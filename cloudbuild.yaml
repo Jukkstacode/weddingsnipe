@@ -1,3 +1,5 @@
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m', 'rsync', '-r', '-c', '-d', '.', 'gs://wedding-snipe-countdown-site']
+  options:
+    logging: CLOUD_LOGGING_ONLY
