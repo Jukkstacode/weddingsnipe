@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Adam",
+    "image": "gm-assets/adam.jpeg",
+    "bimmbetOdds": "+600"
+  },
+  {
+    "name": "Bimm",
+    "image": "gm-assets/chris.png",
+    "bimmbetOdds": "+400"
+  },
+  {
+    "name": "Dan",
+    "image": "gm-assets/dan.jpeg",
+    "bimmbetOdds": "+350"
+  },
+  {
+    "name": "Dave",
+    "image": "gm-assets/dave.jpeg",
+    "bimmbetOdds": "+500"
+  },
+  {
+    "name": "Colin",
+    "image": "gm-assets/colin.jpeg",
+    "bimmbetOdds": "+800"
+  },
+  {
+    "name": "Hordo",
+    "image": "gm-assets/hordo.jpeg",
+    "bimmbetOdds": "+550"
+  },
+  {
+    "name": "Jordan",
+    "image": "gm-assets/jordan.jpeg",
+    "bimmbetOdds": "+800"
+  },
+  {
+    "name": "Marinos",
+    "image": "gm-assets/marinos.jpeg",
+    "bimmbetOdds": "+400"
+  },
+  {
+    "name": "Seedo",
+    "image": "gm-assets/seedo.jpeg",
+    "bimmbetOdds": "+200"
+  },
+  {
+    "name": "Mike",
+    "image": "gm-assets/mike.jpeg",
+    "bimmbetOdds": "+250"
+  },
+  {
+    "name": "Ryan",
+    "image": "gm-assets/mroki.jpeg",
+    "bimmbetOdds": "+∞"
+  }
+]

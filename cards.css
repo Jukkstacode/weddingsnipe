@@ -1,0 +1,161 @@
+/* Global body styles for background and font */
+body {
+    background-image: url('assets/background2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Arial', sans-serif;
+    color: #ecf0f1;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- Styles for Flipping Cards Page --- */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.card {
+    background-color: transparent;
+    width: 300px;
+    height: 420px;
+    perspective: 1000px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden; /* Ensures content fits within rounded corners */
+}
+
+.card-front {
+    color: white;
+}
+
+.card-back {
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 15px;
+}
+
+.card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.card-back > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+.card-back h2 {
+    margin-top: 0;
+}
+
+.card-back ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* --- Styles for Player List Page --- */
+.list-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    height: 90vh;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.player-card {
+    background-color: rgba(23, 32, 42, 0.85); /* Dark, high-contrast background */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-card .player-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #5dade2;
+    margin-bottom: 15px;
+}
+
+.player-card .player-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    color: #ffffff;
+}
+
+.player-card .player-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.player-card .player-info li {
+    margin-bottom: 5px;
+}
+
+.odds-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.odds-container p {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
