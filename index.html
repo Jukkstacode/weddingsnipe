@@ -22,10 +22,17 @@
     </div>
 
     <div class="container">
-        </div>
+        <h1 id="localized-date-time"></h1>
+        <div id="countdown"></div>
+    </div>
 
     <script src="nav.js"></script>
     <script src="script.js"></script>
     <script src="news-scroll.js"></script>
+    <script>
+        const date = new Date('2025-10-06T01:00:00Z');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
+        document.getElementById('localized-date-time').textContent = date.toLocaleString(undefined, options);
+    </script>
 </body>
 </html>
