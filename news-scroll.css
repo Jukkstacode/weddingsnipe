@@ -26,3 +26,24 @@
         transform: translateX(-100%);
     }
 }
+
+.news-scroll-container {
+    position: fixed;
+    top: 40px; /* Aligns below the nav bar on DESKTOP */
+    left: 0;
+    width: 100%;
+    background-color: navy;
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 600px) {
+    .news-scroll-container {
+        top: 53px; /* Position below the stacked nav links */
+    }
+}

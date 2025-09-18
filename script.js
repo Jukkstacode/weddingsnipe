@@ -1,6 +1,5 @@
-// Set the date we're counting down to: Aug 31, 2025 7:30 PM MDT
 // The format "YYYY-MM-DDTHH:mm:ss-06:00" specifies the Mountain Daylight Time (UTC-6) offset
-const countDownDate = new Date("2025-08-31T19:30:00-06:00").getTime();
+const countDownDate = new Date("2025-10-06T01:00:00Z").getTime();
 
 // Update the count down every 1 second
 const x = setInterval(function() {
@@ -24,6 +23,6 @@ const x = setInterval(function() {
     // If the count down is finished, write some text
     if (distance < 0) {
         clearInterval(x);
-        document.getElementById("countdown").innerHTML = "COUNTDOWN FINISHED";
+        document.getElementById("countdown").innerHTML = "IT'S DRAFTING TIME!";
     }
 }, 1000);

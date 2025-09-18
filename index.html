@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8TZ69H67W"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -17,28 +16,23 @@
     <link rel="stylesheet" href="news-scroll.css">
 </head>
 <body>
+    <div id="nav-placeholder"></div>
     <div class="news-scroll-container">
         <div class="news-scroll-content" id="news-scroll-content"></div>
     </div>
 
     <div class="container">
-        <a class="target-list" href="players.html">THE LIST</a>
-    </div>
-    <div class="container">
-        <a class="target-list" href="winners.html">THE WINNER</a>
-    </div>
-    <div class="container">
-        <a class="target-list" href="https://photos.app.goo.gl/Qx72mfg3i9pCe9CbA">THE ALBUM</a>
-    </div>
-    <div class="wedding-info">
-        <p>Aug 31, 2025 @ 3:30PM</p>
-        <a href="https://maps.app.goo.gl/3ycWJp2mF8EsJbvC6" target="_blank">Hyatt downtown</a><br>
-        <a href="https://maps.app.goo.gl/JhR1KNRQnxqTN5LQ6" target="_blank">BBQ @ 4PM</a><br>
-        <a href="https://maps.app.goo.gl/kduGFS8MApxm4iah6" target="_blank">Venue (Alloy)</a><br>
-        <a href="assets/andyweddingsched.png" target="_blank">Schedule</a><br><br>
+        <h1 id="localized-date-time"></h1>
+        <div id="countdown"></div>
     </div>
 
+    <script src="nav.js"></script>
     <script src="script.js"></script>
     <script src="news-scroll.js"></script>
+    <script>
+        const date = new Date('2025-10-06T01:00:00Z');
+        const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
+        document.getElementById('localized-date-time').textContent = date.toLocaleString(undefined, options);
+    </script>
 </body>
 </html>
