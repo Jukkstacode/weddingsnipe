@@ -1,4 +1,3 @@
-// Set the date we're counting down to: Aug 31, 2025 7:30 PM MDT
 // The format "YYYY-MM-DDTHH:mm:ss-06:00" specifies the Mountain Daylight Time (UTC-6) offset
 const countDownDate = new Date("2025-10-06T01:00:00Z").getTime();
 
