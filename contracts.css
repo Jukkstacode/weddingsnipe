@@ -1,0 +1,153 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #202020;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.gm-list-container {
+    flex-grow: 1;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 54px;
+    background-color: #202020;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.gm-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.gm-photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.players-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.player-chip {
+    background-color: #e4e6eb;
+    border-radius: 16px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    padding-right: 30px; 
+}
+
+.player-info {
+    font-weight: normal;
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+    color: #606770;
+}
+
+.stolen-badge {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('assets/stolen.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+/* Top Navigation Bar Styles */
+.top-nav {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px 10px 0px;
+    position: fixed;
+    width: 100%;
+    top: 0px; /* Adjusted for the news scroll */
+    left: 0;
+    z-index: 1001;
+    display: flex;
+    justify-content: flex-start;
+    align-items: left;
+    box-sizing: border-box;
+}
+
+.top-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.top-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.hamburger {
+    display: none;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.hamburger .line {
+    width: 30px;
+    height: 3px;
+    background: white;
+    margin: 6px 0;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+    .top-nav {
+        justify-content: space-between;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+    }
+
+    .nav-links.nav-active {
+        display: flex;
+    }
+
+    .top-nav a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .top-nav a:last-child {
+        border-bottom: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
