@@ -1,0 +1,658 @@
+[
+  {
+    "GM": "Adam",
+    "Player": "Robert Thomas",
+    "Position": "C",
+    "Team": "STL",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Adam",
+    "Player": "Roope Hintz",
+    "Position": "C",
+    "Team": "DAL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Adam",
+    "Player": "MacKenzie Weegar",
+    "Position": "D",
+    "Team": "CAL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Adam",
+    "Player": "Dougie Hamilton",
+    "Position": "D",
+    "Team": "NJD",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Adam",
+    "Player": "Thatcher Demko",
+    "Position": "G",
+    "Team": "VAN",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Adam",
+    "Player": "Ryan Nugent-Hopkins",
+    "Position": "C",
+    "Team": "EDM",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Andy",
+    "Player": "Brayden Point",
+    "Position": "C",
+    "Team": "TBL",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Andy",
+    "Player": "Jake Oettinger",
+    "Position": "G",
+    "Team": "DAL",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Andy",
+    "Player": "Nikita Kucherov",
+    "Position": "RW",
+    "Team": "TBL",
+    "Contract Length": 3,
+    "Stolen?": true
+  },
+  {
+    "GM": "Andy",
+    "Player": "Jason Robertson",
+    "Position": "LW,RW",
+    "Team": "DAL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Andy",
+    "Player": "Brady Tkachuk",
+    "Position": "C,LW",
+    "Team": "OTT",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Andy",
+    "Player": "Ilya Sorokin",
+    "Position": "G",
+    "Team": "NYI",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Andy",
+    "Player": "Lane Hutson",
+    "Position": "D",
+    "Team": "MTL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "Evan Bouchard",
+    "Position": "D",
+    "Team": "EDM",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "Macklin Celebrini",
+    "Position": "C",
+    "Team": "SJS",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "David Pastrnak",
+    "Position": "RW",
+    "Team": "BOS",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "John Tavares",
+    "Position": "C",
+    "Team": "TOR",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "Mason McTavish",
+    "Position": "C",
+    "Team": "ANH",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "Frederik Andersen",
+    "Position": "G",
+    "Team": "CAR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Charlie",
+    "Player": "Brandon Hagel",
+    "Position": "LW,RW",
+    "Team": "TBL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
+    "Player": "Josh Morrisey",
+    "Position": "D",
+    "Team": "WPG",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
+    "Player": "Pavel Buchnevich",
+    "Position": "C,LW,RW",
+    "Team": "STL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
+    "Player": "Dylan Larkin",
+    "Position": "C",
+    "Team": "DET",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
+    "Player": "Tage Thompson",
+    "Position": "C",
+    "Team": "BUF",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Adrian Kempe",
+    "Position": "RW",
+    "Team": "LAK",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Elias Petterson",
+    "Position": "C,LW",
+    "Team": "VAN",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Alex Debrincat",
+    "Position": "LW,RW",
+    "Team": "DET",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Zach Hyman",
+    "Position": "LW,RW",
+    "Team": "EDM",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Charlie McAvoy",
+    "Position": "D",
+    "Team": "BOS",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Tim Stutzle",
+    "Position": "C,LW",
+    "Team": "OTT",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Colin",
+    "Player": "Dylan Strome",
+    "Position": "C",
+    "Team": "WAS",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "Nathan MacKinnon",
+    "Position": "C",
+    "Team": "COL",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "Auston Matthews",
+    "Position": "C",
+    "Team": "TOR",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "Kyle Connor",
+    "Position": "LW",
+    "Team": "WPG",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "Jake Guentzel",
+    "Position": "LW",
+    "Team": "TBL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "J.T. Miller",
+    "Position": "C,RW",
+    "Team": "NYR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "Nazem Kadri",
+    "Position": "C",
+    "Team": "CAL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dan",
+    "Player": "Anthony Stolarz",
+    "Position": "G",
+    "Team": "TOR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Leon Draisaitl",
+    "Position": "C,LW",
+    "Team": "EDM",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Matt Boldy",
+    "Position": "LW,RW",
+    "Team": "MIN",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Jack Hughes",
+    "Position": "C,LW",
+    "Team": "NJD",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Connor Hellebuyck",
+    "Position": "G",
+    "Team": "WPG",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Juuse Saros",
+    "Position": "G",
+    "Team": "NAS",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Timo Meier",
+    "Position": "LW,RW",
+    "Team": "NJD",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Josh Norris",
+    "Position": "C",
+    "Team": "OTT",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Dave",
+    "Player": "Victor Hedman",
+    "Position": "D",
+    "Team": "TBL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Hordo",
+    "Player": "Mathew Barzal",
+    "Position": "C,RW",
+    "Team": "NYI",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Hordo",
+    "Player": "Joel Eriksson Ek",
+    "Position": "C",
+    "Team": "MIN",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Hordo",
+    "Player": "Kirill Kaprizov",
+    "Position": "LW",
+    "Team": "MIN",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Hordo",
+    "Player": "Jordan Binnington",
+    "Position": "G",
+    "Team": "STL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Jordan",
+    "Player": "Adam Fox",
+    "Position": "D",
+    "Team": "NYR",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Jordan",
+    "Player": "Quinn Hughes",
+    "Position": "D",
+    "Team": "VAN",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Jordan",
+    "Player": "Elias Lindholm",
+    "Position": "C",
+    "Team": "BOS",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Jordan",
+    "Player": "Igor Shesterkin",
+    "Position": "G",
+    "Team": "NYR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Jordan",
+    "Player": "Artemi Panarin",
+    "Position": "LW",
+    "Team": "NYR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Marinos",
+    "Player": "Alexis Lafreniere",
+    "Position": "LW,RW",
+    "Team": "NYR",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Marinos",
+    "Player": "Jack Eichel",
+    "Position": "C",
+    "Team": "VGK",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Marinos",
+    "Player": "Aleksander Barkov",
+    "Position": "C",
+    "Team": "FLA",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Marinos",
+    "Player": "Gabriel Landeskog",
+    "Position": "LW",
+    "Team": "COL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Seedo",
+    "Player": "Cole Caufield",
+    "Position": "LW,RW",
+    "Team": "MTL",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Seedo",
+    "Player": "Wyatt Johnston",
+    "Position": "C,RW",
+    "Team": "DAL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Seedo",
+    "Player": "Sam Montembeault",
+    "Position": "G",
+    "Team": "MTL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Cale Makar",
+    "Position": "D",
+    "Team": "COL",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Sebastian Aho",
+    "Position": "D",
+    "Team": "CAR",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Andrei Vasilevskiy",
+    "Position": "G",
+    "Team": "TBL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Connor Bedard",
+    "Position": "C,RW",
+    "Team": "CHI",
+    "Contract Length": 2,
+    "Stolen?": true
+  },
+  {
+    "GM": "Mike",
+    "Player": "Mikko Rantanen",
+    "Position": "LW,RW",
+    "Team": "DAL",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Mika Zibanejad",
+    "Position": "C,RW",
+    "Team": "NYR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Alex Tuch",
+    "Position": "RW",
+    "Team": "BUF",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Mike",
+    "Player": "Martin Necas",
+    "Position": "RW",
+    "Team": "COL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Ryan",
+    "Player": "Matthew Tkachuk",
+    "Position": "LW,RW",
+    "Team": "FLA",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Ryan",
+    "Player": "Trevor Zegras",
+    "Position": "C",
+    "Team": "PHI",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Ryan",
+    "Player": "Seth Jarvis",
+    "Position": "C,LW,RW",
+    "Team": "CAR",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Ryan",
+    "Player": "Jesper Bratt",
+    "Position": "LW,RW",
+    "Team": "NJD",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Ryan",
+    "Player": "Sam Reinhart",
+    "Position": "C,RW",
+    "Team": "FLA",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Ryan",
+    "Player": "Mackenzie Blackwood",
+    "Position": "G",
+    "Team": "COL",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Trevor",
+    "Player": "William Nylander",
+    "Position": "C,RW",
+    "Team": "TOR",
+    "Contract Length": 3,
+    "Stolen?": false
+  },
+  {
+    "GM": "Trevor",
+    "Player": "Pierre-Luc Dubois",
+    "Position": "C,LW",
+    "Team": "WAS",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Trevor",
+    "Player": "Shea Theodore",
+    "Position": "D",
+    "Team": "VGK",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Trevor",
+    "Player": "Nico Hischier",
+    "Position": "C",
+    "Team": "NJD",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Trevor",
+    "Player": "Jacob Markstrom",
+    "Position": "G",
+    "Team": "NJD",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Trevor",
+    "Player": "Sergei Bobrovsky",
+    "Position": "G",
+    "Team": "FLA",
+    "Contract Length": 1,
+    "Stolen?": false
+  }
+]
