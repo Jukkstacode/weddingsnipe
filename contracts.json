@@ -161,6 +161,14 @@
   },
   {
     "GM": "Bimm",
+    "Player": "Mitch Marner",
+    "Position": "RW",
+    "Team": "VGK",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
     "Player": "Josh Morrisey",
     "Position": "D",
     "Team": "WPG",
@@ -177,9 +185,25 @@
   },
   {
     "GM": "Bimm",
+    "Player": "Rasmus Dahlin",
+    "Position": "D",
+    "Team": "BUF",
+    "Contract Length": 2,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
     "Player": "Dylan Larkin",
     "Position": "C",
     "Team": "DET",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Bimm",
+    "Player": "Mark Scheifle",
+    "Position": "C",
+    "Team": "WPG",
     "Contract Length": 1,
     "Stolen?": false
   },

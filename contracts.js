@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     playerChip.innerHTML = `
                         ${contract.Player}
                         <span class="player-info">
-                            ${contract.Position} - ${contract.Team} | ${contract['Contract Length']} years
+                            ${contract.Position} </br> ${contract.Team} </br> ${contract['Contract Length']} years
                         </span>
                         ${stolenBadge}
                     `;
