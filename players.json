@@ -126,5 +126,41 @@
     "stats": {
       "Games Played": "don't sweat it man"
     }
+  },
+  {
+    "name": "",
+    "image": "assets/placeholder.jpg",
+    "stats": {
+      "Games Played": 0,
+      "Goals": 0,
+      "Assists": 0,
+      "Points": 0,
+      "+/-": 0,
+      "Fantasy Pts": 0
+    }
+  },
+  {
+    "name": "",
+    "image": "assets/placeholder.jpg",
+    "stats": {
+      "Games Played": 0,
+      "Goals": 0,
+      "Assists": 0,
+      "Points": 0,
+      "+/-": 0,
+      "Fantasy Pts": 0
+    }
+  },
+  {
+    "name": "",
+    "image": "assets/placeholder.jpg",
+    "stats": {
+      "Games Played": 0,
+      "Goals": 0,
+      "Assists": 0,
+      "Points": 0,
+      "+/-": 0,
+      "Fantasy Pts": 0
+    }
   }
 ]

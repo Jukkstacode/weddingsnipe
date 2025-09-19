@@ -5,24 +5,9 @@
     "bimmbetOdds": "+600"
   },
   {
-    "name": "Andy",
-    "image": "gm-assets/andy.jpeg",
-    "bimmbetOdds": "NA"
-  },
-  {
     "name": "Bimm",
     "image": "gm-assets/chris.png",
     "bimmbetOdds": "+400"
-  },
-  {
-    "name": "Charlie",
-    "image": "gm-assets/charlie.jpeg",
-    "bimmbetOdds": "NA"
-  },
-  {
-    "name": "Colin",
-    "image": "gm-assets/colin.jpeg",
-    "bimmbetOdds": "+800"
   },
   {
     "name": "Dan",
@@ -33,6 +18,11 @@
     "name": "Dave",
     "image": "gm-assets/dave.jpeg",
     "bimmbetOdds": "+500"
+  },
+  {
+    "name": "Colin",
+    "image": "gm-assets/colin.jpeg",
+    "bimmbetOdds": "+800"
   },
   {
     "name": "Hordo",
@@ -50,6 +40,11 @@
     "bimmbetOdds": "+400"
   },
   {
+    "name": "Seedo",
+    "image": "gm-assets/seedo.jpeg",
+    "bimmbetOdds": "+200"
+  },
+  {
     "name": "Mike",
     "image": "gm-assets/mike.jpeg",
     "bimmbetOdds": "+250"
@@ -60,13 +55,18 @@
     "bimmbetOdds": "+∞"
   },
   {
-    "name": "Seedo",
-    "image": "gm-assets/seedo.jpeg",
-    "bimmbetOdds": "+200"
+    "name": "Andy",
+    "image": "gm-assets/andy.jpeg",
+    "bimmbetOdds": "N/A"
+  },
+  {
+    "name": "Charlie",
+    "image": "gm-assets/charlie.jpeg",
+    "bimmbetOdds": "N/A"
   },
   {
     "name": "Trevor",
     "image": "gm-assets/trevor.jpeg",
-    "bimmbetOdds": "NA"
+    "bimmbetOdds": "N/A"
   }
 ]
