@@ -175,23 +175,58 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch(`https://api-web.nhle.com/v1/player/${playerId}/landing`);
+            // Try the stats API endpoint instead - sometimes has different CORS policy
+            const statsUrl = `https://api.nhle.com/stats/rest/en/skater/summary?cayenneExp=playerId=${playerId}`;
+            const response = await fetch(statsUrl);
             if (!response.ok) throw new Error('Player not found');
             
+            const statsData = await response.json();
+            // Transform the stats API response to match the landing API format
+            const playerStats = statsData.data?.[0];
+            if (!playerStats) throw new Error('No stats found');
+            
+            // Create a mock data structure that matches what we expect
+            const transformedData = {
+                seasonTotals: [{
+                    season: playerStats.seasonId,
+                    leagueAbbrev: 'NHL',
+                    gamesPlayed: playerStats.gamesPlayed,
+                    goals: playerStats.goals,
+                    assists: playerStats.assists,
+                    points: playerStats.points,
+                    plusMinus: playerStats.plusMinus,
+                    pim: playerStats.penaltyMinutes,
+                    shots: playerStats.shots,
+                    powerPlayGoals: playerStats.ppGoals,
+                    powerPlayAssists: playerStats.ppAssists,
+                    shortHandedGoals: playerStats.shGoals,
+                    shortHandedAssists: playerStats.shAssists,
+                    gameWinningGoals: playerStats.gameWinningGoals,
+                    // Goalie stats if available
+                    wins: playerStats.wins,
+                    losses: playerStats.losses,
+                    goalsAgainst: playerStats.goalsAgainst,
+                    saves: playerStats.saves,
+                    shutouts: playerStats.shutouts,
+                    goalsAgainstAverage: playerStats.goalsAgainstAverage,
+                    savePctg: playerStats.savePct
+                }]
+            };
+            
             const data = await response.json();
-            console.log(`Player ${playerId} seasons:`, data.seasonTotals?.map(s => s.season)); // Debug log
+            console.log(`Player ${playerId} seasons:`, transformedData.seasonTotals?.map(s => s.season)); // Debug log
             
             const currentSeason = getCurrentNHLSeason();
             console.log(`Looking for season: ${currentSeason}`); // Debug log
             
             // Try current season first, then fall back to most recent season
-            let stats = data.seasonTotals?.find(season => 
+            let stats = transformedData.seasonTotals?.find(season => 
                 season.season === currentSeason && season.leagueAbbrev === 'NHL'
             );
             
-            if (!stats && data.seasonTotals?.length > 0) {
+            if (!stats && transformedData.seasonTotals?.length > 0) {
                 // Fall back to most recent NHL season
-                stats = data.seasonTotals
+                stats = transformedData.seasonTotals
                     .filter(season => season.leagueAbbrev === 'NHL')
                     .sort((a, b) => b.season - a.season)[0];
                 console.log(`Using fallback season ${stats.season} for player ${playerId}`); // Debug log
