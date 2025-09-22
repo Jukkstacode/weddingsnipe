@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHL Player ID Verifier</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+        select {
+            padding: 8px 12px;
+            font-size: 1em;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+        }
+        #loader {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 40px;
+            display: none; /* Hidden by default */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+        }
+        thead {
+            background-color: #00488D; /* NHL Blue */
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #2c2c2c;
+        }
+        tbody tr:hover {
+            background-color: #4a4a4a;
+        }
+        .player-id {
+            font-family: "Courier New", Courier, monospace;
+            font-weight: bold;
+            color: #87CEEB; /* Sky Blue */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>NHL Player ID Verifier</h1>
+        <div class="controls">
+            <label for="team-select">Select a Team:</label>
+            <select id="team-select">
+                <option value="">-- Choose a Team --</option>
+            </select>
+        </div>
+
+        <div id="loader">Fetching roster...</div>
+
+        <table id="roster-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Player Name</th>
+                    <th>Position</th>
+                    <th>Player ID</th>
+                </tr>
+            </thead>
+            <tbody id="roster-tbody">
+                <!-- Player data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const teams = [
+                { name: "Anaheim Ducks", abbr: "ANA" },
+                { name: "Boston Bruins", abbr: "BOS" },
+                { name: "Buffalo Sabres", abbr: "BUF" },
+                { name: "Calgary Flames", abbr: "CGY" },
+                { name: "Carolina Hurricanes", abbr: "CAR" },
+                { name: "Chicago Blackhawks", abbr: "CHI" },
+                { name: "Colorado Avalanche", abbr: "COL" },
+                { name: "Columbus Blue Jackets", abbr: "CBJ" },
+                { name: "Dallas Stars", abbr: "DAL" },
+                { name: "Detroit Red Wings", abbr: "DET" },
+                { name: "Edmonton Oilers", abbr: "EDM" },
+                { name: "Florida Panthers", abbr: "FLA" },
+                { name: "Los Angeles Kings", abbr: "LAK" },
+                { name: "Minnesota Wild", abbr: "MIN" },
+                { name: "Montreal Canadiens", abbr: "MTL" },
+                { name: "Nashville Predators", abbr: "NSH" },
+                { name: "New Jersey Devils", abbr: "NJD" },
+                { name: "New York Islanders", abbr: "NYI" },
+                { name: "New York Rangers", abbr: "NYR" },
+                { name: "Ottawa Senators", abbr: "OTT" },
+                { name: "Philadelphia Flyers", abbr: "PHI" },
+                { name: "Pittsburgh Penguins", abbr: "PIT" },
+                { name: "San Jose Sharks", abbr: "SJS" },
+                { name: "Seattle Kraken", abbr: "SEA" },
+                { name: "St. Louis Blues", abbr: "STL" },
+                { name: "Tampa Bay Lightning", abbr: "TBL" },
+                { name: "Toronto Maple Leafs", abbr: "TOR" },
+                { name: "Utah Hockey Club", abbr: "UTA" },
+                { name: "Vancouver Canucks", abbr: "VAN" },
+                { name: "Vegas Golden Knights", abbr: "VGK" },
+                { name: "Washington Capitals", abbr: "WSH" },
+                { name: "Winnipeg Jets", abbr: "WPG" }
+            ];
+
+            const teamSelect = document.getElementById('team-select');
+            // Sort teams alphabetically by name for better UX
+            teams.sort((a, b) => a.name.localeCompare(b.name));
+            
+            teams.forEach(team => {
+                const option = document.createElement('option');
+                option.value = team.abbr;
+                option.textContent = team.name;
+                teamSelect.appendChild(option);
+            });
+
+            teamSelect.addEventListener('change', async function() {
+                const teamAbbr = this.value;
+                if (!teamAbbr) {
+                    document.getElementById('roster-table').style.display = 'none';
+                    return;
+                }
+
+                const loader = document.getElementById('loader');
+                const rosterTable = document.getElementById('roster-table');
+                const rosterTbody = document.getElementById('roster-tbody');
+
+                loader.style.display = 'block';
+                rosterTable.style.display = 'none';
+                rosterTbody.innerHTML = '';
+
+                try {
+                    const apiUrl = `https://api-web.nhle.com/v1/roster/${teamAbbr}/current`;
+                    const proxyApiUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+                    
+                    const response = await fetch(proxyApiUrl);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    
+                    const players = [...data.forwards, ...data.defensemen, ...data.goalies];
+
+                    if (players.length === 0) {
+                        rosterTbody.innerHTML = '<tr><td colspan="3">No players found for this team.</td></tr>';
+                    }
+
+                    players.sort((a, b) => a.lastName.default.localeCompare(b.lastName.default));
+
+                    players.forEach(player => {
+                        const row = document.createElement('tr');
+                        const fullName = `${player.firstName.default} ${player.lastName.default}`;
+                        const position = player.positionCode;
+                        const playerId = player.id;
+
+                        row.innerHTML = `
+                            <td>${fullName}</td>
+                            <td>${position}</td>
+                            <td class="player-id">${playerId}</td>
+                        `;
+                        rosterTbody.appendChild(row);
+                    });
+
+                } catch (error) {
+                    console.error("Failed to fetch roster:", error);
+                    rosterTbody.innerHTML = '<tr><td colspan="3">Failed to load roster data. The proxy may be blocked or the team data is unavailable.</td></tr>';
+                } finally {
+                    loader.style.display = 'none';
+                    rosterTable.style.display = 'table';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
