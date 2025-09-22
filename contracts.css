@@ -47,7 +47,7 @@ body {
 }
 
 .player-chip {
-    background-color: #e4e6eb;
+    background-color: #3a3a3a; 
     border-radius: 16px;
     padding: 12px 15px;
     font-size: 14px;
@@ -57,6 +57,7 @@ body {
     min-width: 200px;
     flex: 1;
     max-width: 280px;
+    color: #ffffff; 
 }
 
 .player-name {
@@ -68,7 +69,7 @@ body {
 .player-info {
     font-weight: normal;
     font-size: 14px; /* Increased from 12px */
-    color: #606770;
+    color: #dcdcdc; /* Lighter grey for secondary info */
 }
 
 .position-team {
@@ -89,13 +90,17 @@ body {
 
 .stats-line {
     display: block;
-    color: #2c3e50;
+    color: #ffffff;
     font-weight: 500;
 }
 
 .stats-line.fantasy-pts {
-    color: #27ae60;
+    background: #3a3a3a;
+    padding-left: 8px;
+    border-radius: 8px;
+    color: #2cd171;
     font-weight: 600;
+    font-size: 16px; /* Increased from 14px */
     margin-top: 2px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     padding-top: 2px;
@@ -103,7 +108,7 @@ body {
 
 .stats-season {
     display: block;
-    color: #34495e;
+    color: #ffffff;
     font-weight: 600;
     font-size: 10px; /* Increased from 9px */
     margin-bottom: 2px;
@@ -111,7 +116,7 @@ body {
 }
 
 .no-stats {
-    color: #7f8c8d;
+    color: #ffffff;
     font-style: italic;
     font-size: 10px; /* Increased from 9px */
 }
@@ -120,9 +125,9 @@ body {
     position: absolute;
     right: 6px;
     top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    transform: translateY(-175%);
+    width: 40px;
+    height: 40px;
     background-image: url('assets/stolen.webp');
     background-size: contain;
     background-repeat: no-repeat;
