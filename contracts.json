@@ -5,7 +5,8 @@
     "Position": "C",
     "Team": "STL",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480023"
   },
   {
     "GM": "Adam",
@@ -13,7 +14,8 @@
     "Position": "C",
     "Team": "DAL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478449"
   },
   {
     "GM": "Adam",
@@ -21,7 +23,8 @@
     "Position": "D",
     "Team": "CAL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477346"
   },
   {
     "GM": "Adam",
@@ -29,7 +32,8 @@
     "Position": "D",
     "Team": "NJD",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476462"
   },
   {
     "GM": "Adam",
@@ -37,7 +41,8 @@
     "Position": "G",
     "Team": "VAN",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477967"
   },
   {
     "GM": "Adam",
@@ -45,7 +50,8 @@
     "Position": "C",
     "Team": "EDM",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476454"
   },
   {
     "GM": "Andy",
@@ -53,7 +59,8 @@
     "Position": "C",
     "Team": "TBL",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478010"
   },
   {
     "GM": "Andy",
@@ -61,7 +68,8 @@
     "Position": "G",
     "Team": "DAL",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479979"
   },
   {
     "GM": "Andy",
@@ -69,7 +77,8 @@
     "Position": "RW",
     "Team": "TBL",
     "Contract Length": 3,
-    "Stolen?": true
+    "Stolen?": true,
+    "nhlId": "8476453"
   },
   {
     "GM": "Andy",
@@ -77,7 +86,8 @@
     "Position": "LW,RW",
     "Team": "DAL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480027"
   },
   {
     "GM": "Andy",
@@ -85,7 +95,8 @@
     "Position": "C,LW",
     "Team": "OTT",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480801"
   },
   {
     "GM": "Andy",
@@ -93,7 +104,8 @@
     "Position": "G",
     "Team": "NYI",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478009"
   },
   {
     "GM": "Andy",
@@ -101,7 +113,8 @@
     "Position": "D",
     "Team": "MTL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8483457"
   },
   {
     "GM": "Charlie",
@@ -109,7 +122,8 @@
     "Position": "D",
     "Team": "EDM",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480803"
   },
   {
     "GM": "Charlie",
@@ -117,7 +131,8 @@
     "Position": "C",
     "Team": "SJS",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8484801"
   },
   {
     "GM": "Charlie",
@@ -125,7 +140,8 @@
     "Position": "RW",
     "Team": "BOS",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477956"
   },
   {
     "GM": "Charlie",
@@ -133,7 +149,8 @@
     "Position": "C",
     "Team": "TOR",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8475166"
   },
   {
     "GM": "Charlie",
@@ -141,7 +158,8 @@
     "Position": "C",
     "Team": "ANH",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8482745"
   },
   {
     "GM": "Charlie",
@@ -149,7 +167,8 @@
     "Position": "G",
     "Team": "CAR",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8475883"
   },
   {
     "GM": "Charlie",
@@ -157,7 +176,8 @@
     "Position": "LW,RW",
     "Team": "TBL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479542"
   },
   {
     "GM": "Bimm",
@@ -165,7 +185,8 @@
     "Position": "RW",
     "Team": "VGK",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478483"
   },
   {
     "GM": "Bimm",
@@ -173,7 +194,8 @@
     "Position": "D",
     "Team": "WPG",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477504"
   },
   {
     "GM": "Bimm",
@@ -181,7 +203,8 @@
     "Position": "C,LW,RW",
     "Team": "STL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477402"
   },
   {
     "GM": "Bimm",
@@ -189,7 +212,8 @@
     "Position": "D",
     "Team": "BUF",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480839"
   },
   {
     "GM": "Bimm",
@@ -197,7 +221,8 @@
     "Position": "C",
     "Team": "DET",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477946"
   },
   {
     "GM": "Bimm",
@@ -205,7 +230,8 @@
     "Position": "C",
     "Team": "WPG",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476460"
   },
   {
     "GM": "Bimm",
@@ -213,7 +239,8 @@
     "Position": "C",
     "Team": "BUF",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479420"
   },
   {
     "GM": "Colin",
@@ -221,7 +248,8 @@
     "Position": "RW",
     "Team": "LAK",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477960"
   },
   {
     "GM": "Colin",
@@ -229,7 +257,8 @@
     "Position": "C,LW",
     "Team": "VAN",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480012"
   },
   {
     "GM": "Colin",
@@ -237,7 +266,8 @@
     "Position": "LW,RW",
     "Team": "DET",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479337"
   },
   {
     "GM": "Colin",
@@ -245,7 +275,8 @@
     "Position": "LW,RW",
     "Team": "EDM",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8475786"
   },
   {
     "GM": "Colin",
@@ -253,7 +284,8 @@
     "Position": "D",
     "Team": "BOS",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479325"
   },
   {
     "GM": "Colin",
@@ -261,7 +293,8 @@
     "Position": "C,LW",
     "Team": "OTT",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8482116"
   },
   {
     "GM": "Colin",
@@ -269,7 +302,8 @@
     "Position": "C",
     "Team": "WAS",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478440"
   },
   {
     "GM": "Dan",
@@ -277,7 +311,8 @@
     "Position": "C",
     "Team": "COL",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477492"
   },
   {
     "GM": "Dan",
@@ -285,7 +320,8 @@
     "Position": "C",
     "Team": "TOR",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479318"
   },
   {
     "GM": "Dan",
@@ -293,7 +329,8 @@
     "Position": "LW",
     "Team": "WPG",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478398"
   },
   {
     "GM": "Dan",
@@ -301,7 +338,8 @@
     "Position": "LW",
     "Team": "TBL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477404"
   },
   {
     "GM": "Dan",
@@ -309,7 +347,8 @@
     "Position": "C,RW",
     "Team": "NYR",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476468"
   },
   {
     "GM": "Dan",
@@ -317,7 +356,8 @@
     "Position": "C",
     "Team": "CAL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8475172"
   },
   {
     "GM": "Dan",
@@ -325,7 +365,8 @@
     "Position": "G",
     "Team": "TOR",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476932"
   },
   {
     "GM": "Dave",
@@ -333,7 +374,8 @@
     "Position": "C,LW",
     "Team": "EDM",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477934"
   },
   {
     "GM": "Dave",
@@ -341,7 +383,8 @@
     "Position": "LW,RW",
     "Team": "MIN",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8481557"
   },
   {
     "GM": "Dave",
@@ -349,7 +392,8 @@
     "Position": "C,LW",
     "Team": "NJD",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8481559"
   },
   {
     "GM": "Dave",
@@ -357,7 +401,8 @@
     "Position": "G",
     "Team": "WPG",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476945"
   },
   {
     "GM": "Dave",
@@ -365,7 +410,8 @@
     "Position": "G",
     "Team": "NAS",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477424"
   },
   {
     "GM": "Dave",
@@ -373,7 +419,8 @@
     "Position": "LW,RW",
     "Team": "NJD",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478414"
   },
   {
     "GM": "Dave",
@@ -381,7 +428,8 @@
     "Position": "C",
     "Team": "OTT",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480064"
   },
   {
     "GM": "Dave",
@@ -389,7 +437,8 @@
     "Position": "D",
     "Team": "TBL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8475167"
   },
   {
     "GM": "Hordo",
@@ -397,7 +446,8 @@
     "Position": "C,RW",
     "Team": "NYI",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478445"
   },
   {
     "GM": "Hordo",
@@ -405,7 +455,8 @@
     "Position": "C",
     "Team": "MIN",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478493"
   },
   {
     "GM": "Hordo",
@@ -413,7 +464,8 @@
     "Position": "LW",
     "Team": "MIN",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478864"
   },
   {
     "GM": "Hordo",
@@ -421,23 +473,26 @@
     "Position": "G",
     "Team": "STL",
     "Contract Length": 1,
-    "Stolen?": false
-  },  
+    "Stolen?": false,
+    "nhlId": "8476412"
+  },
   {
     "GM": "Hordo",
     "Player": "Sidney Crosby",
     "Position": "C",
     "Team": "PIT",
     "Contract Length": 2,
-    "Stolen?": false
-  },  
+    "Stolen?": false,
+    "nhlId": "8471675"
+  },
   {
     "GM": "Hordo",
     "Player": "Luke Hughes",
     "Position": "D",
     "Team": "NJD",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480192"
   },
   {
     "GM": "Jordan",
@@ -445,7 +500,8 @@
     "Position": "D",
     "Team": "NYR",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479323"
   },
   {
     "GM": "Jordan",
@@ -453,7 +509,8 @@
     "Position": "D",
     "Team": "VAN",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480800"
   },
   {
     "GM": "Jordan",
@@ -461,7 +518,8 @@
     "Position": "C",
     "Team": "BOS",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477496"
   },
   {
     "GM": "Jordan",
@@ -469,7 +527,8 @@
     "Position": "C",
     "Team": "CBJ",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8484166"
   },
   {
     "GM": "Jordan",
@@ -477,7 +536,8 @@
     "Position": "G",
     "Team": "NYR",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478048"
   },
   {
     "GM": "Jordan",
@@ -485,7 +545,8 @@
     "Position": "LW",
     "Team": "NYR",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478550"
   },
   {
     "GM": "Marinos",
@@ -493,7 +554,8 @@
     "Position": "C",
     "Team": "EDM",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478402"
   },
   {
     "GM": "Marinos",
@@ -501,7 +563,8 @@
     "Position": "C",
     "Team": "MTL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480018"
   },
   {
     "GM": "Marinos",
@@ -509,7 +572,8 @@
     "Position": "LW,RW",
     "Team": "NYR",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8482109"
   },
   {
     "GM": "Marinos",
@@ -517,7 +581,8 @@
     "Position": "C",
     "Team": "VGK",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478403"
   },
   {
     "GM": "Marinos",
@@ -525,7 +590,8 @@
     "Position": "C",
     "Team": "FLA",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477493"
   },
   {
     "GM": "Marinos",
@@ -533,7 +599,8 @@
     "Position": "LW",
     "Team": "COL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476455"
   },
   {
     "GM": "Seedo",
@@ -541,7 +608,8 @@
     "Position": "LW,RW",
     "Team": "MTL",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8481540"
   },
   {
     "GM": "Seedo",
@@ -549,7 +617,8 @@
     "Position": "C,RW",
     "Team": "DAL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8482740"
   },
   {
     "GM": "Seedo",
@@ -557,7 +626,8 @@
     "Position": "G",
     "Team": "MTL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478470"
   },
   {
     "GM": "Mike",
@@ -565,7 +635,8 @@
     "Position": "D",
     "Team": "COL",
     "Contract Length": 4,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480069"
   },
   {
     "GM": "Mike",
@@ -573,7 +644,8 @@
     "Position": "D",
     "Team": "CAR",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478427"
   },
   {
     "GM": "Mike",
@@ -581,7 +653,8 @@
     "Position": "G",
     "Team": "TBL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476883"
   },
   {
     "GM": "Mike",
@@ -589,7 +662,8 @@
     "Position": "C,RW",
     "Team": "CHI",
     "Contract Length": 2,
-    "Stolen?": true
+    "Stolen?": true,
+    "nhlId": "8484144"
   },
   {
     "GM": "Mike",
@@ -597,7 +671,8 @@
     "Position": "LW,RW",
     "Team": "DAL",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478420"
   },
   {
     "GM": "Mike",
@@ -605,7 +680,8 @@
     "Position": "C,RW",
     "Team": "NYR",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8476459"
   },
   {
     "GM": "Mike",
@@ -613,7 +689,8 @@
     "Position": "RW",
     "Team": "BUF",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477949"
   },
   {
     "GM": "Mike",
@@ -621,7 +698,8 @@
     "Position": "RW",
     "Team": "COL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480039"
   },
   {
     "GM": "Ryan",
@@ -629,7 +707,8 @@
     "Position": "LW,RW",
     "Team": "FLA",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479314"
   },
   {
     "GM": "Ryan",
@@ -637,7 +716,8 @@
     "Position": "C",
     "Team": "PHI",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8481533"
   },
   {
     "GM": "Ryan",
@@ -645,7 +725,8 @@
     "Position": "C,LW,RW",
     "Team": "CAR",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8482093"
   },
   {
     "GM": "Ryan",
@@ -653,7 +734,8 @@
     "Position": "LW,RW",
     "Team": "NJD",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479407"
   },
   {
     "GM": "Ryan",
@@ -661,7 +743,8 @@
     "Position": "C,RW",
     "Team": "FLA",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477933"
   },
   {
     "GM": "Ryan",
@@ -669,7 +752,8 @@
     "Position": "G",
     "Team": "COL",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8478406"
   },
   {
     "GM": "Trevor",
@@ -677,7 +761,8 @@
     "Position": "C,RW",
     "Team": "TOR",
     "Contract Length": 3,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477939"
   },
   {
     "GM": "Trevor",
@@ -685,7 +770,8 @@
     "Position": "C,LW",
     "Team": "WAS",
     "Contract Length": 2,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8479400"
   },
   {
     "GM": "Trevor",
@@ -693,7 +779,8 @@
     "Position": "D",
     "Team": "VGK",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8477447"
   },
   {
     "GM": "Trevor",
@@ -701,7 +788,8 @@
     "Position": "C",
     "Team": "NJD",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8480002"
   },
   {
     "GM": "Trevor",
@@ -709,7 +797,8 @@
     "Position": "G",
     "Team": "NJD",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8474593"
   },
   {
     "GM": "Trevor",
@@ -717,6 +806,7 @@
     "Position": "G",
     "Team": "FLA",
     "Contract Length": 1,
-    "Stolen?": false
+    "Stolen?": false,
+    "nhlId": "8475683"
   }
 ]

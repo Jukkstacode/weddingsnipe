@@ -1,99 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // NHL Player ID mapping
-    const playerNHLIds = {
-            "Robert Thomas": "8480023",
-            "Roope Hintz": "8478449",
-            "MacKenzie Weegar": "8477346",
-            "Dougie Hamilton": "8476462",
-            "Thatcher Demko": "8477967",
-            "Ryan Nugent-Hopkins": "8476454",
-            "Brayden Point": "8478010",
-            "Jake Oettinger": "8479979",
-            "Nikita Kucherov": "8476453",
-            "Jason Robertson": "8480027",
-            "Brady Tkachuk": "8480801",
-            "Ilya Sorokin": "8478009",
-            "Lane Hutson": "8483457",
-            "Evan Bouchard": "8480803",
-            "Macklin Celebrini": "8484801",
-            "David Pastrnak": "8477956",
-            "John Tavares": "8475166",
-            "Mason McTavish": "8482745", 
-            "Frederik Andersen": "8475883",
-            "Brandon Hagel": "8479542",
-            "Mitch Marner": "8478483",
-            "Josh Morrissey": "8477504",
-            "Pavel Buchnevich": "8477402",
-            "Rasmus Dahlin": "8480839",
-            "Dylan Larkin": "8477946",
-            "Mark Scheifele": "8476460",
-            "Tage Thompson": "8479420",
-            "Adrian Kempe": "8477960",
-            "Elias Pettersson": "8480012",
-            "Alex DeBrincat": "8479337",
-            "Zach Hyman": "8475786",
-            "Charlie McAvoy": "8479325",
-            "Tim Stützle": "8482116",
-            "Dylan Strome": "8478440",
-            "Nathan MacKinnon": "8477492",
-            "Auston Matthews": "8479318",
-            "Kyle Connor": "8478398",
-            "Jake Guentzel": "8477404",
-            "J.T. Miller": "8476468",
-            "Nazem Kadri": "8475172",
-            "Anthony Stolarz": "8476932", 
-            "Leon Draisaitl": "8477934",
-            "Matt Boldy": "8481557",
-            "Jack Hughes": "8481559",
-            "Connor Hellebuyck": "8476945",
-            "Juuse Saros": "8477424",
-            "Timo Meier": "8478414",
-            "Josh Norris": "8480064",
-            "Victor Hedman": "8475167",
-            "Mathew Barzal": "8478445",
-            "Joel Eriksson Ek": "8478493",
-            "Kirill Kaprizov": "8478864",
-            "Jordan Binnington": "8476412",
-            "Adam Fox": "8479323",
-            "Quinn Hughes": "8480800",
-            "Elias Lindholm": "8477496",
-            "Igor Shesterkin": "8478048",
-            "Artemi Panarin": "8478550",
-            "Alexis Lafrenière": "8482109",
-            "Jack Eichel": "8478403",
-            "Aleksander Barkov": "8477493",
-            "Gabriel Landeskog": "8476455",
-            "Cole Caufield": "8481540",
-            "Wyatt Johnston": "8482740",
-            "Sam Montembeault": "8478470",
-            "Cale Makar": "8480069",
-            "Sebastian Aho": "8478427",
-            "Andrei Vasilevskiy": "8476883",
-            "Connor Bedard": "8484144",
-            "Mikko Rantanen": "8478420",
-            "Mika Zibanejad": "8476459",
-            "Alex Tuch": "8477949",
-            "Martin Nečas": "8480039",
-            "Matthew Tkachuk": "8479314",
-            "Trevor Zegras": "8481533",
-            "Seth Jarvis": "8482093",
-            "Jesper Bratt": "8479407",
-            "Sam Reinhart": "8477933",
-            "Mackenzie Blackwood": "8478406",
-            "William Nylander": "8477939",
-            "Pierre-Luc Dubois": "8479400",
-            "Shea Theodore": "8477447",
-            "Nico Hischier": "8480002",
-            "Jacob Markstrom": "8474593",
-            "Sergei Bobrovsky": "8475683",
-            "Sidney Crosby": "8471675",
-            "Luke Hughes": "8480192",
-            "Adam Fantilli": "8484166",
-            "Connor McDavid": "8478402",
-            "Nick Suzuki": "8480018"
-
-    };
-
     // Fantasy scoring system
     const FANTASY_SCORING = {
         goals: 3,
@@ -185,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const allPlayerIds = contracts.map(contract => playerNHLIds[contract.Player]).filter(id => id);
+        const allPlayerIds = contracts.map(contract => contract.nhlId).filter(id => id);
         const uniquePlayerIds = [...new Set(allPlayerIds)];
         const allPlayerStats = await fetchAllPlayerStats(uniquePlayerIds);
 
@@ -214,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 for (const contract of contractsByGm[gmName]) {
                     const playerChip = document.createElement('div');
                     playerChip.className = 'player-chip';
-                    const nhlId = playerNHLIds[contract.Player];
+                    const nhlId = contract.nhlId;
                     const stats = allPlayerStats[nhlId];
                     const statsHtml = formatStatsHtml(stats, contract.Position);
                     let stolenBadge = contract['Stolen?'] ? `<div class="stolen-badge"></div>` : '';
