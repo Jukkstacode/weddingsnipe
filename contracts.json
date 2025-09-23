@@ -422,6 +422,22 @@
     "Team": "STL",
     "Contract Length": 1,
     "Stolen?": false
+  },  
+  {
+    "GM": "Hordo",
+    "Player": "Sidney Crosby",
+    "Position": "C",
+    "Team": "PIT",
+    "Contract Length": 2,
+    "Stolen?": false
+  },  
+  {
+    "GM": "Hordo",
+    "Player": "Luke Hughes",
+    "Position": "D",
+    "Team": "NJD",
+    "Contract Length": 1,
+    "Stolen?": false
   },
   {
     "GM": "Jordan",
@@ -449,6 +465,14 @@
   },
   {
     "GM": "Jordan",
+    "Player": "Adam Fantilli",
+    "Position": "C",
+    "Team": "CBJ",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Jordan",
     "Player": "Igor Shesterkin",
     "Position": "G",
     "Team": "NYR",
@@ -460,6 +484,22 @@
     "Player": "Artemi Panarin",
     "Position": "LW",
     "Team": "NYR",
+    "Contract Length": 1,
+    "Stolen?": false
+  },
+  {
+    "GM": "Marinos",
+    "Player": "Connor McDavid",
+    "Position": "C",
+    "Team": "EDM",
+    "Contract Length": 4,
+    "Stolen?": false
+  },
+  {
+    "GM": "Marinos",
+    "Player": "Nick Suzuki",
+    "Position": "C",
+    "Team": "MTL",
     "Contract Length": 1,
     "Stolen?": false
   },

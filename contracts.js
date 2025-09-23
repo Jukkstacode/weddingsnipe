@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "Macklin Celebrini": "8484801",
             "David Pastrnak": "8477956",
             "John Tavares": "8475166",
-            "Mason McTavish": "8482745", // ⚠️ Unmatched
+            "Mason McTavish": "8482745", 
             "Frederik Andersen": "8475883",
             "Brandon Hagel": "8479542",
             "Mitch Marner": "8478483",
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "Jake Guentzel": "8477404",
             "J.T. Miller": "8476468",
             "Nazem Kadri": "8475172",
-            "Anthony Stolarz": "8476440", // corrected from wrong ID
+            "Anthony Stolarz": "8476932", 
             "Leon Draisaitl": "8477934",
             "Matt Boldy": "8481557",
             "Jack Hughes": "8481559",
@@ -85,7 +85,13 @@ document.addEventListener('DOMContentLoaded', function() {
             "Shea Theodore": "8477447",
             "Nico Hischier": "8480002",
             "Jacob Markstrom": "8474593",
-            "Sergei Bobrovsky": "8475683"
+            "Sergei Bobrovsky": "8475683",
+            "Sidney Crosby": "8471675",
+            "Luke Hughes": "8480192",
+            "Adam Fantilli": "8484166",
+            "Connor McDavid": "8478402",
+            "Nick Suzuki": "8480018"
+
     };
 
     // Fantasy scoring system
