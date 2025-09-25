@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 // Initialize Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
-  databaseURL: 'https://<YOUR_PROJECT_ID>.firebaseio.com' // Replace with your project ID
+  databaseURL: 'https://wedding-snipe.firebaseio.com' // Replace with your project ID
 });
 
 const db = admin.firestore();
