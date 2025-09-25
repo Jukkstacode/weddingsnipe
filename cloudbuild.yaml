@@ -1,14 +1,17 @@
 steps:
-# Install dependencies
+# Install dependencies inside the project's subdirectory
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
-  dir: 'jukkstacode/weddingsnipe/
-# Run the script to fetch and save the NHL stats to Firestore
+  dir: 'jukkstacode/weddingsnipe/Jukkstacode-weddingsnipe-29f23f4ac7ec03754b6f947b02cb6f1b368d1fb5'
+
+# Run the fetch-stats script from inside the subdirectory
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'fetch-stats']
-  dir: 'jukkstacode/weddingsnipe/
-# Upload all files to your site
+  dir: 'jukkstacode/weddingsnipe/Jukkstacode-weddingsnipe-29f23f4ac7ec03754b6f947b02cb6f1b368d1fb5'
+
+# Sync the contents of the subdirectory to your site
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-m', 'rsync', '-r', '-c', '-d', '.', 'gs://wedding-snipe-countdown-site']
+  args: ['-m', 'rsync', '-r', '-c', '-d', './jukkstacode/weddingsnipe/Jukkstacode-weddingsnipe-29f23f4ac7ec03754b6f947b02cb6f1b368d1fb5', 'gs://wedding-snipe-countdown-site']
+
 options:
   logging: CLOUD_LOGGING_ONLY
