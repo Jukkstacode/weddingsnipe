@@ -1,0 +1,13 @@
+{
+  "name": "weddingsnipe",
+  "version": "1.0.0",
+  "description": "Fantasy hockey website",
+  "main": "script.js",
+  "scripts": {
+    "fetch-stats": "node fetch-stats.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}

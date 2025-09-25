@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+     // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDtbnBa_wok-tRS-A2xraRBMJE8oM5Hc6c",
+        authDomain: "wedding-snipe.firebaseapp.com",
+        projectId: "wedding-snipe",
+        storageBucket: "wedding-snipe.firebasestorage.app",
+        messagingSenderId: "347732622266",
+        appId: "1:347732622266:web:db85733e367e9c2ae37b83"
+    };
+    
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
     // Fantasy scoring system
     const FANTASY_SCORING = {
         goals: 3,
@@ -38,18 +50,16 @@ document.addEventListener('DOMContentLoaded', function() {
                (shutouts * FANTASY_SCORING.shutouts);
     }
 
-    async function fetchAllPlayerStats(playerIds) {
-        const functionUrl = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
-        const season = '20242025'; // Specify the season you want
+    async function fetchAllPlayerStats() {
         try {
-            // Add the season as a query parameter to the request
-            const response = await fetch(`${functionUrl}?playerIds=${playerIds.join(',')}&season=${season}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch player stats from cloud function');
-            }
-            return response.json();
+            const snapshot = await db.collection('player-stats').get();
+            const stats = {};
+            snapshot.forEach(doc => {
+                stats[doc.id] = doc.data();
+            });
+            return stats;
         } catch (error) {
-            console.error('Error calling the cloud function:', error);
+            console.error('Error loading player stats:', error);
             return {};
         }
     }
