@@ -17,3 +17,5 @@ steps:
     '.', # Assuming the files to sync are in the root
     'gs://wedding-snipe-countdown-site'
   ]
+options:
+  logging: CLOUD_LOGGING_ONLY
