@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Game Log</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Player Goal Performance (2024-2025)</h1>
+        <div class="controls">
+            <input type="text" id="playerIdInput" placeholder="Enter Player ID (e.g., 8478402)">
+            <button id="loadChartBtn">Load Chart</button>
+        </div>
+        <div class="chart-container">
+            <canvas id="goalsChart"></canvas>
+        </div>
+         <p id="playerName"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
