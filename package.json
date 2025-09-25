@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "firebase-admin": "^11.0.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "@google-cloud/firestore": "^7.7.0"
   }
 }
