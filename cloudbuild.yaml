@@ -1,25 +1,19 @@
 steps:
-# Step 1: Change directory, install dependencies, and run the stats script
+# Step 1: Install dependencies and run the stats script
 - name: 'gcr.io/cloud-builders/npm'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    cd jukkstacode/weddingsnipe/Jukkstacode-weddingsnipe-29f23f4ac7ec03754b6f947b02cb6f1b368d1fb5
-    npm install
-    npm run fetch-stats
+  args: ['install']
 
-# Step 2: Deploy the static files from the correct directory
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'fetch-stats']
+
+# Step 2: Deploy the static files
 - name: 'gcr.io/cloud-builders/gsutil'
   args: [
-    '-m', 
-    'rsync', 
-    '-r', 
-    '-c', 
-    '-d', 
-    'jukkstacode/weddingsnipe/Jukkstacode-weddingsnipe-29f23f4ac7ec03754b6f947b02cb6f1b368d1fb5/', 
+    '-m',
+    'rsync',
+    '-r',
+    '-c',
+    '-d',
+    '.', # Assuming the files to sync are in the root
     'gs://wedding-snipe-countdown-site'
   ]
-
-options:
-  logging: CLOUD_LOGGING_ONLY
