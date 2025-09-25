@@ -1,17 +1,14 @@
 steps:
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['-m', 'rsync', '-r', '-c', '-d', '.', 'gs://wedding-snipe-countdown-site']
+# Install dependencies
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
+  dir: 'jukkstacode/weddingsnipe/
 # Run the script to fetch and save the NHL stats to Firestore
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'fetch-stats']
+  dir: 'jukkstacode/weddingsnipe/
 # Upload all files to your site
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m', 'rsync', '-r', '-c', '-d', '.', 'gs://wedding-snipe-countdown-site']
-options:
-  logging: CLOUD_LOGGING_ONLY
-# Install dependencies
-
 options:
   logging: CLOUD_LOGGING_ONLY
