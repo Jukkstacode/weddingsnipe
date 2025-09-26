@@ -3,50 +3,48 @@ document.addEventListener('DOMContentLoaded', async () => {
     const ENDPOINT_URL = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
     let currentChart = null;
 
-    // --- SCORING LOGIC (from contracts.js) ---
+    // --- CORRECT SCORING LOGIC ---
     const FANTASY_SCORING = {
         goals: 3, assists: 2, plusMinus: 1, pim: 0.25, powerPlayPoints: 1, shortHandedPoints: 1, gameWinningGoals: 1.5,
         wins: 3, goalsAgainst: -1.5, saves: 0.2, shutouts: 6
     };
 
-    // --- CORRECTED PER-GAME CALCULATION FUNCTIONS ---
+    // --- CORRECTED FANTASY POINT CALCULATION FUNCTIONS ---
+
     function calculateFantasyPointsForSkaterGame(game) {
-        if (!game) return 0;
+        // Skips games where the player didn't play (TOI is "00:00")
+        if (!game || game.toi === "00:00") return 0;
         
-        // Calculate combined points from their components, which are in the game log
-        const calculatedPowerPlayPoints = (game.powerPlayPoints || 0);
-        const calculatedShorthandedPoints = (game.shorthandedGoals || 0) + (game.shorthandedAssists || 0);
-
-        const { goals = 0, assists = 0, plusMinus = 0, pim = 0, gameWinningGoal = 0 } = game;
-
-        return (goals * FANTASY_SCORING.goals) +
-               (assists * FANTASY_SCORING.assists) +
-               (plusMinus * FANTASY_SCORING.plusMinus) +
-               (pim * FANTASY_SCORING.pim) +
-               (calculatedPowerPlayPoints * FANTASY_SCORING.powerPlayPoints) +
-               (calculatedShorthandedPoints * FANTASY_SCORING.shortHandedPoints) +
-               (gameWinningGoal * FANTASY_SCORING.gameWinningGoals);
+        const ppp = game.powerPlayPoints || 0; 
+        const shp = game.shorthandedPoints || 0;
+        const { goals = 0, assists = 0, plusMinus = 0, pim = 0, gameWinningGoals = 0 } = game;
+        
+        return (goals * FANTASY_SCORING.goals) + 
+               (assists * FANTASY_SCORING.assists) + 
+               (plusMinus * FANTASY_SCORING.plusMinus) + 
+               (pim * FANTASY_SCORING.pim) + 
+               (ppp * FANTASY_SCORING.powerPlayPoints) + 
+               (shp * FANTASY_SCORING.shortHandedPoints) + 
+               (gameWinningGoals * FANTASY_SCORING.gameWinningGoals);
     }
 
     function calculateFantasyPointsForGoalieGame(game) {
-        if (!game) return 0;
-        const { decision, saves = 0, goalsAgainst = 0 } = game;
-        let points = 0;
+        // Skips games where the player didn't play (TOI is "00:00")
+        if (!game || game.toi === "00:00") return 0;
+        
+        const { decision, shotsAgainst = 0, goalsAgainst = 0, shutouts = 0 } = game;
+        const calculatedSaves = shotsAgainst - goalsAgainst;
 
+        let points = 0;
         if (decision === 'W') {
             points += FANTASY_SCORING.wins;
         }
-        
-        points += (saves * FANTASY_SCORING.saves);
+        points += (calculatedSaves * FANTASY_SCORING.saves);
         points += (goalsAgainst * FANTASY_SCORING.goalsAgainst);
+        points += (shutouts * FANTASY_SCORING.shutouts);
         
-        // A shutout is awarded for 0 goals against, regardless of win/loss decision.
-        if (goalsAgainst === 0) {
-            points += FANTASY_SCORING.shutouts;
-        }
         return points;
     }
-
 
     const chartColors = [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',

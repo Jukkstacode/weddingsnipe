@@ -10,20 +10,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function calculateFantasyPointsForSkaterGame(game) {
         if (!game || game.timeOnIce === "00:00") return 0;
-        const ppp = (game.powerPlayGoals || 0) + (game.powerPlayPoints || 0);
-        const shp = (game.shorthandedGoals || 0) + (game.shorthandedAssists || 0);
-        const { goals = 0, assists = 0, plusMinus = 0, pim = 0, gameWinningGoal = 0 } = game;
-        return (goals * FANTASY_SCORING.goals) + (assists * FANTASY_SCORING.assists) + (plusMinus * FANTASY_SCORING.plusMinus) + (pim * FANTASY_SCORING.pim) + (ppp * FANTASY_SCORING.powerPlayPoints) + (shp * FANTASY_SCORING.shortHandedPoints) + (gameWinningGoal * FANTASY_SCORING.gameWinningGoals);
+        
+        const ppp = game.powerPlayPoints || 0; 
+        const shp = game.shorthandedPoints || 0;
+        const { goals = 0, assists = 0, plusMinus = 0, pim = 0, gameWinningGoals = 0 } = game;
+        
+        return (goals * FANTASY_SCORING.goals) + 
+               (assists * FANTASY_SCORING.assists) + 
+               (plusMinus * FANTASY_SCORING.plusMinus) + 
+               (pim * FANTASY_SCORING.pim) + 
+               (ppp * FANTASY_SCORING.powerPlayPoints) + 
+               (shp * FANTASY_SCORING.shortHandedPoints) + 
+               (gameWinningGoals * FANTASY_SCORING.gameWinningGoals);
     }
 
     function calculateFantasyPointsForGoalieGame(game) {
         if (!game || game.timeOnIce === "00:00") return 0;
-        const { decision, saves = 0, goalsAgainst = 0 } = game;
+        
+        const { decision, shotsAgainst = 0, goalsAgainst = 0, shutouts = 0 } = game;
+        const calculatedSaves = shotsAgainst - goalsAgainst;
+
         let points = 0;
-        if (decision === 'W') points += FANTASY_SCORING.wins;
-        points += (saves * FANTASY_SCORING.saves);
+        if (decision === 'W') {
+            points += FANTASY_SCORING.wins;
+        }
+        points += (calculatedSaves * FANTASY_SCORING.saves);
         points += (goalsAgainst * FANTASY_SCORING.goalsAgainst);
-        if (goalsAgainst === 0 && game.decision) points += FANTASY_SCORING.shutouts;
+        points += (shutouts * FANTASY_SCORING.shutouts);
+        
         return points;
     }
 
@@ -40,7 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tableBody = document.getElementById('log-tbody');
 
     try {
-        const contractsResponse = await fetch('/contracts.json');
+        // CORRECTED: Changed path to be relative
+        const contractsResponse = await fetch('../../contracts.json');
         if (!contractsResponse.ok) throw new Error(`Could not load contracts.json. Status: ${contractsResponse.status}`);
         const contracts = await contractsResponse.json();
 
@@ -64,7 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!playerId) {
             tableBody.innerHTML = '';
-            // Clear totals when no player is selected
             return;
         }
 
@@ -75,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const gameLogMap = new Map(gameLog.map(game => [game.gameDate, game]));
         const allGameDates = [...new Set(gameLog.map(g => g.gameDate))].sort((a,b) => new Date(a) - new Date(b));
         
-        const totals = { g: 0, a: 0, pim: 0, pm: 0, ppg: 0, ppa: 0, shp: 0, saves: 0, ga: 0, fp: 0 };
+        const totals = { g: 0, a: 0, pim: 0, pm: 0, gwg: 0, ppp: 0, shp: 0, saves: 0, ga: 0, fp: 0 };
 
         for (const date of allGameDates) {
             const game = gameLogMap.get(date);
@@ -85,34 +99,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (game && game.timeOnIce !== "00:00") {
                 if (position.includes('G')) {
                     fantasyPoints = calculateFantasyPointsForGoalieGame(game);
-                    totals.saves += game.saves || 0;
+                    const calculatedSaves = (game.shotsAgainst || 0) - (game.goalsAgainst || 0);
+                    totals.saves += calculatedSaves;
                     totals.ga += game.goalsAgainst || 0;
                     row.innerHTML = `
                         <td>${game.gameDate}</td><td>${game.opponentAbbrev}</td><td>${game.decision || '--'}</td>
-                        <td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td>
-                        <td>${game.saves || 0}</td><td>${game.goalsAgainst || 0}</td><td>${game.timeOnIce}</td>
+                        <td>--</td><td>--</td><td>--</td><td>--</td>
+                        <td>--</td><td>--</td><td>--</td>
+                        <td>${calculatedSaves}</td>
+                        <td>${game.goalsAgainst || 0}</td><td>${game.timeOnIce}</td>
                         <td>${fantasyPoints.toFixed(2)}</td>
                     `;
                 } else {
                     fantasyPoints = calculateFantasyPointsForSkaterGame(game);
-                    const ppg = game.powerPlayGoals || 0;
-                    const ppa = game.powerPlayAssists || 0;
-                    const shp = (game.shorthandedGoals || 0) + (game.shorthandedAssists || 0);
+                    const ppp = game.powerPlayPoints || 0;
+                    const shp = game.shorthandedPoints || 0;
+                    const gwg = game.gameWinningGoals || 0;
                     
                     totals.g += game.goals || 0;
                     totals.a += game.assists || 0;
                     totals.pim += game.pim || 0;
                     totals.pm += game.plusMinus || 0;
-                    totals.ppg += ppg;
-                    totals.ppa += ppa;
+                    totals.gwg += gwg;
+                    totals.ppp += ppp;
                     totals.shp += shp;
 
                     row.innerHTML = `
                         <td>${game.gameDate}</td><td>${game.opponentAbbrev}</td><td>--</td>
                         <td>${game.goals || 0}</td><td>${game.assists || 0}</td>
                         <td>${game.pim || 0}</td><td>${game.plusMinus || 0}</td>
-                        <td>${ppg}</td>
-                        <td>${ppa}</td>
+                        <td>${gwg}</td>
+                        <td>${ppp}</td>
                         <td>${shp}</td>
                         <td>--</td><td>--</td><td>${game.timeOnIce}</td>
                         <td>${fantasyPoints.toFixed(2)}</td>
@@ -131,8 +148,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('total-a').textContent = totals.a;
         document.getElementById('total-pim').textContent = totals.pim;
         document.getElementById('total-pm').textContent = totals.pm;
-        document.getElementById('total-ppg').textContent = totals.ppg;
-        document.getElementById('total-ppa').textContent = totals.ppa;
+        document.getElementById('total-gwg').textContent = totals.gwg;
+        document.getElementById('total-ppp').textContent = totals.ppp;
         document.getElementById('total-shp').textContent = totals.shp;
         document.getElementById('total-saves').textContent = totals.saves;
         document.getElementById('total-ga').textContent = totals.ga;
