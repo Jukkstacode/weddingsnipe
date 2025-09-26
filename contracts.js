@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     Promise.all([
-        fetch('contracts.json').then(response => response.json()),
-        fetch('gm.json').then(response => response.json())
+        fetch('/contracts.json').then(response => response.json()),
+        fetch('/gm.json').then(response => response.json())
     ]).then(async ([contracts, gms]) => {
         const container = document.querySelector('.gm-list-container');
         if (!container) {

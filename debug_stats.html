@@ -234,7 +234,7 @@
 
             async function runDiagnostics() {
                 try {
-                    const contractsResponse = await fetch('contracts.json');
+                    const contractsResponse = await fetch('/contracts.json');
                     const contracts = await contractsResponse.json();
                     const playerPositions = contracts.reduce((acc, p) => { acc[p.Player] = p.Position; return acc; }, {});
 

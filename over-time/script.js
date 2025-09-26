@@ -1,101 +1,143 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const SEASON = '20242025';
     const ENDPOINT_URL = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
-    let currentChart = null; 
+    let currentChart = null;
 
-    const loadChartBtn = document.getElementById('loadChartBtn');
-    const playerIdInput = document.getElementById('playerIdInput');
-    const playerNameDisplay = document.getElementById('playerName');
+    // --- SCORING LOGIC (from contracts.js) ---
+    const FANTASY_SCORING = {
+        goals: 3, assists: 2, plusMinus: 1, pim: 0.25, powerPlayPoints: 1, shortHandedPoints: 1, gameWinningGoals: 1.5,
+        wins: 3, goalsAgainst: -1.5, saves: 0.2, shutouts: 6
+    };
 
-    loadChartBtn.addEventListener('click', () => {
-        const playerId = playerIdInput.value.trim();
-        if (playerId) {
-            initialize(playerId);
-        } else {
-            alert('Please enter a valid Player ID.');
+    // --- CORRECTED PER-GAME CALCULATION FUNCTIONS ---
+    function calculateFantasyPointsForSkaterGame(game) {
+        if (!game) return 0;
+        
+        // Calculate combined points from their components, which are in the game log
+        const calculatedPowerPlayPoints = (game.powerPlayPoints || 0);
+        const calculatedShorthandedPoints = (game.shorthandedGoals || 0) + (game.shorthandedAssists || 0);
+
+        const { goals = 0, assists = 0, plusMinus = 0, pim = 0, gameWinningGoal = 0 } = game;
+
+        return (goals * FANTASY_SCORING.goals) +
+               (assists * FANTASY_SCORING.assists) +
+               (plusMinus * FANTASY_SCORING.plusMinus) +
+               (pim * FANTASY_SCORING.pim) +
+               (calculatedPowerPlayPoints * FANTASY_SCORING.powerPlayPoints) +
+               (calculatedShorthandedPoints * FANTASY_SCORING.shortHandedPoints) +
+               (gameWinningGoal * FANTASY_SCORING.gameWinningGoals);
+    }
+
+    function calculateFantasyPointsForGoalieGame(game) {
+        if (!game) return 0;
+        const { decision, saves = 0, goalsAgainst = 0 } = game;
+        let points = 0;
+
+        if (decision === 'W') {
+            points += FANTASY_SCORING.wins;
         }
-    });
-    
+        
+        points += (saves * FANTASY_SCORING.saves);
+        points += (goalsAgainst * FANTASY_SCORING.goalsAgainst);
+        
+        // A shutout is awarded for 0 goals against, regardless of win/loss decision.
+        if (goalsAgainst === 0) {
+            points += FANTASY_SCORING.shutouts;
+        }
+        return points;
+    }
+
+
+    const chartColors = [
+        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+        '#E7E9ED', '#8D5B4C', '#D64541', '#8E44AD', '#27AE60', '#F39C12'
+    ];
+
     async function fetchPlayerGameLog(playerId, season) {
         const apiUrl = `${ENDPOINT_URL}?requestType=gameLog&playerIds=${playerId}&season=${season}`;
-        
         try {
             const response = await fetch(apiUrl);
             if (!response.ok) {
-                throw new Error(`Your endpoint responded with status: ${response.status}`);
+                console.error(`Endpoint responded with status: ${response.status} for player ${playerId}`);
+                return [];
             }
             const data = await response.json();
-            
-            return data.gameLog; 
+            return data.gameLog || [];
         } catch (error) {
-            console.error("Failed to fetch player game log:", error);
+            console.error(`Failed to fetch player game log for ${playerId}:`, error);
             return [];
         }
     }
-    
-    async function fetchPlayerLanding(playerId) {
-         const apiUrl = `${ENDPOINT_URL}?requestType=playerName&playerIds=${playerId}`;
-         try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                return 'Player'; // Return default name on error
-            }
-            const data = await response.json();
-            return data.fullName; // Directly return the full name from our endpoint's response
-         } catch (e) {
-            console.error("Failed to fetch player name:", e);
-            return 'Player';
-         }
-    }
-    
-    // *** UPDATED: This function now calculates a running total ***
-    function processDataForChart(gameLog) {
-        const labels = [];
-        const cumulativeGoalsData = [];
-        let cumulativeGoals = 0; // Start a running total at 0
 
-        if (!gameLog) return { labels, cumulativeGoalsData };
+    function processGameLogForChart(gameLog, position) {
+        const labels = [];
+        const cumulativeFantasyPointsData = [];
+        let cumulativeFantasyPoints = 0;
         
-        // Loop through games in chronological order
-        gameLog.slice().reverse().forEach(game => {
+        if (!gameLog || gameLog.length === 0) return { labels, data: [] };
+        
+        const sortedGameLog = gameLog.slice().sort((a, b) => new Date(a.gameDate) - new Date(b.gameDate));
+
+        sortedGameLog.forEach(game => {
             labels.push(game.gameDate);
-            cumulativeGoals += game.goals; // Add this game's goals to the total
-            cumulativeGoalsData.push(cumulativeGoals); // Push the new total to our data array
+            let gamePoints = 0;
+            if (position.includes('G')) {
+                gamePoints = calculateFantasyPointsForGoalieGame(game);
+            } else {
+                gamePoints = calculateFantasyPointsForSkaterGame(game);
+            }
+            cumulativeFantasyPoints += gamePoints;
+            // Round to 2 decimal places to avoid floating point issues
+            cumulativeFantasyPointsData.push(parseFloat(cumulativeFantasyPoints.toFixed(2)));
         });
 
-        return { labels, cumulativeGoalsData };
+        return { labels, data: cumulativeFantasyPointsData };
     }
-
-    // *** UPDATED: This function now creates a LINE chart ***
-    function createGoalsChart(chartData) {
+    
+    function createOrUpdateChart(datasets) {
         const ctx = document.getElementById('goalsChart').getContext('2d');
-        
         if (currentChart) {
             currentChart.destroy();
         }
-        
+
+        const allLabels = datasets.map(d => d.labels).flat();
+        const masterXAxisLabels = [...new Set(allLabels)].sort((a, b) => new Date(a) - new Date(b));
+
+        const processedDatasets = datasets.map((playerData, index) => {
+            const dataMap = new Map(playerData.labels.map((label, i) => [label, playerData.data[i]]));
+            let lastValue = 0;
+            const fullData = masterXAxisLabels.map(date => {
+                if (dataMap.has(date)) {
+                    lastValue = dataMap.get(date);
+                }
+                return lastValue;
+            });
+
+            return {
+                label: playerData.playerName,
+                data: fullData,
+                borderColor: chartColors[index % chartColors.length],
+                backgroundColor: chartColors[index % chartColors.length] + '33',
+                fill: false,
+                tension: 0.1,
+                pointRadius: 2,
+            };
+        });
+
         currentChart = new Chart(ctx, {
-            type: 'line', // Changed from 'bar' to 'line'
+            type: 'line',
             data: {
-                labels: chartData.labels,
-                datasets: [{
-                    label: 'Cumulative Goals', // Updated label
-                    data: chartData.cumulativeGoalsData, // Use the new cumulative data
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2,
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                    fill: true, // Fills the area under the line
-                    tension: 0.1 // Makes the line slightly curved
-                }]
+                labels: masterXAxisLabels,
+                datasets: processedDatasets
             },
-             options: {
+            options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
-                        ticks: { color: '#e8e8e8' }, // Removed stepSize to be automatic
+                        title: { display: true, text: 'Cumulative Fantasy Points', color: '#e8e8e8' },
+                        ticks: { color: '#e8e8e8' },
                         grid: { color: 'rgba(255, 255, 255, 0.1)' }
                     },
                     x: {
@@ -110,32 +152,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function initialize(playerId) {
-        const [gameLog, playerName] = await Promise.all([
-            fetchPlayerGameLog(playerId, SEASON),
-            fetchPlayerLanding(playerId)
-        ]);
+    async function initialize() {
+        const response = await fetch('../contracts.json');
+        const contracts = await response.json();
+        const selectionListDiv = document.getElementById('player-selection-list');
+        
+        contracts
+            .filter(c => c.nhlId) 
+            .sort((a,b) => a.Player.localeCompare(b.Player))
+            .forEach(player => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'player-item';
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = player.nhlId;
+                checkbox.dataset.name = player.Player;
+                checkbox.dataset.position = player.Position;
+                checkbox.id = `player-${player.nhlId}`;
+                label.htmlFor = checkbox.id;
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(`${player.Player} (${player.Position})`));
+                itemDiv.appendChild(label);
+                selectionListDiv.appendChild(itemDiv);
+            });
 
-        playerNameDisplay.textContent = playerName;
-        const container = document.querySelector('.chart-container');
-        const canvas = document.getElementById('goalsChart');
+        document.getElementById('updateChartBtn').addEventListener('click', async () => {
+            const selectedPlayers = [];
+            document.querySelectorAll('#player-selection-list input:checked').forEach(checkbox => {
+                selectedPlayers.push({
+                    id: checkbox.value,
+                    name: checkbox.dataset.name,
+                    position: checkbox.dataset.position
+                });
+            });
 
-        if (gameLog && gameLog.length > 0) {
-             canvas.style.display = 'block';
-             if (container.querySelector('p')) {
-                container.querySelector('p').remove();
-             }
-            const chartData = processDataForChart(gameLog);
-            createGoalsChart(chartData);
-        } else {
-            if (currentChart) currentChart.destroy();
-            canvas.style.display = 'none';
-            if (container.querySelector('p')) {
-                container.querySelector('p').remove();
-             }
-            const message = document.createElement('p');
-            message.textContent = `No game data available for player ID ${playerId} for the 2024-2025 season yet.`;
-            container.appendChild(message);
-        }
+            if (selectedPlayers.length === 0) {
+                alert('Please select at least one player.');
+                return;
+            }
+
+            const datasets = [];
+            for (const player of selectedPlayers) {
+                const gameLog = await fetchPlayerGameLog(player.id, SEASON);
+                const processedData = processGameLogForChart(gameLog, player.position);
+                datasets.push({
+                    playerName: player.name,
+                    labels: processedData.labels,
+                    data: processedData.data
+                });
+            }
+            createOrUpdateChart(datasets);
+        });
     }
+
+    initialize();
 });
