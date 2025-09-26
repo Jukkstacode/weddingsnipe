@@ -25,10 +25,12 @@ h1 {
     text-align: center;
     margin-top: 0;
     margin-bottom: 25px;
+    font-size: 1.5rem; /* Adjusted for better mobile scaling */
 }
 
 .main-content {
     display: flex;
+    flex-direction: row; /* Default direction for desktop */
     gap: 25px;
     height: 70vh;
 }
@@ -51,6 +53,7 @@ h1 {
 .chart-container {
     flex-grow: 1;
     position: relative;
+    min-height: 300px; /* Ensures the chart has a minimum height on mobile */
 }
 
 .player-item {
@@ -133,4 +136,33 @@ h1 {
 
 .player-name {
     font-weight: 500;
+}
+
+/* --- MOBILE RESPONSIVE STYLES --- */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px; /* Reduce padding on smaller screens */
+        align-items: flex-start; /* Align content to the top */
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.2rem; /* Make the title smaller on mobile */
+    }
+
+    .main-content {
+        flex-direction: column; /* Stack the sidebar and chart vertically */
+        height: auto; /* Let the content determine the height */
+    }
+
+    .player-list-sidebar {
+        flex: 1 1 auto; /* Allow the sidebar to grow and shrink as needed */
+        max-height: 40vh; /* Give the sidebar a max height to prevent it from taking up the whole screen */
+    }
+    .player-item label{
+        height: 40px;
+    }
 }
