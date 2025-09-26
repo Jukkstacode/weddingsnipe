@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // This function now calls YOUR endpoint
-
     async function fetchPlayerGameLog(playerId, season) {
         const apiUrl = `${ENDPOINT_URL}?requestType=gameLog&playerIds=${playerId}&season=${season}`;
         
@@ -28,31 +26,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const data = await response.json();
             
-            // --- THIS IS THE FIX ---
-            // The API returns an object with a "gameLog" property, which is the array we need.
-            // We now correctly return that array.
             return data.gameLog; 
         } catch (error) {
             console.error("Failed to fetch player game log:", error);
-            return []; // Return an empty array on error
+            return [];
         }
     }
     
-    // No changes needed for the functions below this line
-    // ... (fetchPlayerLanding, processDataForChart, createGoalsChart, initialize)
-
+    // *** UPDATED: This function now calls YOUR endpoint and is much simpler ***
     async function fetchPlayerLanding(playerId) {
-         // This can still call the NHL API directly as it's just for display name
-         // and isn't the core data. Or we could build this into the endpoint too.
-         // For now, let's proxy it through a free CORS proxy to be safe.
-         const apiUrl = `https://api-web.nhle.com/v1/player/${playerId}/landing`;
-         const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+         const apiUrl = `${ENDPOINT_URL}?requestType=playerName&playerIds=${playerId}`;
          try {
-            const response = await fetch(proxyUrl);
-            if (!response.ok) return 'Player';
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                return 'Player'; // Return default name on error
+            }
             const data = await response.json();
-            return `${data.firstName.default} ${data.lastName.default}`;
+            return data.fullName; // Directly return the full name from our endpoint's response
          } catch (e) {
+            console.error("Failed to fetch player name:", e);
             return 'Player';
          }
     }
