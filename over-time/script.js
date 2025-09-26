@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // --- CORRECTED FANTASY POINT CALCULATION FUNCTIONS ---
-
     function calculateFantasyPointsForSkaterGame(game) {
-        // Skips games where the player didn't play (TOI is "00:00")
         if (!game || game.toi === "00:00") return 0;
         
         const ppp = game.powerPlayPoints || 0; 
@@ -29,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function calculateFantasyPointsForGoalieGame(game) {
-        // Skips games where the player didn't play (TOI is "00:00")
         if (!game || game.toi === "00:00") return 0;
         
         const { decision, shotsAgainst = 0, goalsAgainst = 0, shutouts = 0 } = game;
@@ -85,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 gamePoints = calculateFantasyPointsForSkaterGame(game);
             }
             cumulativeFantasyPoints += gamePoints;
-            // Round to 2 decimal places to avoid floating point issues
             cumulativeFantasyPointsData.push(parseFloat(cumulativeFantasyPoints.toFixed(2)));
         });
 
@@ -151,8 +147,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     async function initialize() {
-        const response = await fetch('../contracts.json');
-        const contracts = await response.json();
+        // Fetch both contracts and GM data at the same time
+        const [contracts, gms] = await Promise.all([
+            fetch('../contracts.json').then(res => res.json()),
+            fetch('../gm.json').then(res => res.json())
+        ]);
+
+        // Create a map for easy lookup of GM images
+        const gmMap = new Map(gms.map(gm => [gm.name, gm.image]));
+
         const selectionListDiv = document.getElementById('player-selection-list');
         
         contracts
@@ -161,16 +164,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             .forEach(player => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'player-item';
+
                 const label = document.createElement('label');
+                label.htmlFor = `player-${player.nhlId}`;
+
+                // 1. Create the new GM Info component
+                const gmInfoDiv = document.createElement('div');
+                gmInfoDiv.className = 'gm-info';
+
+                const gmPhoto = document.createElement('img');
+                gmPhoto.className = 'gm-photo';
+                // Use placeholder image if GM isn't found in gm.json
+                gmPhoto.src = `../${gmMap.get(player.GM) || 'assets/placeholder.jpg'}`;
+                
+                const contractSpan = document.createElement('span');
+                contractSpan.className = 'contract-years';
+                const yearText = player['Contract Length'] === 1 ? 'year' : 'years';
+                contractSpan.textContent = `${player['Contract Length']} ${yearText}`;
+
+                gmInfoDiv.appendChild(gmPhoto);
+                gmInfoDiv.appendChild(contractSpan);
+
+                // 2. Create the checkbox
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.value = player.nhlId;
                 checkbox.dataset.name = player.Player;
                 checkbox.dataset.position = player.Position;
                 checkbox.id = `player-${player.nhlId}`;
-                label.htmlFor = checkbox.id;
+
+                // 3. Create the player name span
+                const playerNameSpan = document.createElement('span');
+                playerNameSpan.className = 'player-name';
+                playerNameSpan.textContent = `${player.Player} (${player.Position})`;
+
+                // 4. Append all parts to the label in the desired order
+                label.appendChild(gmInfoDiv);
                 label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(`${player.Player} (${player.Position})`));
+                label.appendChild(playerNameSpan);
+                
                 itemDiv.appendChild(label);
                 selectionListDiv.appendChild(itemDiv);
             });
