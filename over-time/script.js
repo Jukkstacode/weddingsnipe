@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // *** UPDATED: This function now calls YOUR endpoint and is much simpler ***
     async function fetchPlayerLanding(playerId) {
          const apiUrl = `${ENDPOINT_URL}?requestType=playerName&playerIds=${playerId}`;
          try {
@@ -49,20 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     }
     
+    // *** UPDATED: This function now calculates a running total ***
     function processDataForChart(gameLog) {
         const labels = [];
-        const goals = [];
+        const cumulativeGoalsData = [];
+        let cumulativeGoals = 0; // Start a running total at 0
 
-        if (!gameLog) return { labels, goals };
+        if (!gameLog) return { labels, cumulativeGoalsData };
         
+        // Loop through games in chronological order
         gameLog.slice().reverse().forEach(game => {
             labels.push(game.gameDate);
-            goals.push(game.goals);
+            cumulativeGoals += game.goals; // Add this game's goals to the total
+            cumulativeGoalsData.push(cumulativeGoals); // Push the new total to our data array
         });
 
-        return { labels, goals };
+        return { labels, cumulativeGoalsData };
     }
 
+    // *** UPDATED: This function now creates a LINE chart ***
     function createGoalsChart(chartData) {
         const ctx = document.getElementById('goalsChart').getContext('2d');
         
@@ -71,15 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         currentChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line', // Changed from 'bar' to 'line'
             data: {
                 labels: chartData.labels,
                 datasets: [{
-                    label: 'Goals',
-                    data: chartData.goals,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    label: 'Cumulative Goals', // Updated label
+                    data: chartData.cumulativeGoalsData, // Use the new cumulative data
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    fill: true, // Fills the area under the line
+                    tension: 0.1 // Makes the line slightly curved
                 }]
             },
              options: {
@@ -88,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scales: {
                     y: {
                         beginAtZero: true,
-                        ticks: { color: '#e8e8e8', stepSize: 1 },
+                        ticks: { color: '#e8e8e8' }, // Removed stepSize to be automatic
                         grid: { color: 'rgba(255, 255, 255, 0.1)' }
                     },
                     x: {
