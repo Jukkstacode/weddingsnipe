@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
+    <title>Sidebet Suggestions</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="sidebets.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="sidebets-container">
+        <h1>🎲 Sidebet Suggestions</h1>
+        <div class="sidebets-filters">
+            <button class="filter-btn active" data-filter="all">All Sidebets</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="approved">Approved</button>
+        </div>
+        <div id="sidebets-list" class="sidebets-list">
+            <div class="loading">Loading sidebets...</div>
+        </div>
+    </div>
+    <script src="nav.js"></script>
+    <script src="sidebets.js"></script>
+</body>
+</html>
