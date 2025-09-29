@@ -4,8 +4,7 @@
     "Matchups": [
       {
         "GM1": "Bimm",
-        "GM2": "Andy",
-        "isSpecial": true
+        "GM2": "Andy"
       },
       {
         "GM1": "Dave",
@@ -21,7 +20,8 @@
       },
       {
         "GM1": "Seedo",
-        "GM2": "Hordo"
+        "GM2": "Hordo",
+        "isSpecial": true
       },
       {
         "GM1": "Dan",
@@ -50,7 +50,8 @@
       },
       {
         "GM1": "Colin",
-        "GM2": "Mike"
+        "GM2": "Mike",
+        "isSpecial": true
       },
       {
         "GM1": "Ryan",
@@ -95,7 +96,8 @@
       },
       {
         "GM1": "Dan",
-        "GM2": "Jordan"
+        "GM2": "Jordan",
+        "isSpecial": true
       }
     ]
   }
