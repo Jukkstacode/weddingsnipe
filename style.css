@@ -4,15 +4,12 @@ html, body {
     margin: 0;
     padding: 0;
     flex-direction: column;
-    overflow: hidden; /* Prevents the body from scrolling */
-
 }
 body {
     color: #ecf0f1;
     font-family: 'Arial', sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100svh; /* Use svh instead of vh for better mobile support */
     margin: 0;
     text-align: center;
@@ -37,7 +34,7 @@ body::before {
 
 .container {
     padding: 1rem 2rem;
-    margin: 1rem;
+    margin: 0 auto;
     border-radius: 15px;
     border: 2px solid white;
     }

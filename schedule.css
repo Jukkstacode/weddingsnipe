@@ -2,6 +2,11 @@
 body {
     background-color: #1a1a1a; /* Dark background */
     color: #e8e8e8;
+    /* *** SCROLLABILITY FIX OVERRIDE *** */
+    /* This allows the main content to scroll now that overflow:hidden is removed from style.css */
+    min-height: 100vh;
+    overflow-y: auto;
+    padding-top: 100px; 
 }
 /* Re-using a container class for centralizing content */
 .gm-list-container {
@@ -9,8 +14,9 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 20px;
-    padding-top: 100px; /* Adjust for fixed nav bar */
+    /* Padding-top is now handled by the body element */
     box-sizing: border-box;
+    padding-bottom: 50px; /* Added padding to ensure content doesn't get cut off at the bottom */
 }
 
 .gm-list-container h1 {
@@ -43,34 +49,28 @@ body {
     justify-content: center;
 }
 
+/* Base style for matchup item - designed to flex on desktop */
 .matchup-item {
     background-color: #202020;
-    padding: 15px 25px;
+    padding: 15px 25px; 
     border-radius: 6px;
     font-size: 1.2rem;
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 10px;
-    min-width: 250px;
+    flex: 1 1 350px; /* Allow items to be wide, but wrap if space runs out */
     color: #e8e8e8;
+    justify-content: space-between; 
+    box-sizing: border-box;
+    position: relative; /* Needed for the 'on-fire' effect ::before element */
+    max-width: 360px;
 }
 
 .vs-label {
-    color: #FFCE56; /* Yellow/Gold for "vs" */
+    color: #999;
     font-size: 0.9em;
     font-weight: normal;
-}
-
-.gm-name {
-    color: #36A2EB; /* Blue for GM names */
-}
-
-/* Mobile adjustments */
-@media screen and (max-width: 768px) {
-    .gm-list-container {
-        padding-top: 75px; 
-    }
 }
 
 .gm-matchup-container {
@@ -84,23 +84,84 @@ body {
     height: 30px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #36A2EB; /* Blue border for a clean look */
+    border: 2px solid #36A2EB; 
 }
 
-/* Adjust the matchup item to ensure elements are centered */
-.matchup-item {
-    justify-content: space-between; /* Distribute space more evenly */
-    min-width: 350px; /* Increase min-width slightly to fit photos better */
-    padding: 10px 25px; /* Adjust padding if needed */
-}
-
-/* Re-center the name within its container to account for the photo */
 .gm-matchup-container .gm-name {
     font-weight: bold;
-    color: #e8e8e8; /* Change GM name color to white for contrast, keep blue as border color */
+    color: #e8e8e8; 
+    white-space: nowrap; /* Prevent GM names from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Adjust color for 'vs' to be a neutral grey */
-.vs-label {
-    color: #999;
+
+/* --- MOBILE ADJUSTMENTS (Max 768px) --- */
+@media screen and (max-width: 768px) {
+    
+    .week-container {
+        margin: 0 auto 40px auto;
+        max-width: 60%; /* Ensure week container doesn't touch screen edges */
+    }
+    .gm-list-container {
+        /* Reset to base padding and let body manage top space */
+        padding-top: 20px; 
+    }
+    
+    .matchups-list {
+        flex-direction: column; /* Force stack on mobile */
+        gap: 15px;
+        justify-content: center;
+    }
+    
+    .matchup-item {
+        flex: 1 1 100%; /* Take full width of the container on mobile */
+        min-width: 280px; /* Remove minimum width constraint */
+        padding: 10px; /* Slightly reduced padding */
+        margin: 0 auto;
+    }
+    
+    /* Increase body padding-top to safely clear the fixed navigation and news scroll on mobile */
+    body {
+        padding-top: 40px !important; 
+    }
+}
+
+/* Fire/Glow Effect for specific match-up */
+.matchup-item.on-fire {
+    border: 3px solid transparent; 
+    position: relative;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6), 0 0 30px rgba(255, 255, 0, 0.4);
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Custom border to make it look 'on fire' */
+.matchup-item.on-fire::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid;
+    border-image: linear-gradient(to right, #ff4500, #ff8c00, #ffd700) 1;
+    border-radius: 9px; 
+    z-index: 0;
+    pointer-events: none;
+    animation: border-flicker 0.15s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(255, 69, 0, 1), 0 0 25px rgba(255, 140, 0, 0.8);
+    }
+}
+
+@keyframes border-flicker {
+    0% { opacity: 0.8; }
+    50% { opacity: 1.0; }
+    100% { opacity: 0.8; }
 }

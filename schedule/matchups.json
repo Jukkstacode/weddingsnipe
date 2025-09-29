@@ -4,7 +4,8 @@
     "Matchups": [
       {
         "GM1": "Bimm",
-        "GM2": "Andy"
+        "GM2": "Andy",
+        "isSpecial": true
       },
       {
         "GM1": "Dave",

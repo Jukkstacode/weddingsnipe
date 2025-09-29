@@ -22,9 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const matchupsList = document.createElement('div');
             matchupsList.className = 'matchups-list';
 
+            // --- START MODIFIED BLOCK ---
             week.Matchups.forEach(matchup => {
                 const gm1Name = matchup.GM1;
                 const gm2Name = matchup.GM2;
+                const isSpecial = matchup.isSpecial; // <--- NEW: Read the flag
                 
                 // Get image paths, use placeholder if not found
                 const gm1Image = gmMap.get(gm1Name) || 'assets/placeholder.jpg';
@@ -32,6 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const matchupDiv = document.createElement('div');
                 matchupDiv.className = 'matchup-item';
+                
+                // <--- NEW: Conditionally add the class
+                if (isSpecial) {
+                    matchupDiv.classList.add('on-fire'); 
+                }
                 
                 matchupDiv.innerHTML = `
                     <div class="gm-matchup-container gm1">
@@ -46,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 matchupsList.appendChild(matchupDiv);
             });
+            // --- END MODIFIED BLOCK ---
 
             weekContainer.appendChild(matchupsList);
             container.appendChild(weekContainer);
