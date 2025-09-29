@@ -1,26 +1,26 @@
-/* New file: schedule.css */
+/* ============================================
+   SCHEDULE PAGE STYLES
+   ============================================ */
+
 body {
-    background-color: #1a1a1a; /* Dark background */
+    background-color: #1a1a1a;
     color: #e8e8e8;
-    /* *** SCROLLABILITY FIX OVERRIDE *** */
-    /* This allows the main content to scroll now that overflow:hidden is removed from style.css */
     min-height: 100vh;
     overflow-y: auto;
-    padding-top: 100px; 
 }
+
 /* Re-using a container class for centralizing content */
 .gm-list-container {
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
-    /* Padding-top is now handled by the body element */
+    padding: 0 20px 50px 20px;
     box-sizing: border-box;
-    padding-bottom: 50px; /* Added padding to ensure content doesn't get cut off at the bottom */
 }
 
 .gm-list-container h1 {
     text-align: center;
+    margin-top: 0;
     margin-bottom: 30px;
     color: white;
 }
@@ -59,11 +59,11 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex: 1 1 350px; /* Allow items to be wide, but wrap if space runs out */
+    flex: 1 1 350px;
     color: #e8e8e8;
     justify-content: space-between; 
     box-sizing: border-box;
-    position: relative; /* Needed for the 'on-fire' effect ::before element */
+    position: relative;
     max-width: 360px;
 }
 
@@ -76,7 +76,7 @@ body {
 .gm-matchup-container {
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between photo and name */
+    gap: 8px;
 }
 
 .gm-photo-matchup {
@@ -90,52 +90,64 @@ body {
 .gm-matchup-container .gm-name {
     font-weight: bold;
     color: #e8e8e8; 
-    white-space: nowrap; /* Prevent GM names from wrapping */
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 
-/* --- MOBILE ADJUSTMENTS (Max 768px) --- */
+/* ============================================
+   MOBILE ADJUSTMENTS (Max 768px)
+   ============================================ */
+
 @media screen and (max-width: 768px) {
+    body {
+        padding-top: 50px !important;
+    }
     
     .week-container {
         margin: 0 auto 40px auto;
-        max-width: 60%; /* Ensure week container doesn't touch screen edges */
+        max-width: 90%;
+        padding: 15px;
     }
+    
     .gm-list-container {
-        /* Reset to base padding and let body manage top space */
-        padding-top: 20px; 
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     
     .matchups-list {
-        flex-direction: column; /* Force stack on mobile */
+        flex-direction: column;
         gap: 15px;
         justify-content: center;
     }
     
     .matchup-item {
-        flex: 1 1 100%; /* Take full width of the container on mobile */
-        min-width: 280px; /* Remove minimum width constraint */
-        padding: 10px; /* Slightly reduced padding */
+        flex: 1 1 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding: 10px;
         margin: 0 auto;
-    }
-    
-    /* Increase body padding-top to safely clear the fixed navigation and news scroll on mobile */
-    body {
-        padding-top: 40px !important; 
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 
-/* Fire/Glow Effect for specific match-up */
+
+/* ============================================
+   FIRE/GLOW EFFECT FOR SPECIAL MATCHUPS
+   ============================================ */
+
 .matchup-item.on-fire {
     border: 3px solid transparent; 
     position: relative;
-    box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6), 0 0 30px rgba(255, 255, 0, 0.4);
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 
+                0 0 20px rgba(255, 140, 0, 0.6), 
+                0 0 30px rgba(255, 255, 0, 0.4);
     animation: glow 1.5s infinite alternate;
 }
 
-/* Custom border to make it look 'on fire' */
 .matchup-item.on-fire::before {
     content: '';
     position: absolute;
@@ -153,10 +165,12 @@ body {
 
 @keyframes glow {
     from {
-        box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6);
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 
+                    0 0 20px rgba(255, 140, 0, 0.6);
     }
     to {
-        box-shadow: 0 0 15px rgba(255, 69, 0, 1), 0 0 25px rgba(255, 140, 0, 0.8);
+        box-shadow: 0 0 15px rgba(255, 69, 0, 1), 
+                    0 0 25px rgba(255, 140, 0, 0.8);
     }
 }
 
