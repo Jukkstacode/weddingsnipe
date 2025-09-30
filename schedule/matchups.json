@@ -20,8 +20,7 @@
       },
       {
         "GM1": "Seedo",
-        "GM2": "Hordo",
-        "isSpecial": true
+        "GM2": "Hordo"
       },
       {
         "GM1": "Dan",
@@ -96,9 +95,7 @@
       },
       {
         "GM1": "Dan",
-        "GM2": "Jordan",
-        "isSpecial": true
-      }
+        "GM2": "Jordan"      }
     ]
   }
 ]
