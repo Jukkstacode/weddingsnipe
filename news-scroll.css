@@ -15,7 +15,6 @@
 .news-scroll-content {
     display: inline-block;
     animation: scroll-left 12s linear infinite;
-    /* Removed padding-left: 100%; */
 }
 
 @keyframes scroll-left {
@@ -29,7 +28,7 @@
 
 .news-scroll-container {
     position: fixed;
-    top: 40px; /* Aligns below the nav bar on DESKTOP */
+    top: 60px; /* Increased from 40px to align below the nav bar on DESKTOP */
     left: 0;
     width: 100%;
     background-color: navy;

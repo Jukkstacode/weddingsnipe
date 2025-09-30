@@ -73,10 +73,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="sidebet-content">
                         ${escapeHtml(sidebet.suggestion)}
                     </div>
-                    ${sidebet.targetWeek ? `
+                    ${sidebet.targetMatchup ? `
                         <div class="sidebet-week">
                             <span>Target:</span>
-                            <span class="week-badge">Week ${sidebet.targetWeek}</span>
+                            <span class="week-badge">${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week}) 🔥</span>
                         </div>
                     ` : ''}
                 </div>

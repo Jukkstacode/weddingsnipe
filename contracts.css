@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #202020;
-    font-size: 16px; /* Increased base font size for better readability */
+    font-size: 16px;
 }
 
 body {
@@ -53,82 +53,97 @@ body {
     font-size: 14px;
     font-weight: bold;
     position: relative;
-    padding-right: 30px;
-    min-width: 200px;
-    flex: 1;
-    max-width: 400px;
+    width: 296px; /* Fixed width instead of flexible */
     color: #ffffff; 
+    box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 .player-name {
     font-weight: bold;
-    font-size: 16px; /* Increased from 14px */
+    font-size: 17px; /* Slightly larger */
     margin-bottom: 6px;
 }
 
 .player-info {
     font-weight: normal;
-    font-size: 14px; /* Increased from 12px */
-    color: #dcdcdc; /* Lighter grey for secondary info */
+    font-size: 14px;
+    color: #dcdcdc;
 }
 
 .position-team {
     display: block;
-    margin-bottom: 6px;
-    font-size: 12px; /* Increased from 11px */
+    margin-bottom: 8px; /* Increased spacing */
+    font-size: 13px; /* Slightly larger */
 }
 
 .player-stats {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 8px;
-    padding: 6px 8px;
-    margin-top: 4px;
+    padding: 8px 10px; /* Increased padding */
+    margin-top: 6px; /* More space from position/team */
     font-family: 'Courier New', monospace;
-    font-size: 11.5px; /* Increased from 10px */
-    line-height: 1.4; /* Increased from 1.3 for better spacing */
+    font-size: 13px; /* Increased from 11.5px */
+    line-height: 1.6; /* More line spacing */
 }
 
 .stats-line {
     display: block;
     color: #ffffff;
-    font-weight: 500;
+    font-weight: 600; /* Bolder */
+    margin-bottom: 3px; /* Space between lines */
 }
 
 .stats-line.fantasy-pts {
     background: #3a3a3a;
-    padding-left: 8px;
+    padding: 4px 8px; /* More padding */
     border-radius: 8px;
     color: #2cd171;
-    font-weight: 600;
-    font-size: 16px; /* Increased from 14px */
-    margin-top: 2px;
+    font-weight: 700; /* Extra bold */
+    font-size: 17px; /* Larger */
+    margin-top: 6px; /* More space above */
     border-top: 1px solid rgba(255, 255, 255, 0.3);
-    padding-top: 2px;
 }
 
 .stats-season {
     display: block;
-    color: #ffffff;
-    font-weight: 600;
-    font-size: 10px; /* Increased from 9px */
-    margin-bottom: 2px;
+    color: #ffd700; /* Gold color for season */
+    font-weight: 700; /* Bolder */
+    font-size: 11px; /* Slightly larger */
+    margin-bottom: 4px; /* More space below */
     text-transform: uppercase;
+    letter-spacing: 0.5px; /* Spread letters slightly */
 }
 
 .no-stats {
     color: #ffffff;
     font-style: italic;
-    font-size: 10px; /* Increased from 9px */
+    font-size: 12px; /* Larger */
 }
 
 .stolen-badge {
     position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-175%);
+    right: 8px;
+    top: 8px;
     width: 40px;
     height: 40px;
     background-image: url('assets/stolen.webp');
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+    .player-chip {
+        width: 100%; /* Full width on mobile */
+        max-width: 350px; /* But not too wide */
+    }
+
+    .gm-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gm-photo {
+        margin-bottom: 15px;
+    }
 }

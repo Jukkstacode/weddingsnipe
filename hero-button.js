@@ -85,8 +85,8 @@ const HeroButton = {
             await this.handleSidebetSubmission(e.target);
         });
 
-        // Populate week dropdown
-        this.populateWeekDropdown();
+        // Populate matchup dropdown
+        this.populateMatchupDropdown();
     },
 
     // Create the sidebet modal HTML
@@ -119,9 +119,9 @@ const HeroButton = {
                         </div>
                         
                         <div class="form-group">
-                            <label for="targetWeek">Target Week (Optional)</label>
-                            <select id="targetWeek" name="targetWeek">
-                                <option value="">Any Week</option>
+                            <label for="targetMatchup">Target Matchup (Optional)</label>
+                            <select id="targetMatchup" name="targetMatchup">
+                                <option value="">Any Matchup</option>
                             </select>
                         </div>
                         
@@ -142,25 +142,30 @@ const HeroButton = {
         document.body.insertAdjacentHTML('beforeend', modalHTML);
     },
 
-    // Populate the week dropdown based on matchups data
-    async populateWeekDropdown() {
+    // Populate the matchup dropdown with special matchups only
+    async populateMatchupDropdown() {
         try {
             const response = await fetch('schedule/matchups.json');
             const matchups = await response.json();
-            const dropdown = document.getElementById('targetWeek');
+            const dropdown = document.getElementById('targetMatchup');
             
+            // Loop through all weeks
             matchups.forEach(week => {
-                const option = document.createElement('option');
-                option.value = week.Week;
-                option.textContent = `Week ${week.Week}`;
+                // Filter for special matchups only
+                const specialMatchups = week.Matchups.filter(m => m.isSpecial === true);
                 
-                // Mark special weeks
-                const hasSpecial = week.Matchups.some(m => m.isSpecial);
-                if (hasSpecial) {
-                    option.textContent += ' 🔥 (Sidebet Week)';
-                }
-                
-                dropdown.appendChild(option);
+                // Add each special matchup to the dropdown
+                specialMatchups.forEach(matchup => {
+                    const option = document.createElement('option');
+                    // Create a unique value combining week and matchup
+                    option.value = JSON.stringify({
+                        week: week.Week,
+                        gm1: matchup.GM1,
+                        gm2: matchup.GM2
+                    });
+                    option.textContent = `${matchup.GM1} vs ${matchup.GM2} (Week ${week.Week}) 🔥`;
+                    dropdown.appendChild(option);
+                });
             });
         } catch (error) {
             console.error('Error loading matchups:', error);
@@ -172,13 +177,15 @@ const HeroButton = {
         const submitBtn = document.getElementById('submitBtn');
         const messageDiv = document.getElementById('formMessage');
         
-        // Get form data
-        const formData = new FormData(form);
-        const data = {
-            suggestion: formData.get('suggestion'),
-            submittedBy: formData.get('submittedBy'),
-            targetWeek: formData.get('targetWeek') || null
-        };
+    // Get form data
+    const formData = new FormData(form);
+    const targetMatchupValue = formData.get('targetMatchup');
+
+    const data = {
+        suggestion: formData.get('suggestion'),
+        submittedBy: formData.get('submittedBy'),
+        targetMatchup: targetMatchupValue ? JSON.parse(targetMatchupValue) : null
+    };
 
         // Show loading state
         submitBtn.classList.add('loading');

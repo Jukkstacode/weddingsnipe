@@ -49,8 +49,7 @@
       },
       {
         "GM1": "Colin",
-        "GM2": "Mike",
-        "isSpecial": true
+        "GM2": "Mike"
       },
       {
         "GM1": "Ryan",
@@ -75,7 +74,8 @@
       },
       {
         "GM1": "Andy",
-        "GM2": "Mike"
+        "GM2": "Mike",
+        "isSpecial": true
       },
       {
         "GM1": "Dave",
@@ -95,7 +95,43 @@
       },
       {
         "GM1": "Dan",
-        "GM2": "Jordan"      }
+        "GM2": "Jordan",
+        "isSpecial": true      
+      }
+    ]
+  },
+    {
+    "Week": 4,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Marinos",
+        "isSpecial": true
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Adam"
+      },
+      {
+        "GM1": "Dave",
+        "GM2": "Ryan"
+      },
+      {
+        "GM1": "Colin",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Charlie",
+        "GM2": "Mike"
+      },
+      {
+        "GM1": "Matt",
+        "GM2": "Dan"
+      },
+      {
+        "GM1": "Trevor",
+        "GM2": "Hordo"      
+      }
     ]
   }
 ]
