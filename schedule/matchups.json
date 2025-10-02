@@ -95,7 +95,8 @@
       },
       {
         "GM1": "Dan",
-        "GM2": "Jordan"
+        "GM2": "Jordan",
+        "isSpecial": true 
       }
     ]
   },
@@ -237,7 +238,8 @@
     "Matchups": [
       {
         "GM1": "Bimm",
-        "GM2": "Seedo"
+        "GM2": "Seedo",
+        "isSpecial": true
       },
       {
         "GM1": "Andy",
