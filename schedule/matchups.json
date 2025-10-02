@@ -95,8 +95,7 @@
       },
       {
         "GM1": "Dan",
-        "GM2": "Jordan",
-        "isSpecial": true      
+        "GM2": "Jordan"
       }
     ]
   },
@@ -105,8 +104,7 @@
     "Matchups": [
       {
         "GM1": "Bimm",
-        "GM2": "Marinos",
-        "isSpecial": true
+        "GM2": "Marinos"
       },
       {
         "GM1": "Andy",
@@ -125,11 +123,243 @@
         "GM2": "Mike"
       },
       {
-        "GM1": "Matt",
+        "GM1": "Seedo",
         "GM2": "Dan"
       },
       {
         "GM1": "Trevor",
+        "GM2": "Hordo"      
+      }
+    ]
+  },
+      {
+    "Week": 5,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Dave"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Colin"
+      },
+      {
+        "GM1": "Charlie",
+        "GM2": "Adam"
+      },
+      {
+        "GM1": "Ryan",
+        "GM2": "Dan"
+      },
+      {
+        "GM1": "Seedo",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Marinos",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Hordo",
+        "GM2": "Mike"      
+      }
+    ]
+  },
+        {
+    "Week": 6,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Dan"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Dave",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Colin",
+        "GM2": "Charlie"
+      },
+      {
+        "GM1": "Ryan",
+        "GM2": "Seedo"
+      },
+      {
+        "GM1": "Marinos",
+        "GM2": "Mike"
+      },
+      {
+        "GM1": "Hordo",
+        "GM2": "Adam"      
+      }
+    ]
+  },
+          {
+    "Week": 6,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Dan"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Dave",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Colin",
+        "GM2": "Charlie"
+      },
+      {
+        "GM1": "Ryan",
+        "GM2": "Seedo"
+      },
+      {
+        "GM1": "Marinos",
+        "GM2": "Mike"
+      },
+      {
+        "GM1": "Hordo",
+        "GM2": "Adam"      
+      }
+    ]
+  },
+          
+  {
+    "Week": 7,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Seedo"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Charlie"
+      },
+      {
+        "GM1": "Dave",
+        "GM2": "Mike"
+      },
+      {
+        "GM1": "Colin",
+        "GM2": "Hordo"
+      },
+      {
+        "GM1": "Ryan",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Dan",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Marinos",
+        "GM2": "Adam"      
+      }
+    ]
+  },
+  {
+    "Week": 8,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Ryan"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Hordo"
+      },
+      {
+        "GM1": "Dave",
+        "GM2": "Adam"
+      },
+      {
+        "GM1": "Colin",
+        "GM2": "Marinos"
+      },
+      {
+        "GM1": "Charlie",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Seedo",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Dan",
+        "GM2": "Mike"      
+      }
+    ]
+  },
+    {
+    "Week": 9,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Jordan"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Marinos"
+      },
+      {
+        "GM1": "Dave",
+        "GM2": "Colin"
+      },
+      {
+        "GM1": "Charlie",
+        "GM2": "Hordo"
+      },
+      {
+        "GM1": "Ryan",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Seedo",
+        "GM2": "Mike"
+      },
+      {
+        "GM1": "Dan",
+        "GM2": "Adam"      
+      }
+    ]
+  },
+    {
+    "Week": 10,
+    "Matchups": [
+      {
+        "GM1": "Bimm",
+        "GM2": "Trevor"
+      },
+      {
+        "GM1": "Andy",
+        "GM2": "Dave"
+      },
+      {
+        "GM1": "Colin",
+        "GM2": "Dan"
+      },
+      {
+        "GM1": "Charlie",
+        "GM2": "Marinos"
+      },
+      {
+        "GM1": "Ryan",
+        "GM2": "Mike"
+      },
+      {
+        "GM1": "Seedo",
+        "GM2": "Adam"
+      },
+      {
+        "GM1": "Jordan",
         "GM2": "Hordo"      
       }
     ]
