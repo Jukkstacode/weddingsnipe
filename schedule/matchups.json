@@ -198,41 +198,7 @@
         "GM2": "Adam"      
       }
     ]
-  },
-          {
-    "Week": 6,
-    "Matchups": [
-      {
-        "GM1": "Bimm",
-        "GM2": "Dan"
-      },
-      {
-        "GM1": "Andy",
-        "GM2": "Jordan"
-      },
-      {
-        "GM1": "Dave",
-        "GM2": "Trevor"
-      },
-      {
-        "GM1": "Colin",
-        "GM2": "Charlie"
-      },
-      {
-        "GM1": "Ryan",
-        "GM2": "Seedo"
-      },
-      {
-        "GM1": "Marinos",
-        "GM2": "Mike"
-      },
-      {
-        "GM1": "Hordo",
-        "GM2": "Adam"      
-      }
-    ]
-  },
-          
+  },      
   {
     "Week": 7,
     "Matchups": [
