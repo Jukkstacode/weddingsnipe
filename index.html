@@ -23,9 +23,20 @@
         <div class="news-scroll-content" id="news-scroll-content"></div>
     </div>
 
-    <div class="container">
-        <h1 id="localized-date-time"></h1>
-        <div id="countdown"></div>
+    <div class="countdown-wrapper">
+        <!-- First Countdown - Draft Day -->
+        <div class="countdown-section">
+            <div class="countdown-label">Draft Day</div>
+            <h1 id="localized-date-time"></h1>
+            <div id="countdown" class="countdown-display"></div>
+        </div>
+
+        <!-- Second Countdown - Draft Order Reveal -->
+        <div class="countdown-section">
+            <div class="countdown-label">Draft Order Reveal</div>
+            <h1 id="draft-order-date-time"></h1>
+            <div id="draft-order-countdown" class="countdown-display"></div>
+        </div>
     </div>
 
     <script src="nav.js"></script>
@@ -33,9 +44,14 @@
     <script src="news-scroll.js"></script>
 <!--    <script src="truth.js"></script>-->
     <script>
+        // First countdown date display
         const date = new Date('2025-10-06T01:00:00Z');
         const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
         document.getElementById('localized-date-time').textContent = date.toLocaleString(undefined, options);
+        
+        // Second countdown date display - Oct 4, 4PM PST (which is midnight UTC on Oct 5)
+        const draftOrderDate = new Date('2025-10-05T00:00:00Z');
+        document.getElementById('draft-order-date-time').textContent = draftOrderDate.toLocaleString(undefined, options);
     </script>
 </body>
 </html>
