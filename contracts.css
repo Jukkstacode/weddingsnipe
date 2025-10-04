@@ -2,7 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #202020;
+    background-color: #1a1a1a;  /* Changed from #202020 to #1a1a1a */
     font-size: 16px;
 }
 
@@ -18,7 +18,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     padding-top: 54px;
-    background-color: #202020;
+    background-color: #1a1a1a;  /* Changed from #202020 to #1a1a1a */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow-y: auto;
     box-sizing: border-box;

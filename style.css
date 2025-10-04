@@ -61,6 +61,20 @@ body::before {
     flex: 1;
 }
 
+/* Navigation sections */
+.nav-section {
+    display: flex;
+    align-items: center;
+}
+
+/* Separator line between nav sections */
+.nav-separator {
+    width: 1px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 0 10px;
+}
+
 .top-nav a {
     color: white;
     text-decoration: none;
@@ -126,7 +140,6 @@ body::before {
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
-
 /* ============================================
    MOBILE NAVIGATION
    ============================================ */
@@ -162,12 +175,28 @@ body::before {
         left: 0;
     }
 
+    /* Stack nav sections vertically on mobile */
+    .nav-section {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Horizontal separator line on mobile */
+    .nav-separator {
+        width: 80%;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.3);
+        margin: 15px auto;
+        align-self: center;
+    }
+
     .top-nav a {
         display: block;
         width: 100%;
         text-align: left;
         padding: 18px 25px;
-        margin-left:32px;
+        margin-left: 32px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         font-size: 1.1rem;
         transition: background-color 0.2s ease, padding-left 0.2s ease;
@@ -182,7 +211,8 @@ body::before {
         padding-left: 35px;
     }
 
-    .top-nav a:last-child {
+    /* Remove border from last item in each section */
+    .nav-section a:last-child {
         border-bottom: none;
     }
 
