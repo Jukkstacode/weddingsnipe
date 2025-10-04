@@ -3,13 +3,13 @@
    ============================================ */
 
 html {
-    background-color: #1a1a1a;  
+    background-color: #1a1a1a;
 }
 
 body {
     min-height: 100vh;
     overflow-y: auto;
-    background-color: #1a1a1a;  /* Add this line to ensure body matches */
+    background-color: #1a1a1a;
 }
 
 .snipes-container {
@@ -20,9 +20,24 @@ body {
     text-align: center;
 }
 
+/* Title container with icon */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stolen-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
 .snipes-container h1 {
     font-size: 3rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     color: #ffffff;
     text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
 }
@@ -48,12 +63,27 @@ body {
     border-radius: 15px;
     padding: 1.5rem;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .snipe-card:hover {
     background-color: rgba(74, 158, 255, 0.1);
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(74, 158, 255, 0.3);
+}
+
+/* Date Badge - Top Left */
+.snipe-date {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(74, 158, 255, 0.2);
+    color: #4a9eff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid #4a9eff;
 }
 
 /* Main Content Area */
@@ -139,6 +169,15 @@ body {
 
 /* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
+    .title-container {
+        gap: 1rem;
+    }
+    
+    .stolen-icon {
+        width: 60px;
+        height: 60px;
+    }
+
     .snipes-container h1 {
         font-size: 2rem;
     }
@@ -150,6 +189,14 @@ body {
 
     .snipe-card {
         padding: 1rem;
+        padding-top: 3rem;
+    }
+
+    .snipe-date {
+        top: 10px;
+        left: 10px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
     }
 
     .gm-section {
