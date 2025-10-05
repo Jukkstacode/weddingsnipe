@@ -158,7 +158,8 @@
       },
       {
         "GM1": "Marinos",
-        "GM2": "Trevor"
+        "GM2": "Trevor",
+        "isSpecial": true
       },
       {
         "GM1": "Hordo",
