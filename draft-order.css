@@ -11,7 +11,7 @@ body {
     max-width: 800px;
     width: 90%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem 2rem 2rem;
     text-align: center;
 }
 
@@ -38,6 +38,7 @@ body {
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .draft-pick:hover {
@@ -91,6 +92,21 @@ body {
     color: #ffffff;
 }
 
+/* Draft pick link styling */
+.draft-pick-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+}
+
+/* Make sure hover effect works on the link */
+.draft-pick:hover .draft-pick-link {
+    text-decoration: none;
+}
+
 a.target-list {
     display: inline-block;
     padding: 15px 40px;
@@ -110,12 +126,13 @@ a.target-list:hover {
     transform: scale(1.05);
     box-shadow: 0 0 30px rgba(74, 158, 255, 0.6);
 }
+
 .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh; 
-    padding: 2rem;
+    padding: 2rem 2rem 1rem 2rem;
+    margin-top: 2rem;
 }
 
 /* Mobile responsiveness */
@@ -129,6 +146,11 @@ a.target-list:hover {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
+    }
+    
+    .draft-pick-link {
+        flex-direction: column;
+        gap: 1rem;
     }
     
     .pick-number {
