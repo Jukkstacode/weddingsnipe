@@ -1,11 +1,16 @@
-// Sidebets Display Page
+// Sidebets Display Page with Filtering
 document.addEventListener('DOMContentLoaded', async () => {
     let allSidebets = [];
-    let currentFilter = 'all';
+    let currentStatusFilter = 'all';
+    let currentMatchupFilter = 'all';
+    let hideNoMatchup = false;
 
     // Get elements
     const sidebetsList = document.getElementById('sidebets-list');
+    const noResults = document.getElementById('noResults');
     const filterButtons = document.querySelectorAll('.filter-btn');
+    const matchupDropdown = document.getElementById('matchupFilter');
+    const hideNoMatchupCheckbox = document.getElementById('hideNoMatchup');
 
     // Load sidebets from the API
     async function loadSidebets() {
@@ -17,36 +22,80 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             allSidebets = await response.json();
-            displaySidebets(allSidebets);
+            
+            // Populate matchup filter dropdown
+            populateMatchupFilter();
+            
+            // Display sidebets
+            displaySidebets();
+
         } catch (error) {
             console.error('Error loading sidebets:', error);
             sidebetsList.innerHTML = `
-                <div class="empty-state">
-                    <h3>⚠️ Error Loading Sidebets</h3>
-                    <p>Unable to fetch sidebets. Please try again later.</p>
+                <div class="loading" style="color: red;">
+                    ⚠️ Error loading sidebets. Please try again later.
                 </div>
             `;
         }
     }
 
-    // Display sidebets based on filter
-    function displaySidebets(sidebets) {
-        // Filter sidebets
-        let filteredSidebets = sidebets;
-        if (currentFilter !== 'all') {
-            filteredSidebets = sidebets.filter(s => s.status === currentFilter);
-        }
+    // Populate matchup dropdown with unique matchups
+    function populateMatchupFilter() {
+        const matchups = new Set();
+        
+        allSidebets.forEach(sidebet => {
+            if (sidebet.targetMatchup) {
+                const matchupKey = `${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week})`;
+                matchups.add(matchupKey);
+            }
+        });
 
-        // Check if empty
+        // Add matchups to dropdown in sorted order
+        Array.from(matchups).sort().forEach(matchup => {
+            const option = document.createElement('option');
+            option.value = matchup;
+            option.textContent = matchup + ' 🔥';
+            matchupDropdown.appendChild(option);
+        });
+    }
+
+    // Filter and display sidebets
+    function displaySidebets() {
+        // Apply all filters
+        let filteredSidebets = allSidebets.filter(sidebet => {
+            // Status filter
+            if (currentStatusFilter !== 'all' && sidebet.status !== currentStatusFilter) {
+                return false;
+            }
+
+            // Matchup filter
+            if (currentMatchupFilter !== 'all') {
+                if (!sidebet.targetMatchup) {
+                    return false;
+                }
+                const matchupKey = `${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week})`;
+                if (matchupKey !== currentMatchupFilter) {
+                    return false;
+                }
+            }
+
+            // Hide no matchup filter
+            if (hideNoMatchup && !sidebet.targetMatchup) {
+                return false;
+            }
+
+            return true;
+        });
+
+        // Show/hide no results message
         if (filteredSidebets.length === 0) {
-            sidebetsList.innerHTML = `
-                <div class="empty-state">
-                    <h3>📭 No Sidebets Found</h3>
-                    <p>No ${currentFilter === 'all' ? '' : currentFilter} sidebets to display.</p>
-                </div>
-            `;
+            sidebetsList.style.display = 'none';
+            noResults.style.display = 'block';
             return;
         }
+
+        sidebetsList.style.display = 'grid';
+        noResults.style.display = 'none';
 
         // Build HTML for sidebets
         const html = filteredSidebets.map(sidebet => {
@@ -54,9 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const formattedDate = date.toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
+                year: 'numeric'
             });
 
             return `
@@ -93,17 +140,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         return div.innerHTML;
     }
 
-    // Handle filter button clicks
+    // Handle status filter button clicks
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             // Update active button
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             
-            // Update filter and display
-            currentFilter = button.dataset.filter;
-            displaySidebets(allSidebets);
+            // Update filter and redisplay
+            currentStatusFilter = button.dataset.filter;
+            displaySidebets();
         });
+    });
+
+    // Handle matchup dropdown change
+    matchupDropdown.addEventListener('change', (e) => {
+        currentMatchupFilter = e.target.value;
+        displaySidebets();
+    });
+
+    // Handle hide no matchup checkbox
+    hideNoMatchupCheckbox.addEventListener('change', (e) => {
+        hideNoMatchup = e.target.checked;
+        displaySidebets();
     });
 
     // Load sidebets on page load

@@ -7,6 +7,11 @@ const HeroButton = {
             icon: '+',
             tooltip: 'Suggest a Sidebet'
         },
+        'sidebets.html': {
+            action: 'sidebet',
+            icon: '+',
+            tooltip: 'Suggest a Sidebet'
+        },
         // Add more pages here as needed
         'default': {
             action: 'default',
@@ -55,7 +60,6 @@ const HeroButton = {
         const modal = document.getElementById('sidebetModal');
         const form = document.getElementById('sidebetForm');
         const cancelBtn = document.getElementById('cancelBtn');
-        const messageDiv = document.getElementById('formMessage');
 
         // Toggle modal on button click
         heroButton.addEventListener('click', () => {
@@ -177,15 +181,15 @@ const HeroButton = {
         const submitBtn = document.getElementById('submitBtn');
         const messageDiv = document.getElementById('formMessage');
         
-    // Get form data
-    const formData = new FormData(form);
-    const targetMatchupValue = formData.get('targetMatchup');
+        // Get form data
+        const formData = new FormData(form);
+        const targetMatchupValue = formData.get('targetMatchup');
 
-    const data = {
-        suggestion: formData.get('suggestion'),
-        submittedBy: formData.get('submittedBy'),
-        targetMatchup: targetMatchupValue ? JSON.parse(targetMatchupValue) : null
-    };
+        const data = {
+            suggestion: formData.get('suggestion'),
+            submittedBy: formData.get('submittedBy'),
+            targetMatchup: targetMatchupValue ? JSON.parse(targetMatchupValue) : null
+        };
 
         // Show loading state
         submitBtn.classList.add('loading');
@@ -215,6 +219,16 @@ const HeroButton = {
                 
                 // Clear form
                 form.reset();
+                
+                // Reload sidebets list if on sidebets page
+                if (window.location.pathname.includes('sidebets.html')) {
+                    setTimeout(() => {
+                        // Trigger a reload of the sidebets list
+                        if (typeof window.reloadSidebets === 'function') {
+                            window.reloadSidebets();
+                        }
+                    }, 1000);
+                }
                 
                 // Close modal after delay
                 setTimeout(() => {
