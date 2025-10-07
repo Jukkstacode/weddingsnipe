@@ -23,35 +23,29 @@
         <div class="news-scroll-content" id="news-scroll-content"></div>
     </div>
 
-    <div class="countdown-wrapper">
-        <!-- First Countdown - Draft Day -->
-        <div class="countdown-section">
-            <div class="countdown-label">Draft Day</div>
-            <h1 id="localized-date-time"></h1>
-            <div id="countdown" class="countdown-display"></div>
+    <div class="gm-teams-wrapper">
+        <h1 class="gm-teams-title">Bathouse Hockey League</h1>
+        
+        <!-- Quick Links Buttons -->
+        <div class="quick-links">
+            <a href="https://hockey.fantasysports.yahoo.com/hockey/8655/matchup" class="quick-link-btn" target="_blank" rel="noopener noreferrer">
+                Your Matchup
+            </a>
+            <a href="https://hockey.fantasysports.yahoo.com/hockey/8655/transactions" class="quick-link-btn" target="_blank" rel="noopener noreferrer">
+                Recent Transactions
+            </a>
+            <a href="https://hockey.fantasysports.yahoo.com/hockey/8655/buzzindex" class="quick-link-btn" target="_blank" rel="noopener noreferrer">
+                Transaction Trends
+            </a>
         </div>
 
-        <!-- Second Countdown - Draft Order Reveal -->
-        <div class="countdown-section">
-            <div class="countdown-label">Draft Order Reveal</div>
-            <h1 id="draft-order-date-time"></h1>
-            <div id="draft-order-countdown" class="countdown-display"></div>
+        <div class="gm-teams-grid" id="gm-teams-grid">
+            <!-- GM cards will be dynamically generated here -->
         </div>
     </div>
 
     <script src="nav.js"></script>
-    <script src="script.js"></script>
+    <script src="home.js"></script>
     <script src="news-scroll.js"></script>
-<!--    <script src="truth.js"></script>-->
-    <script>
-        // First countdown date display
-        const date = new Date('2025-10-06T01:00:00Z');
-        const options = { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
-        document.getElementById('localized-date-time').textContent = date.toLocaleString(undefined, options);
-        
-        // Second countdown date display - Oct 4, 4PM PST (which is midnight UTC on Oct 5)
-        const draftOrderDate = new Date('2025-10-05T00:00:00Z');
-        document.getElementById('draft-order-date-time').textContent = draftOrderDate.toLocaleString(undefined, options);
-    </script>
 </body>
 </html>

@@ -3,144 +3,185 @@
    ============================================ */
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    padding-top: 80px;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-.countdown-wrapper {
+/* GM Teams Wrapper */
+.gm-teams-wrapper {
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.gm-teams-title {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Quick Links Buttons */
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.quick-link-btn {
+    padding: 0.75rem 1rem;
+    background: rgba(74, 158, 255, 0.2);
+    color: #4a9eff;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 2px solid #4a9eff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.quick-link-btn:hover {
+    background: #4a9eff;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 158, 255, 0.4);
+}
+
+/* GM Teams Grid */
+.gm-teams-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gm-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 5rem;
-    padding: 2rem;
-    width: 100%;
-    max-width: 900px;
-}
-
-.countdown-section {
-    text-align: center;
-    width: 100%;
-    padding: 2rem 0;
-    position: relative;
-}
-
-.countdown-section:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: -2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
-}
-
-.countdown-label {
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #ffffff;
-    margin-bottom: 2rem;
-    font-weight: 700;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-}
-
-.countdown-section h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #aaaaaa;
-    font-weight: 300;
-}
-
-.countdown-display {
-    font-size: 3.5rem;
-    font-weight: bold;
-    letter-spacing: 0.1em;
-    color: #4a9eff;
-    text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
-}
-
-/* Styling for the draft order link when countdown finishes */
-.countdown-display a.target-list {
-    display: inline-block;
-    padding: 15px 40px;
-    background-color: rgba(74, 158, 255, 0.2);
-    color: #4a9eff;
     text-decoration: none;
-    border-radius: 10px;
-    border: 2px solid #4a9eff;
-    font-size: 2rem;
-    font-weight: bold;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+}
+
+.gm-card:hover {
+    background: rgba(74, 158, 255, 0.1);
+    border-color: #4a9eff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(74, 158, 255, 0.3);
+}
+
+.gm-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4a9eff;
+    margin-bottom: 0.75rem;
     transition: all 0.3s ease;
 }
 
-.countdown-display a.target-list:hover {
-    background-color: #4a9eff;
-    color: #ffffff;
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(74, 158, 255, 0.6);
+.gm-card:hover .gm-photo {
+    border-color: #ffffff;
+    box-shadow: 0 0 20px rgba(74, 158, 255, 0.6);
 }
 
-/* Mobile responsiveness */
-@media screen and (max-width: 768px) {
-    .countdown-wrapper {
-        gap: 3rem;
-        padding: 1rem;
+.gm-name {
+    font-size: 0.9rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Tablet and up */
+@media screen and (min-width: 600px) {
+    .gm-teams-wrapper {
+        padding: 2rem;
     }
     
-    .countdown-section {
-        padding: 1.5rem 0;
+    .gm-teams-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
     }
     
-    .countdown-section:not(:last-child)::after {
-        bottom: -1.5rem;
-        width: 80%;
+    .quick-links {
+        flex-direction: row;
+        max-width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
     }
     
-    .countdown-label {
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-        letter-spacing: 0.15em;
+    .quick-link-btn {
+        width: auto;
+        min-width: 200px;
     }
     
-    .countdown-section h1 {
-        font-size: 1.2rem;
+    .gm-teams-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .gm-photo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .gm-name {
+        font-size: 1rem;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 900px) {
+    .gm-teams-title {
+        font-size: 3rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 2.5rem;
+    }
+    
+    .quick-links {
+        margin-bottom: 3rem;
+    }
+    
+    .quick-link-btn {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .gm-teams-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+    
+    .gm-card {
+        padding: 1.5rem;
+    }
+    
+    .gm-photo {
+        width: 120px;
+        height: 120px;
         margin-bottom: 1rem;
     }
     
-    .countdown-display {
-        font-size: 2.5rem;
-    }
-    
-    .countdown-display a.target-list {
-        font-size: 1.5rem;
-        padding: 12px 30px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .countdown-wrapper {
-        gap: 2.5rem;
-    }
-    
-    .countdown-label {
-        font-size: 1.4rem;
-        letter-spacing: 0.1em;
-    }
-    
-    .countdown-section h1 {
-        font-size: 1rem;
-    }
-    
-    .countdown-display {
-        font-size: 2rem;
-    }
-    
-    .countdown-display a.target-list {
+    .gm-name {
         font-size: 1.2rem;
-        padding: 10px 25px;
     }
 }
