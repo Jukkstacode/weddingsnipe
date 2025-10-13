@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="schedule.css">
     <link rel="stylesheet" href="hero-button.css">
+    
+    <!-- ADD THESE FIREBASE SCRIPTS -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div id="nav-placeholder"></div>
     <div class="gm-list-container">
         <h1>Bathouse Hockey League </br> 2025 Schedule</h1>
         
-        <!-- UPDATED: Filter Section with Spicy Matchups -->
+        <!-- UPDATED: Filter Section -->
         <div class="filter-section">
             <div class="filter-group">
                 <label for="gm-filter">Filter by GM:</label>
@@ -23,6 +27,7 @@
                 </select>
             </div>
             
+            <!-- NOTE: Spicy filter won't work anymore since we didn't migrate isSpecial -->
             <div class="filter-group spicy-filter">
                 <label class="spicy-checkbox-label">
                     <input type="checkbox" id="spicy-filter">

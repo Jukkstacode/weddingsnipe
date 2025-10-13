@@ -1,5 +1,8 @@
 // Hero Button Module
 const HeroButton = {
+    // Firebase instance (will be initialized if needed)
+    db: null,
+
     // Configuration for different pages
     pageConfig: {
         'schedule.html': {
@@ -17,6 +20,24 @@ const HeroButton = {
             action: 'default',
             icon: '⚡',
             tooltip: 'Action'
+        }
+    },
+
+    // Initialize Firebase
+    initFirebase() {
+        if (!this.db) {
+            const firebaseConfig = {
+                apiKey: "YOUR_API_KEY_HERE", // Replace with your actual API key
+                authDomain: "wedding-snipe.firebaseapp.com",
+                projectId: "wedding-snipe",
+            };
+            
+            // Initialize Firebase if not already initialized
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            
+            this.db = firebase.firestore();
         }
     },
 
@@ -52,6 +73,9 @@ const HeroButton = {
 
     // Initialize sidebet-specific features
     initSidebetFeature() {
+        // Initialize Firebase
+        this.initFirebase();
+        
         // Create modal HTML
         this.createSidebetModal();
         
@@ -89,7 +113,7 @@ const HeroButton = {
             await this.handleSidebetSubmission(e.target);
         });
 
-        // Populate matchup dropdown
+        // Populate matchup dropdown from Firestore
         this.populateMatchupDropdown();
     },
 
@@ -127,6 +151,9 @@ const HeroButton = {
                             <select id="targetMatchup" name="targetMatchup">
                                 <option value="">Any Matchup</option>
                             </select>
+                            <small style="color: #999; font-size: 0.85rem; display: block; margin-top: 5px;">
+                                Choose a specific matchup for your sidebet
+                            </small>
                         </div>
                         
                         <div class="form-buttons">
@@ -146,33 +173,63 @@ const HeroButton = {
         document.body.insertAdjacentHTML('beforeend', modalHTML);
     },
 
-    // Populate the matchup dropdown with special matchups only
+    // NEW: Populate the matchup dropdown from Firestore (ALL matchups)
     async populateMatchupDropdown() {
         try {
-            const response = await fetch('schedule/matchups.json');
-            const matchups = await response.json();
+            console.log('📡 Loading matchups for dropdown...');
+            
+            // Get all matchup documents from Firestore
+            const snapshot = await this.db.collection('matchups').get();
+            
+            if (snapshot.empty) {
+                console.warn('No matchups found in Firestore');
+                return;
+            }
+            
             const dropdown = document.getElementById('targetMatchup');
             
-            // Loop through all weeks
-            matchups.forEach(week => {
-                // Filter for special matchups only
-                const specialMatchups = week.Matchups.filter(m => m.isSpecial === true);
+            // Group matchups by week
+            const matchupsByWeek = {};
+            
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const weekNumber = data.week;
                 
-                // Add each special matchup to the dropdown
-                specialMatchups.forEach(matchup => {
+                if (!matchupsByWeek[weekNumber]) {
+                    matchupsByWeek[weekNumber] = [];
+                }
+                
+                matchupsByWeek[weekNumber].push({
+                    gm1: data.gm1,
+                    gm2: data.gm2,
+                    matchupIndex: data.matchupIndex
+                });
+            });
+            
+            // Sort weeks numerically and add to dropdown
+            const sortedWeeks = Object.keys(matchupsByWeek).sort((a, b) => Number(a) - Number(b));
+            
+            sortedWeeks.forEach(weekNum => {
+                // Sort matchups within each week by index
+                const weekMatchups = matchupsByWeek[weekNum].sort((a, b) => a.matchupIndex - b.matchupIndex);
+                
+                weekMatchups.forEach(matchup => {
                     const option = document.createElement('option');
                     // Create a unique value combining week and matchup
                     option.value = JSON.stringify({
-                        week: week.Week,
-                        gm1: matchup.GM1,
-                        gm2: matchup.GM2
+                        week: Number(weekNum),
+                        gm1: matchup.gm1,
+                        gm2: matchup.gm2
                     });
-                    option.textContent = `${matchup.GM1} vs ${matchup.GM2} (Week ${week.Week}) 🔥`;
+                    option.textContent = `${matchup.gm1} vs ${matchup.gm2} (Week ${weekNum})`;
                     dropdown.appendChild(option);
                 });
             });
+            
+            console.log('✅ Matchup dropdown populated');
+            
         } catch (error) {
-            console.error('Error loading matchups:', error);
+            console.error('Error loading matchups for dropdown:', error);
         }
     },
 
@@ -181,25 +238,25 @@ const HeroButton = {
         const submitBtn = document.getElementById('submitBtn');
         const messageDiv = document.getElementById('formMessage');
         
-        // Get form data
-        const formData = new FormData(form);
-        const targetMatchupValue = formData.get('targetMatchup');
-
-        const data = {
-            suggestion: formData.get('suggestion'),
-            submittedBy: formData.get('submittedBy'),
-            targetMatchup: targetMatchupValue ? JSON.parse(targetMatchupValue) : null
-        };
-
         // Show loading state
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
-        submitBtn.textContent = '';
+        submitBtn.textContent = 'Submitting...';
         messageDiv.innerHTML = '';
-
+        
         try {
-            // Submit to your Google Cloud Function
-            const response = await fetch('https://nhl-stats-cacher-347732622266.us-west1.run.app', {
+            // Get form data
+            const formData = new FormData(form);
+            const targetMatchupValue = formData.get('targetMatchup');
+
+            const data = {
+                suggestion: formData.get('suggestion'),
+                submittedBy: formData.get('submittedBy'),
+                targetMatchup: targetMatchupValue ? JSON.parse(targetMatchupValue) : null
+            };
+
+            // Submit to your endpoint
+            const response = await fetch('https://nhl-stats-cacher-347732622266.us-west1.run.app?requestType=submitSidebet', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -207,42 +264,26 @@ const HeroButton = {
                 body: JSON.stringify(data)
             });
 
-            if (response.ok) {
-                const result = await response.json();
-                
-                // Show success message
-                messageDiv.innerHTML = `
-                    <div class="message success">
-                        ✅ Sidebet suggestion submitted successfully!
-                    </div>
-                `;
-                
-                // Clear form
-                form.reset();
-                
-                // Reload sidebets list if on sidebets page
-                if (window.location.pathname.includes('sidebets.html')) {
-                    setTimeout(() => {
-                        // Trigger a reload of the sidebets list
-                        if (typeof window.reloadSidebets === 'function') {
-                            window.reloadSidebets();
-                        }
-                    }, 1000);
-                }
-                
-                // Close modal after delay
-                setTimeout(() => {
-                    this.closeModal();
-                }, 2000);
-            } else {
+            if (!response.ok) {
                 throw new Error('Failed to submit sidebet');
             }
+
+            // Success!
+            messageDiv.innerHTML = `
+                <div class="message message-success">
+                    ✅ Sidebet submitted successfully! Thanks for your suggestion.
+                </div>
+            `;
+
+            // Reset form after 2 seconds and close modal
+            setTimeout(() => {
+                this.closeModal();
+            }, 2000);
+
         } catch (error) {
             console.error('Error submitting sidebet:', error);
-            
-            // Show error message
             messageDiv.innerHTML = `
-                <div class="message error">
+                <div class="message message-error">
                     ❌ Failed to submit sidebet. Please try again.
                 </div>
             `;

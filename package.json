@@ -7,8 +7,20 @@
     "fetch-stats": "node fetch-stats.js"
   },
   "dependencies": {
-    "firebase-admin": "^11.0.0",
-    "node-fetch": "^2.6.1",
-    "@google-cloud/firestore": "^7.7.0"
-  }
+    "@google-cloud/firestore": "^7.7.0",
+    "firebase-admin": "^11.11.1",
+    "node-fetch": "^2.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jukkstacode/weddingsnipe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Jukkstacode/weddingsnipe/issues"
+  },
+  "homepage": "https://github.com/Jukkstacode/weddingsnipe#readme"
 }
