@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="sidebets.css">
     <link rel="stylesheet" href="hero-button.css">
+    
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div id="nav-placeholder"></div>
@@ -24,14 +28,13 @@
 
         <!-- Filters Section -->
         <div class="filters-section">
-            <!-- Status Filter -->
+            <!-- Status Filter (UPDATED) -->
             <div class="filter-group">
                 <label>Status:</label>
                 <div class="sidebets-filters">
                     <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="pending">Pending</button>
-                    <button class="filter-btn" data-filter="approved">Approved</button>
-                    <button class="filter-btn" data-filter="rejected">Rejected</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="fulfilled">Fulfilled</button>
                 </div>
             </div>
 

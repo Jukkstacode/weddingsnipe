@@ -5,6 +5,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentMatchupFilter = 'all';
     let hideNoMatchup = false;
 
+    // Firebase initialization (for admin features)
+    let db = null;
+    const isAdmin = window.location.search.includes('admin=true'); // Simple admin mode
+    
+    if (isAdmin) {
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE", // Replace with your actual API key
+            authDomain: "wedding-snipe.firebaseapp.com",
+            projectId: "wedding-snipe",
+        };
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        db = firebase.firestore();
+        console.log('🔧 Admin mode enabled');
+    }
+
     // Get elements
     const sidebetsList = document.getElementById('sidebets-list');
     const noResults = document.getElementById('noResults');
@@ -54,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         Array.from(matchups).sort().forEach(matchup => {
             const option = document.createElement('option');
             option.value = matchup;
-            option.textContent = matchup + ' 🔥';
+            option.textContent = matchup;
             matchupDropdown.appendChild(option);
         });
     }
@@ -64,7 +82,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Apply all filters
         let filteredSidebets = allSidebets.filter(sidebet => {
             // Status filter
-            if (currentStatusFilter !== 'all' && sidebet.status !== currentStatusFilter) {
+            if (currentStatusFilter === 'active' && sidebet.isFulfilled) {
+                return false;
+            }
+            if (currentStatusFilter === 'fulfilled' && !sidebet.isFulfilled) {
                 return false;
             }
 
@@ -106,15 +127,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                 year: 'numeric'
             });
 
+            // Admin toggle button (only show in admin mode)
+            const adminToggle = isAdmin ? `
+                <button 
+                    class="admin-toggle-btn ${sidebet.isFulfilled ? 'fulfilled' : 'active'}"
+                    data-id="${sidebet.id}"
+                    data-fulfilled="${sidebet.isFulfilled}"
+                    onclick="toggleFulfilled('${sidebet.id}', ${!sidebet.isFulfilled})"
+                >
+                    ${sidebet.isFulfilled ? '✅ Mark Active' : '✓ Mark Fulfilled'}
+                </button>
+            ` : '';
+
             return `
-                <div class="sidebet-card">
+                <div class="sidebet-card ${sidebet.isFulfilled ? 'fulfilled' : ''}">
                     <div class="sidebet-header">
                         <div class="sidebet-meta">
                             <div class="sidebet-author">💡 ${escapeHtml(sidebet.submittedBy)}</div>
                             <div class="sidebet-date">${formattedDate}</div>
                         </div>
-                        <span class="sidebet-status status-${sidebet.status}">
-                            ${sidebet.status}
+                        <span class="sidebet-status ${sidebet.isFulfilled ? 'status-fulfilled' : 'status-active'}">
+                            ${sidebet.isFulfilled ? '✅ Fulfilled' : '🎲 Active'}
                         </span>
                     </div>
                     <div class="sidebet-content">
@@ -122,16 +155,59 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                     ${sidebet.targetMatchup ? `
                         <div class="sidebet-week">
-                            <span>Target:</span>
-                            <span class="week-badge">${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week}) 🔥</span>
+                            <span>Target Matchup:</span>
+                            <span class="week-badge">
+                                ${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week})
+                            </span>
                         </div>
                     ` : ''}
+                    ${adminToggle}
                 </div>
             `;
         }).join('');
 
         sidebetsList.innerHTML = html;
     }
+
+    // Toggle fulfilled status (admin only)
+    window.toggleFulfilled = async (sidebetId, newStatus) => {
+        if (!isAdmin) {
+            console.warn('Admin mode not enabled');
+            return;
+        }
+
+        try {
+            const response = await fetch('https://nhl-stats-cacher-347732622266.us-west1.run.app', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sidebetId: sidebetId,
+                    isFulfilled: newStatus
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update sidebet');
+            }
+
+            // Update local data
+            const sidebet = allSidebets.find(s => s.id === sidebetId);
+            if (sidebet) {
+                sidebet.isFulfilled = newStatus;
+            }
+
+            // Refresh display
+            displaySidebets();
+
+            console.log('✅ Sidebet updated successfully');
+
+        } catch (error) {
+            console.error('Error updating sidebet:', error);
+            alert('Failed to update sidebet. Please try again.');
+        }
+    };
 
     // Escape HTML to prevent XSS
     function escapeHtml(text) {
@@ -140,31 +216,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         return div.innerHTML;
     }
 
-    // Handle status filter button clicks
+    // Event listeners for filters
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Update active button
+            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
             button.classList.add('active');
-            
-            // Update filter and redisplay
+            // Update filter
             currentStatusFilter = button.dataset.filter;
             displaySidebets();
         });
     });
 
-    // Handle matchup dropdown change
     matchupDropdown.addEventListener('change', (e) => {
         currentMatchupFilter = e.target.value;
         displaySidebets();
     });
 
-    // Handle hide no matchup checkbox
     hideNoMatchupCheckbox.addEventListener('change', (e) => {
         hideNoMatchup = e.target.checked;
         displaySidebets();
     });
 
-    // Load sidebets on page load
+    // Initial load
     await loadSidebets();
 });
