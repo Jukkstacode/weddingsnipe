@@ -27,11 +27,13 @@ const HeroButton = {
     initFirebase() {
         if (!this.db) {
             const firebaseConfig = {
-                apiKey: "YOUR_API_KEY_HERE", // Replace with your actual API key
+                apiKey: "AIzaSyDtbnBa_wok-tRS-A2xraRBMJE8oM5Hc6c",
                 authDomain: "wedding-snipe.firebaseapp.com",
                 projectId: "wedding-snipe",
+                storageBucket: "wedding-snipe.firebasestorage.app",
+                messagingSenderId: "347732622266",
+                appId: "1:347732622266:web:db85733e367e9c2ae37b83"
             };
-            
             // Initialize Firebase if not already initialized
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);

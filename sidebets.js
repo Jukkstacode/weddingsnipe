@@ -5,21 +5,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentMatchupFilter = 'all';
     let hideNoMatchup = false;
 
-    // Firebase initialization (for admin features)
+    // Firebase initialization (needed to fetch matchups)
     let db = null;
     const isAdmin = window.location.search.includes('admin=true'); // Simple admin mode
     
+    const firebaseConfig = {
+        apiKey: "AIzaSyDtbnBa_wok-tRS-A2xraRBMJE8oM5Hc6c",
+        authDomain: "wedding-snipe.firebaseapp.com",
+        projectId: "wedding-snipe",
+        storageBucket: "wedding-snipe.firebasestorage.app",
+        messagingSenderId: "347732622266",
+        appId: "1:347732622266:web:db85733e367e9c2ae37b83"
+    };
+    
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    db = firebase.firestore();
+    
     if (isAdmin) {
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY_HERE", // Replace with your actual API key
-            authDomain: "wedding-snipe.firebaseapp.com",
-            projectId: "wedding-snipe",
-        };
-        
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        db = firebase.firestore();
         console.log('🔧 Admin mode enabled');
     }
 
@@ -41,8 +45,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             allSidebets = await response.json();
             
-            // Populate matchup filter dropdown
-            populateMatchupFilter();
+            // Populate matchup filter dropdown from Firestore (ALL matchups)
+            await populateMatchupFilter();
             
             // Display sidebets
             displaySidebets();
@@ -57,24 +61,60 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Populate matchup dropdown with unique matchups
-    function populateMatchupFilter() {
-        const matchups = new Set();
-        
-        allSidebets.forEach(sidebet => {
-            if (sidebet.targetMatchup) {
-                const matchupKey = `${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week})`;
-                matchups.add(matchupKey);
+    // NEW: Populate matchup dropdown from Firestore (ALL matchups, not just those with sidebets)
+    async function populateMatchupFilter() {
+        try {
+            console.log('📡 Loading all matchups for dropdown...');
+            
+            // Get all matchup documents from Firestore
+            const snapshot = await db.collection('matchups').get();
+            
+            if (snapshot.empty) {
+                console.warn('No matchups found in Firestore');
+                return;
             }
-        });
-
-        // Add matchups to dropdown in sorted order
-        Array.from(matchups).sort().forEach(matchup => {
-            const option = document.createElement('option');
-            option.value = matchup;
-            option.textContent = matchup;
-            matchupDropdown.appendChild(option);
-        });
+            
+            // Group matchups by week
+            const matchupsByWeek = {};
+            
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const weekNumber = data.week;
+                
+                if (!matchupsByWeek[weekNumber]) {
+                    matchupsByWeek[weekNumber] = [];
+                }
+                
+                matchupsByWeek[weekNumber].push({
+                    gm1: data.gm1,
+                    gm2: data.gm2,
+                    week: weekNumber,
+                    matchupIndex: data.matchupIndex
+                });
+            });
+            
+            // Sort weeks numerically and add to dropdown
+            const sortedWeeks = Object.keys(matchupsByWeek).sort((a, b) => Number(a) - Number(b));
+            
+            sortedWeeks.forEach(weekNum => {
+                // Sort matchups within each week by index
+                const weekMatchups = matchupsByWeek[weekNum].sort((a, b) => a.matchupIndex - b.matchupIndex);
+                
+                weekMatchups.forEach(matchup => {
+                    const option = document.createElement('option');
+                    // Create matchup key for filtering
+                    const matchupKey = `${matchup.gm1} vs ${matchup.gm2} (Week ${weekNum})`;
+                    option.value = matchupKey;
+                    option.textContent = matchupKey;
+                    matchupDropdown.appendChild(option);
+                });
+            });
+            
+            console.log('✅ Matchup dropdown populated with all matchups');
+            
+        } catch (error) {
+            console.error('Error loading matchups for dropdown:', error);
+        }
     }
 
     // Filter and display sidebets
@@ -127,6 +167,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 year: 'numeric'
             });
 
+            // Determine if this sidebet has a target matchup
+const matchupText = sidebet.targetMatchup 
+    ? `<div class="sidebet-matchup">🎯 ${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week})</div>`
+    : '';
+
             // Admin toggle button (only show in admin mode)
             const adminToggle = isAdmin ? `
                 <button 
@@ -135,32 +180,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                     data-fulfilled="${sidebet.isFulfilled}"
                     onclick="toggleFulfilled('${sidebet.id}', ${!sidebet.isFulfilled})"
                 >
-                    ${sidebet.isFulfilled ? '✅ Mark Active' : '✓ Mark Fulfilled'}
+                    ${sidebet.isFulfilled ? '✅ Mark Active' : '🏆 Mark Fulfilled'}
                 </button>
             ` : '';
 
             return `
-                <div class="sidebet-card ${sidebet.isFulfilled ? 'fulfilled' : ''}">
+                <div class="sidebet-card" data-fulfilled="${sidebet.isFulfilled}">
                     <div class="sidebet-header">
                         <div class="sidebet-meta">
-                            <div class="sidebet-author">💡 ${escapeHtml(sidebet.submittedBy)}</div>
+                            <div class="sidebet-author">${escapeHtml(sidebet.submittedBy)}</div>
                             <div class="sidebet-date">${formattedDate}</div>
                         </div>
-                        <span class="sidebet-status ${sidebet.isFulfilled ? 'status-fulfilled' : 'status-active'}">
+                        <span class="sidebet-status ${sidebet.isFulfilled ? 'fulfilled' : 'active'}">
                             ${sidebet.isFulfilled ? '✅ Fulfilled' : '🎲 Active'}
                         </span>
                     </div>
-                    <div class="sidebet-content">
-                        ${escapeHtml(sidebet.suggestion)}
-                    </div>
-                    ${sidebet.targetMatchup ? `
-                        <div class="sidebet-week">
-                            <span>Target Matchup:</span>
-                            <span class="week-badge">
-                                ${sidebet.targetMatchup.gm1} vs ${sidebet.targetMatchup.gm2} (Week ${sidebet.targetMatchup.week})
-                            </span>
-                        </div>
-                    ` : ''}
+                    ${matchupText}
+                    <div class="sidebet-suggestion">${escapeHtml(sidebet.suggestion)}</div>
                     ${adminToggle}
                 </div>
             `;
@@ -169,10 +205,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebetsList.innerHTML = html;
     }
 
-    // Toggle fulfilled status (admin only)
-    window.toggleFulfilled = async (sidebetId, newStatus) => {
+    // Admin function to toggle fulfilled status
+    window.toggleFulfilled = async (sidebetId, newFulfilledStatus) => {
         if (!isAdmin) {
-            console.warn('Admin mode not enabled');
+            alert('Admin access required');
             return;
         }
 
@@ -184,7 +220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 body: JSON.stringify({
                     sidebetId: sidebetId,
-                    isFulfilled: newStatus
+                    isFulfilled: newFulfilledStatus
                 })
             });
 
@@ -192,17 +228,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error('Failed to update sidebet');
             }
 
-            // Update local data
-            const sidebet = allSidebets.find(s => s.id === sidebetId);
-            if (sidebet) {
-                sidebet.isFulfilled = newStatus;
-            }
+            // Reload sidebets
+            await loadSidebets();
 
-            // Refresh display
-            displaySidebets();
-
-            console.log('✅ Sidebet updated successfully');
-
+            console.log(`✅ Sidebet ${sidebetId} marked as ${newFulfilledStatus ? 'fulfilled' : 'active'}`);
         } catch (error) {
             console.error('Error updating sidebet:', error);
             alert('Failed to update sidebet. Please try again.');

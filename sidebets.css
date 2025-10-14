@@ -180,24 +180,40 @@ body {
     white-space: nowrap;
 }
 
-.status-pending {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #ffc107;
-    border: 1px solid rgba(255, 193, 7, 0.3);
+.sidebet-status.active {
+    background-color: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
 }
 
-.status-approved {
+.sidebet-status.fulfilled {
     background-color: rgba(46, 213, 115, 0.2);
     color: #2ed573;
     border: 1px solid rgba(46, 213, 115, 0.3);
 }
 
-.status-rejected {
-    background-color: rgba(255, 71, 87, 0.2);
-    color: #ff4757;
-    border: 1px solid rgba(255, 71, 87, 0.3);
+/* Matchup Badge */
+.sidebet-matchup {
+    margin: 10px 0;
+    padding: 10px 15px;
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 3px solid gold;
+    border-radius: 5px;
+    color: #ffd700;
+    font-weight: 600;
+    font-size: 0.95rem;
 }
 
+/* Suggestion Text */
+.sidebet-suggestion {
+    color: #e8e8e8;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Legacy styles for backward compatibility */
 .sidebet-content {
     color: #e8e8e8;
     line-height: 1.6;
@@ -225,6 +241,58 @@ body {
 .week-badge {
     color: gold;
     font-weight: 600;
+}
+
+/* Additional status classes */
+.status-active {
+    background-color: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.status-fulfilled {
+    background-color: rgba(46, 213, 115, 0.2);
+    color: #2ed573;
+    border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+/* Fulfilled sidebet card styling */
+.sidebet-card[data-fulfilled="true"] {
+    opacity: 0.7;
+    border-color: rgba(46, 213, 115, 0.3);
+}
+
+/* Admin toggle button */
+.admin-toggle-btn {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.admin-toggle-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.admin-toggle-btn.active:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.admin-toggle-btn.fulfilled {
+    background-color: rgba(46, 213, 115, 0.2);
+    color: #2ed573;
+    border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+.admin-toggle-btn.fulfilled:hover {
+    background-color: rgba(46, 213, 115, 0.3);
 }
 
 /* Loading State */
@@ -296,59 +364,8 @@ body {
         flex-direction: column;
     }
     
-    .sidebet-content {
+    .sidebet-content,
+    .sidebet-suggestion {
         font-size: 1rem;
     }
-}
-
-/* Fulfilled status badge */
-.status-active {
-    background-color: rgba(102, 126, 234, 0.2);
-    color: #667eea;
-    border: 1px solid rgba(102, 126, 234, 0.3);
-}
-
-.status-fulfilled {
-    background-color: rgba(46, 213, 115, 0.2);
-    color: #2ed573;
-    border: 1px solid rgba(46, 213, 115, 0.3);
-}
-
-/* Fulfilled sidebet card styling */
-.sidebet-card.fulfilled {
-    opacity: 0.7;
-    border-color: rgba(46, 213, 115, 0.3);
-}
-
-/* Admin toggle button */
-.admin-toggle-btn {
-    margin-top: 15px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.admin-toggle-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.admin-toggle-btn.active:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.admin-toggle-btn.fulfilled {
-    background-color: rgba(46, 213, 115, 0.2);
-    color: #2ed573;
-    border: 1px solid rgba(46, 213, 115, 0.3);
-}
-
-.admin-toggle-btn.fulfilled:hover {
-    background-color: rgba(46, 213, 115, 0.3);
 }
