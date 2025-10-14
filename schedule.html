@@ -7,9 +7,8 @@
     <title>Bathouse Schedule</title>
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="schedule.css">
-    <link rel="stylesheet" href="hero-button.css">
     
-    <!-- ADD THESE FIREBASE SCRIPTS -->
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
@@ -18,7 +17,7 @@
     <div class="gm-list-container">
         <h1>Bathouse Hockey League </br> 2025 Schedule</h1>
         
-        <!-- UPDATED: Filter Section -->
+        <!-- Filter Section -->
         <div class="filter-section">
             <div class="filter-group">
                 <label for="gm-filter">Filter by GM:</label>
@@ -27,11 +26,11 @@
                 </select>
             </div>
             
-            <!-- NOTE: Spicy filter won't work anymore since we didn't migrate isSpecial -->
+            <!-- Sidebet Matchup Filter -->
             <div class="filter-group spicy-filter">
                 <label class="spicy-checkbox-label">
                     <input type="checkbox" id="spicy-filter">
-                    <span class="spicy-text">🔥 Spicy Matchups Only</span>
+                    <span class="spicy-text">🎲 Sidebet Matchups Only</span>
                 </label>
             </div>
         </div>
@@ -39,8 +38,32 @@
         <div id="schedule-container">
         </div>
     </div>
+    
+    <!-- Sidebet Assignment Modal -->
+    <div id="sidebetModal" class="sidebet-modal" style="display: none;">
+        <div class="sidebet-modal-overlay"></div>
+        <div class="sidebet-modal-content">
+            <div class="sidebet-modal-header">
+                <h2>🎲 Assign Side Bet</h2>
+                <button class="sidebet-modal-close" onclick="closeSidebetModal()">&times;</button>
+            </div>
+            
+            <div class="sidebet-modal-body">
+                <div id="modalMatchupInfo" class="modal-matchup-info"></div>
+                
+                <div id="modalSidebetsList" class="modal-sidebets-list">
+                    <div class="loading">Loading sidebets...</div>
+                </div>
+            </div>
+            
+            <div class="sidebet-modal-footer">
+                <button class="btn-secondary" onclick="closeSidebetModal()">Cancel</button>
+                <button class="btn-remove" onclick="removeSidebetFromMatchup()" id="removeSidebetBtn" style="display: none;">Remove Sidebet</button>
+            </div>
+        </div>
+    </div>
+    
     <script src="nav.js"></script>
     <script src="schedule.js"></script>
-    <script src="hero-button.js"></script>
 </body>
 </html>

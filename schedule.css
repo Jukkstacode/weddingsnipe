@@ -67,6 +67,28 @@ body {
     max-width: 360px;
 }
 
+.matchup-item:hover {
+    background-color: #2a2a2a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(54, 162, 235, 0.3);
+}
+
+/* Enhanced hover for matchups with sidebets */
+.matchup-item.has-sidebet:hover {
+    box-shadow: 0 0 15px rgba(138, 43, 226, 1),
+                0 0 30px rgba(147, 51, 234, 0.8),
+                0 6px 20px rgba(168, 85, 247, 0.5);
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* Enhanced hover for special matchups (on-fire) */
+.matchup-item.on-fire:hover {
+    box-shadow: 0 0 15px rgba(255, 69, 0, 1),
+                0 0 30px rgba(255, 140, 0, 0.8),
+                0 6px 20px rgba(255, 215, 0, 0.5);
+    transform: translateY(-3px) scale(1.02);
+}
+
 .vs-label {
     color: #999;
     font-size: 0.9em;
@@ -370,5 +392,640 @@ body {
     #gm-filter {
         width: 100%;
         max-width: 300px;
+    }
+}
+
+/* ============================================
+   SIDEBET ASSIGNMENT MODAL
+   ============================================ */
+
+.sidebet-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebet-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.sidebet-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.sidebet-modal-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebet-modal-header h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.sidebet-modal-close {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.sidebet-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebet-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-matchup-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-matchup-info h3 {
+    margin: 0 0 8px 0;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.modal-matchup-info p {
+    margin: 0;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.modal-sidebets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-sidebets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-sidebet-item {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-sidebet-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-sidebet-item:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+}
+
+.modal-sidebet-item:hover::before {
+    opacity: 1;
+}
+
+/* Priority styling for matched target matchups */
+.modal-sidebet-item.priority {
+    border-color: rgba(255, 165, 0, 0.6);
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+}
+
+.modal-sidebet-item.priority::before {
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+    opacity: 1;
+}
+
+.modal-sidebet-item.priority:hover {
+    border-color: rgba(255, 165, 0, 0.8);
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.3);
+}
+
+/* Currently assigned styling */
+.modal-sidebet-item.assigned {
+    border-color: rgba(76, 175, 80, 0.6);
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.05) 100%);
+}
+
+.modal-sidebet-item.assigned::before {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    opacity: 1;
+}
+
+.modal-sidebet-item.assigned:hover {
+    border-color: rgba(76, 175, 80, 0.8);
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+}
+
+/* Sidebet header with status badges */
+.modal-sidebet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.modal-sidebet-badges {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.sidebet-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebet-badge.priority {
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+    color: white;
+}
+
+.sidebet-badge.assigned {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+}
+
+.sidebet-badge.fulfilled {
+    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+    color: white;
+}
+
+/* Sidebet suggestion text */
+.modal-sidebet-text {
+    color: #e8e8e8;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+/* Target matchup info */
+.modal-sidebet-target {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background-color: rgba(255, 165, 0, 0.1);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #ffa500;
+}
+
+.modal-sidebet-target-icon {
+    font-size: 1rem;
+}
+
+/* Sidebet metadata footer */
+.modal-sidebet-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.modal-sidebet-author {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: #bbb;
+}
+
+.modal-sidebet-author::before {
+    content: '👤';
+    font-size: 0.9rem;
+}
+
+.modal-sidebet-date {
+    color: #888;
+}
+
+/* No matchup indicator */
+.modal-sidebet-no-target {
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: #777;
+    font-style: italic;
+}
+
+.sidebet-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-remove {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-remove:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+}
+
+/* Priority badge for matched sidebets */
+.priority-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+/* ============================================
+   SPICY MATCHUP STYLING (for assigned sidebets)
+   ============================================ */
+
+.matchup-item.has-sidebet {
+    border: 3px solid transparent;
+    position: relative;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
+                0 0 20px rgba(147, 51, 234, 0.6),
+                0 0 30px rgba(168, 85, 247, 0.4);
+    animation: glow-purple 1.5s infinite alternate;
+}
+
+.matchup-item.has-sidebet::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid;
+    border-image: linear-gradient(to right, #8a2be2, #9333ea, #a855f7) 1;
+    border-radius: 9px;
+    z-index: 0;
+    pointer-events: none;
+    animation: border-flicker 0.15s infinite alternate;
+}
+
+@keyframes glow-purple {
+    from {
+        box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
+                    0 0 20px rgba(147, 51, 234, 0.6);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(138, 43, 226, 1),
+                    0 0 25px rgba(147, 51, 234, 0.8);
+    }
+}
+
+/* ============================================
+   SIDEBET ASSIGNMENT MODAL
+   ============================================ */
+
+.sidebet-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebet-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.sidebet-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.sidebet-modal-header {
+    padding: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebet-modal-header h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.sidebet-modal-close {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.sidebet-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebet-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-matchup-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-matchup-info h3 {
+    margin: 0 0 8px 0;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.modal-matchup-info p {
+    margin: 0;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.modal-sidebets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-sidebet-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-sidebet-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-2px);
+}
+
+.modal-sidebet-item.priority {
+    border-color: rgba(255, 165, 0, 0.6);
+    background-color: rgba(255, 165, 0, 0.05);
+}
+
+.modal-sidebet-item.priority::before {
+    content: '🎯 ';
+}
+
+.modal-sidebet-item.assigned {
+    border-color: rgba(76, 175, 80, 0.6);
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.modal-sidebet-item.assigned::after {
+    content: ' ✓ Currently Assigned';
+    color: #4caf50;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.modal-sidebet-text {
+    color: #e8e8e8;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.modal-sidebet-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.sidebet-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-remove {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-remove:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+}
+
+/* Priority badge for matched sidebets */
+.priority-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4500 100%);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+/* ============================================
+   SPICY MATCHUP STYLING (for assigned sidebets)
+   ============================================ */
+
+.matchup-item.has-sidebet {
+    border: 3px solid transparent;
+    position: relative;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
+                0 0 20px rgba(147, 51, 234, 0.6),
+                0 0 30px rgba(168, 85, 247, 0.4);
+    animation: glow-purple 1.5s infinite alternate;
+}
+
+.matchup-item.has-sidebet::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid;
+    border-image: linear-gradient(to right, #8a2be2, #9333ea, #a855f7) 1;
+    border-radius: 9px;
+    z-index: 0;
+    pointer-events: none;
+    animation: border-flicker 0.15s infinite alternate;
+}
+
+@keyframes glow-purple {
+    from {
+        box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
+                    0 0 20px rgba(147, 51, 234, 0.6);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(138, 43, 226, 1),
+                    0 0 25px rgba(147, 51, 234, 0.8);
     }
 }
