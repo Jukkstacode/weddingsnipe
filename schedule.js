@@ -303,35 +303,49 @@ async function loadSidebetsForModal() {
         
         allSidebetsForModal = await response.json();
         
-        // Separate sidebets into priority and others
-        const prioritySidebets = [];
-        const otherSidebets = [];
-        
-        allSidebetsForModal.forEach(sidebet => {
-            // Check if this sidebet targets the current matchup
-            const matchesTarget = sidebet.targetMatchup &&
-                                  sidebet.targetMatchup.week === currentMatchupData.week &&
-                                  sidebet.targetMatchup.gm1 === currentMatchupData.gm1 &&
-                                  sidebet.targetMatchup.gm2 === currentMatchupData.gm2;
+        // NEW: If this matchup already has an assigned sidebet, only show that one
+        let sidebetsToDisplay;
+        if (currentMatchupData.currentSidebetId) {
+            // Filter to show only the assigned sidebet
+            sidebetsToDisplay = allSidebetsForModal.filter(sidebet => 
+                sidebet.id === currentMatchupData.currentSidebetId
+            );
+        } else {
+            // No sidebet assigned yet, show all sidebets with priority sorting
+            const prioritySidebets = [];
+            const otherSidebets = [];
             
-            if (matchesTarget) {
-                prioritySidebets.push(sidebet);
-            } else {
-                otherSidebets.push(sidebet);
-            }
-        });
-        
-        // Combine with priority first
-        const sortedSidebets = [...prioritySidebets, ...otherSidebets];
+            allSidebetsForModal.forEach(sidebet => {
+                // Check if this sidebet targets the current matchup
+                const matchesTarget = sidebet.targetMatchup &&
+                                      sidebet.targetMatchup.week === currentMatchupData.week &&
+                                      sidebet.targetMatchup.gm1 === currentMatchupData.gm1 &&
+                                      sidebet.targetMatchup.gm2 === currentMatchupData.gm2;
+                
+                if (matchesTarget) {
+                    prioritySidebets.push(sidebet);
+                } else {
+                    otherSidebets.push(sidebet);
+                }
+            });
+            
+            // Combine with priority first
+            sidebetsToDisplay = [...prioritySidebets, ...otherSidebets];
+        }
         
         // Display sidebets
-        if (sortedSidebets.length === 0) {
+        if (sidebetsToDisplay.length === 0) {
             listContainer.innerHTML = '<div class="loading">No sidebets available</div>';
             return;
         }
         
-        listContainer.innerHTML = sortedSidebets.map(sidebet => {
-            const isPriority = prioritySidebets.includes(sidebet);
+        listContainer.innerHTML = sidebetsToDisplay.map(sidebet => {
+            // For assigned matchups, we know it's assigned. For others, check priority
+            const isPriority = !currentMatchupData.currentSidebetId && 
+                             sidebet.targetMatchup &&
+                             sidebet.targetMatchup.week === currentMatchupData.week &&
+                             sidebet.targetMatchup.gm1 === currentMatchupData.gm1 &&
+                             sidebet.targetMatchup.gm2 === currentMatchupData.gm2;
             const isAssigned = sidebet.id === currentMatchupData.currentSidebetId;
             const priorityClass = isPriority ? 'priority' : '';
             const assignedClass = isAssigned ? 'assigned' : '';
