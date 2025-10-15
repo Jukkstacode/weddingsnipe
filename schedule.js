@@ -89,7 +89,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     GM1: data.gm1,
                     GM2: data.gm2,
                     matchupIndex: data.matchupIndex,
-                    assignedSidebet: data.assignedSidebet || null // NEW: Include assigned sidebet
+                    assignedSidebet: data.assignedSidebet || null, // 
+                    score1: data.score1,
+                    score2: data.score2,
+                    winner: data.winner,
+                    isComplete: data.isComplete || false
                 });
             });
             
@@ -202,16 +206,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                 week.Matchups.forEach(matchup => {
                     const gm1Name = matchup.GM1;
                     const gm2Name = matchup.GM2;
-                    const assignedSidebet = matchup.assignedSidebet; // NEW: Check if sidebet is assigned
+                    const assignedSidebet = matchup.assignedSidebet;
                     
-                    // Get image paths, use placeholder if not found
+                    // NEW: Get score data
+                    const hasScores = matchup.score1 !== undefined && matchup.score2 !== undefined;
+                    const isComplete = matchup.isComplete || false;
+                    const winner = matchup.winner;
+                    
+                    // Get image paths
                     const gm1Image = gmMap.get(gm1Name) || 'assets/placeholder.jpg';
                     const gm2Image = gmMap.get(gm2Name) || 'assets/placeholder.jpg';
 
                     const matchupDiv = document.createElement('div');
                     matchupDiv.className = 'matchup-item';
                     
-                    // NEW: Add has-sidebet class if a sidebet is assigned
+                    // Add winner classes
+                    const gm1WinnerClass = (isComplete && winner === gm1Name) ? 'winner' : '';
+                    const gm2WinnerClass = (isComplete && winner === gm2Name) ? 'winner' : '';
+                    
+                    // Add has-sidebet class if a sidebet is assigned
                     if (assignedSidebet) {
                         matchupDiv.classList.add('has-sidebet');
                     }
@@ -221,22 +234,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                         matchupDiv.classList.add('on-fire'); 
                     }
                     
-                    // NEW: Add click handler to open modal
+                    // Add click handler to open modal
                     matchupDiv.style.cursor = 'pointer';
                     matchupDiv.addEventListener('click', () => {
                         openSidebetModal(week.Week, gm1Name, gm2Name, matchup.matchupIndex, assignedSidebet);
                     });
                     
                     matchupDiv.innerHTML = `
-                        ${assignedSidebet ? '<span></span><span></span><span></span><span></span>' : ''}
-                        <div class="gm-matchup-container gm1">
+                        ${assignedSidebet ?
+                            '<span></span><span></span><span></span><span></span>' : ''}
+                        <div class="gm-matchup-container gm1 ${gm1WinnerClass}">
                             <img src="${gm1Image}" alt="${gm1Name}" class="gm-photo-matchup">
                             <span class="gm-name">${gm1Name}</span>
+                            ${hasScores ? `<span class="score">${matchup.score1}</span>` : ''}
                         </div>
                         <span class="vs-label">vs</span>
-                        <div class="gm-matchup-container gm2">
-                            <img src="${gm2Image}" alt="${gm2Name}" class="gm-photo-matchup">
+                        <div class="gm-matchup-container gm2 ${gm2WinnerClass}">
+                            ${hasScores ? `<span class="score">${matchup.score2}</span>` : ''}
                             <span class="gm-name">${gm2Name}</span>
+                            <img src="${gm2Image}" alt="${gm2Name}" class="gm-photo-matchup">
                         </div>
                     `;
                     matchupsList.appendChild(matchupDiv);

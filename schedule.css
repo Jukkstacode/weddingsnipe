@@ -58,13 +58,14 @@ body {
     font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex: 1 1 350px;
+    gap: 15px;
+    flex: 1 1 450px;  /* CHANGED: Increased from 350px to 450px */
     color: #e8e8e8;
     justify-content: space-between; 
     box-sizing: border-box;
     position: relative;
-    max-width: 360px;
+    max-width: 500px;  /* CHANGED: Increased from 360px to 500px */
+    min-width: 450px;  /* ADDED: Minimum width to prevent squishing */
 }
 
 .matchup-item:hover {
@@ -93,12 +94,14 @@ body {
     color: #999;
     font-size: 0.9em;
     font-weight: normal;
+    flex-shrink: 0;  /* ADDED: Prevent vs from shrinking */
 }
 
 .gm-matchup-container {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;  /* ADDED: Prevent containers from shrinking */
 }
 
 .gm-photo-matchup {
@@ -115,6 +118,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-width: 60px;  /* ADDED: Ensure names have minimum space */
 }
 
 
@@ -1249,5 +1253,66 @@ body {
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   SCORE DISPLAY STYLES
+   ============================================ */
+
+.score {
+    font-weight: bold;
+    font-size: 1em;
+    margin: 0 5px;
+    padding: 4px 10px;
+    background: rgba(54, 162, 235, 0.2);
+    border-radius: 5px;
+    color: #36A2EB;
+    border: 1px solid rgba(54, 162, 235, 0.3);
+    flex-shrink: 0;
+    min-width: 50px;
+    text-align: center;
+}
+
+.gm-matchup-container.winner {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
+    border: 2px solid rgba(76, 175, 80, 0.5);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.gm-matchup-container.winner .score {
+    background: rgba(76, 175, 80, 0.3);
+    color: #4CAF50;
+    border-color: rgba(76, 175, 80, 0.5);
+    font-weight: 900;
+}
+
+.gm-matchup-container.winner .gm-photo-matchup {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+/* Mobile adjustments for scores */
+@media screen and (max-width: 768px) {
+    .matchup-item {
+        min-width: 0;  /* Allow shrinking on mobile */
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+    
+    .score {
+        font-size: 0.9em;
+        padding: 3px 8px;
+        margin: 0 3px;
+        min-width: 45px;
+    }
+    
+    .gm-matchup-container.winner {
+        padding: 6px;
+    }
+    
+    .gm-matchup-container .gm-name {
+        min-width: 50px;
     }
 }
