@@ -228,6 +228,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     });
                     
                     matchupDiv.innerHTML = `
+                        ${assignedSidebet ? '<span></span><span></span><span></span><span></span>' : ''}
                         <div class="gm-matchup-container gm1">
                             <img src="${gm1Image}" alt="${gm1Name}" class="gm-photo-matchup">
                             <span class="gm-name">${gm1Name}</span>
@@ -277,6 +278,10 @@ async function openSidebetModal(week, gm1, gm2, matchupIndex, currentSidebetId) 
     const removeBtn = document.getElementById('removeSidebetBtn');
     removeBtn.style.display = currentSidebetId ? 'block' : 'none';
     
+    // Show/hide create button based on whether there's a current sidebet
+    const createBtn = document.getElementById('toggleCreateBtn');
+    createBtn.style.display = currentSidebetId ? 'none' : 'block';
+
     // Load sidebets
     await loadSidebetsForModal();
 }
@@ -491,3 +496,150 @@ window.openSidebetModal = openSidebetModal;
 window.closeSidebetModal = closeSidebetModal;
 window.assignSidebetToMatchup = assignSidebetToMatchup;
 window.removeSidebetFromMatchup = removeSidebetFromMatchup;
+
+// ============================================
+// CREATE NEW SIDEBET FUNCTIONALITY
+// ============================================
+
+let isCreatingNewSidebet = false;
+
+// Toggle between list view and create form view
+function toggleCreateSidebet() {
+    isCreatingNewSidebet = !isCreatingNewSidebet;
+    
+    const listSection = document.getElementById('sidebetsListSection');
+    const createSection = document.getElementById('createSidebetSection');
+    const listButtons = document.getElementById('listViewButtons');
+    const createButtons = document.getElementById('createViewButtons');
+    const toggleBtn = document.getElementById('toggleCreateBtn');
+    const modalTitle = document.getElementById('modalTitle');
+    const messageDiv = document.getElementById('newSidebetFormMessage');
+    
+    if (isCreatingNewSidebet) {
+        // Show create form
+        listSection.style.display = 'none';
+        createSection.style.display = 'block';
+        listButtons.style.display = 'none';
+        createButtons.style.display = 'flex';
+        toggleBtn.style.display = 'none';
+        modalTitle.textContent = '🎲 Create New Sidebet';
+        
+        // Update the current matchup display
+        const matchupDisplay = document.getElementById('currentMatchupDisplay');
+        if (currentMatchupData) {
+            matchupDisplay.textContent = `${currentMatchupData.gm1} vs ${currentMatchupData.gm2}, Week ${currentMatchupData.week}`;
+        }
+        
+        // Clear any previous messages
+        messageDiv.innerHTML = '';
+    } else {
+        // Show sidebets list
+        listSection.style.display = 'block';
+        createSection.style.display = 'none';
+        listButtons.style.display = 'flex';
+        createButtons.style.display = 'none';
+        toggleBtn.style.display = 'block';
+        modalTitle.textContent = '🎲 Assign Side Bet';
+        
+        // Reset form
+        document.getElementById('newSidebetForm').reset();
+        document.getElementById('useCurrentMatchup').checked = true;
+        messageDiv.innerHTML = '';
+    }
+}
+
+// Submit new sidebet
+async function submitNewSidebet() {
+    const submitBtn = document.getElementById('submitNewSidebetBtn');
+    const messageDiv = document.getElementById('newSidebetFormMessage');
+    const form = document.getElementById('newSidebetForm');
+    
+    // Validate form
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    // Show loading state
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+    messageDiv.innerHTML = '';
+    
+    try {
+        // Get form data
+        const formData = new FormData(form);
+        const useCurrentMatchup = document.getElementById('useCurrentMatchup').checked;
+        
+        const data = {
+            suggestion: formData.get('suggestion'),
+            submittedBy: formData.get('submittedBy'),
+            targetMatchup: useCurrentMatchup && currentMatchupData ? {
+                week: currentMatchupData.week,
+                gm1: currentMatchupData.gm1,
+                gm2: currentMatchupData.gm2
+            } : null
+        };
+
+        // Submit to your endpoint
+        const response = await fetch('https://nhl-stats-cacher-347732622266.us-west1.run.app?requestType=submitSidebet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to submit sidebet');
+        }
+
+        const result = await response.json();
+        
+        // Success!
+        messageDiv.innerHTML = `
+            <div class="message message-success">
+                ✅ Sidebet created successfully!
+            </div>
+        `;
+        
+        // If the sidebet was assigned to the current matchup, automatically assign it
+        if (useCurrentMatchup && currentMatchupData && result.sidebetId) {
+            console.log('🎯 Auto-assigning new sidebet to matchup');
+            await assignSidebetToMatchup(result.sidebetId);
+        } else {
+            // Just close and refresh after a delay
+            setTimeout(() => {
+                closeSidebetModal();
+                location.reload();
+            }, 1500);
+        }
+
+    } catch (error) {
+        console.error('Error submitting sidebet:', error);
+        messageDiv.innerHTML = `
+            <div class="message message-error">
+                ❌ Failed to create sidebet. Please try again.
+            </div>
+        `;
+        
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+    }
+}
+
+// Update the closeSidebetModal function to reset the create form state
+const originalCloseSidebetModal = closeSidebetModal;
+closeSidebetModal = function() {
+    // Reset create form state
+    if (isCreatingNewSidebet) {
+        toggleCreateSidebet();
+    }
+    
+    // Call original close function
+    originalCloseSidebetModal();
+};
+
+// Make functions globally available
+window.toggleCreateSidebet = toggleCreateSidebet;
+window.submitNewSidebet = submitNewSidebet;

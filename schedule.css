@@ -996,36 +996,258 @@ body {
    ============================================ */
 
 .matchup-item.has-sidebet {
-    border: 3px solid transparent;
     position: relative;
-    box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
-                0 0 20px rgba(147, 51, 234, 0.6),
-                0 0 30px rgba(168, 85, 247, 0.4);
-    animation: glow-purple 1.5s infinite alternate;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 107, 71, 0.8),
+                0 0 20px rgba(255, 69, 0, 0.6),
+                0 0 30px rgba(255, 140, 0, 0.4);
+    animation: glow-fire 1.5s infinite alternate;
 }
 
-.matchup-item.has-sidebet::before {
-    content: '';
+/* Animated border spans */
+.matchup-item.has-sidebet > span:nth-child(1) {
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 3px solid;
-    border-image: linear-gradient(to right, #8a2be2, #9333ea, #a855f7) 1;
-    border-radius: 9px;
-    z-index: 0;
-    pointer-events: none;
-    animation: border-flicker 0.15s infinite alternate;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to left, transparent, #ff4500);
+    animation: animateTop 2s linear infinite;
+    z-index: 2;
 }
 
-@keyframes glow-purple {
+.matchup-item.has-sidebet > span:nth-child(2) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to top, transparent, #ff6347);
+    animation: animateRight 2s linear infinite;
+    animation-delay: -1s;
+    z-index: 2;
+}
+
+.matchup-item.has-sidebet > span:nth-child(3) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, #ff8c00);
+    animation: animateBottom 2s linear infinite;
+    z-index: 2;
+}
+
+.matchup-item.has-sidebet > span:nth-child(4) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #ff4500);
+    animation: animateLeft 2s linear infinite;
+    animation-delay: -1s;
+    z-index: 2;
+}
+
+/* Fire glow animation */
+@keyframes glow-fire {
     from {
-        box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
-                    0 0 20px rgba(147, 51, 234, 0.6);
+        box-shadow: 0 0 10px rgba(255, 107, 71, 0.8),
+                    0 0 20px rgba(255, 69, 0, 0.6);
     }
     to {
-        box-shadow: 0 0 15px rgba(138, 43, 226, 1),
-                    0 0 25px rgba(147, 51, 234, 0.8);
+        box-shadow: 0 0 15px rgba(255, 107, 71, 1),
+                    0 0 25px rgba(255, 69, 0, 0.8),
+                    0 0 35px rgba(255, 140, 0, 0.5);
+    }
+}
+
+/* Border animations */
+@keyframes animateTop {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes animateRight {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+}
+
+@keyframes animateBottom {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes animateLeft {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Ensure content stays above the animated borders */
+.matchup-item.has-sidebet .gm-matchup-container,
+.matchup-item.has-sidebet .vs-label {
+    position: relative;
+    z-index: 3;
+}
+
+/* ============================================
+   CREATE NEW SIDEBET FORM STYLES
+   ============================================ */
+
+.new-sidebet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.new-sidebet-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.new-sidebet-form label {
+    color: #ddd;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.new-sidebet-form input[type="text"],
+.new-sidebet-form textarea {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 12px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.new-sidebet-form input[type="text"]:focus,
+.new-sidebet-form textarea:focus {
+    outline: none;
+    border-color: rgba(102, 126, 234, 0.6);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.new-sidebet-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.new-sidebet-form input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.new-sidebet-form label:has(input[type="checkbox"]) {
+    flex-direction: row;
+    align-items: center;
+    color: #bbb;
+    font-weight: normal;
+}
+
+#newSidebetFormMessage {
+    margin-bottom: 12px;
+}
+
+#newSidebetFormMessage .message {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    animation: slideDown 0.3s ease;
+}
+
+#newSidebetFormMessage .message-success {
+    background-color: rgba(46, 213, 115, 0.2);
+    border: 1px solid rgba(46, 213, 115, 0.5);
+    color: #2ed573;
+}
+
+#newSidebetFormMessage .message-error {
+    background-color: rgba(255, 71, 87, 0.2);
+    border: 1px solid rgba(255, 71, 87, 0.5);
+    color: #ff4757;
+}
+
+/* Button Styles */
+.btn-create {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.btn-create:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-submit {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.btn-submit:disabled {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-submit.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn-submit.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
 }
