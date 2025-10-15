@@ -58,14 +58,13 @@ body {
     font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 15px;
-    flex: 1 1 450px;  /* CHANGED: Increased from 350px to 450px */
+    gap: 10px;
+    flex: 1 1 350px;
     color: #e8e8e8;
     justify-content: space-between; 
     box-sizing: border-box;
     position: relative;
-    max-width: 500px;  /* CHANGED: Increased from 360px to 500px */
-    min-width: 450px;  /* ADDED: Minimum width to prevent squishing */
+    max-width: 360px;
 }
 
 .matchup-item:hover {
@@ -94,14 +93,12 @@ body {
     color: #999;
     font-size: 0.9em;
     font-weight: normal;
-    flex-shrink: 0;  /* ADDED: Prevent vs from shrinking */
 }
 
 .gm-matchup-container {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-shrink: 0;  /* ADDED: Prevent containers from shrinking */
 }
 
 .gm-photo-matchup {
@@ -118,7 +115,14 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 60px;  /* ADDED: Ensure names have minimum space */
+}
+
+/* Score styling */
+span.score {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
 }
 
 
@@ -133,19 +137,19 @@ body {
     
     .week-container {
         margin: 0 auto 40px auto;
-        max-width: 90%;
-        padding: 15px;
+        max-width: 95%; /* Slightly wider */
+        padding: 12px; /* Reduced padding */
     }
     
     .gm-list-container {
         padding-top: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 5px; /* Reduced from 10px */
+        padding-right: 5px;
     }
     
     .matchups-list {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px; /* Reduced gap */
         justify-content: center;
     }
     
@@ -153,10 +157,263 @@ body {
         flex: 1 1 100%;
         min-width: 0;
         max-width: 100%;
-        padding: 10px;
+        padding: 8px 10px; /* Even tighter padding */
         margin: 0 auto;
-        width: 100%;
+        width: calc(100% - 10px); /* Slightly wider, accounting for margins */
         box-sizing: border-box;
+        font-size: 0.95rem; /* Smaller base font */
+        gap: 4px; /* Tighter gaps */
+    }
+    
+    /* Reduce size of GM names on mobile */
+    .gm-matchup-container .gm-name {
+        font-size: 0.8rem; /* Even smaller font for names */
+        max-width: 65px; /* Narrower width limit */
+    }
+    
+    /* Make photos smaller on mobile */
+    .gm-photo-matchup {
+        width: 24px; /* Reduced from 30px */
+        height: 24px;
+    }
+    
+    /* Adjust VS label */
+    .vs-label {
+        font-size: 0.7em; /* Smaller */
+        margin: 0 1px; /* Minimal spacing */
+    }
+    
+    /* Reduce stat box size */
+    .gm-matchup-container {
+        gap: 4px; /* Tighter gaps */
+    }
+    
+    /* CRITICAL: Remove padding from score boxes on mobile */
+    span.score {
+        padding: 2px 4px !important; /* Minimal padding */
+        font-size: 1.0em !important; /* Smaller font */
+        border-radius: 3px;
+    }
+}
+
+
+/* ============================================
+   FIRE/GLOW EFFECT FOR SPECIAL MATCHUPS
+   ============================================ */
+
+.matchup-item.on-fire {
+    border: 3px solid transparent; 
+    position: relative;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 
+                0 0 20px rgba(255, 140, 0, 0.6), 
+                0 0 30px rgba(255, 255, 0, 0.4);
+    animation: glow 1.5s infinite alternate;
+}
+
+.matchup-item.on-fire::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid;
+    border-image: linear-gradient(to right, #ff4500, #ff8c00, #ffd700) 1;
+    border-radius: 9px; 
+    z-index: 0;
+    pointer-events: none;
+    animation: border-flicker 0.15s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 
+                    0 0 20px rgba(255, 140, 0, 0.6);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(255, 69, 0, 1), 
+                    0 0 25px rgba(255, 140, 0, 0.8);
+    }
+}
+
+@keyframes border-flicker {
+    0% { opacity: 0.8; }
+    50% { opacity: 1.0; }
+    100% { opacity: 0.8; }
+}
+
+/* ============================================
+   PURPLE GLOW EFFECT FOR SIDEBETS
+   ============================================ */
+
+.matchup-item.has-sidebet {
+    border: 3px solid transparent;
+    position: relative;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
+                0 0 20px rgba(147, 51, 234, 0.6),
+                0 0 30px rgba(168, 85, 247, 0.4);
+    animation: glow-purple 1.5s infinite alternate;
+}
+
+.matchup-item.has-sidebet::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid;
+    border-image: linear-gradient(to right, #8a2be2, #9333ea, #a855f7) 1;
+    border-radius: 9px;
+    z-index: 0;
+    pointer-events: none;
+    animation: border-flicker 0.15s infinite alternate;
+}
+
+@keyframes glow-purple {
+    from {
+        box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
+                    0 0 20px rgba(147, 51, 234, 0.6);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(138, 43, 226, 1),
+                    0 0 25px rgba(147, 51, 234, 0.8);
+    }
+}
+
+/* ============================================
+   FILTER SECTION STYLES
+   ============================================ */
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #444;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter-group label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #e8e8e8;
+}
+
+#gm-filter {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #36A2EB;
+    border-radius: 6px;
+    background-color: #1a1a1a;
+    color: #e8e8e8;
+    cursor: pointer;
+    min-width: 200px;
+    transition: border-color 0.3s ease;
+}
+
+#gm-filter:hover {
+    border-color: #5BC0DE;
+}
+
+#gm-filter:focus {
+    outline: none;
+    border-color: #5BC0DE;
+    box-shadow: 0 0 8px rgba(91, 192, 222, 0.5);
+}
+
+/* Spicy Matchups Filter Styles */
+.spicy-filter {
+    position: relative;
+}
+
+.spicy-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    gap: 10px;
+}
+
+#spicy-filter {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ff8c00;
+    border-radius: 4px;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+#spicy-filter:hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
+}
+
+#spicy-filter:checked {
+    background: linear-gradient(135deg, #ff4500, #ff8c00, #ffd700);
+    border-color: #ffd700;
+    box-shadow: 0 0 12px rgba(255, 140, 0, 0.8);
+}
+
+#spicy-filter:checked::after {
+    content: '🔥';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+}
+
+.spicy-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #e8e8e8;
+    transition: color 0.3s ease;
+}
+
+#spicy-filter:checked ~ .spicy-text {
+    color: #ffd700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* No Matchups Message */
+.no-matchups-message {
+    text-align: center;
+    padding: 30px;
+    font-size: 1.2rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* Mobile adjustments for filter */
+@media screen and (max-width: 768px) {
+    .filter-section {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .filter-group {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    #gm-filter {
+        width: 100%;
+        max-width: 300px;
     }
 }
 
@@ -1303,7 +1560,7 @@ body {
     
     .score {
         font-size: 0.9em;
-        padding: 3px 8px;
+        padding: 3px 0px;
         margin: 0 3px;
         min-width: 45px;
     }
