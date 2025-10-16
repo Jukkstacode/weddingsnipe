@@ -64,7 +64,7 @@ body {
     justify-content: space-between; 
     box-sizing: border-box;
     position: relative;
-    max-width: 360px;
+    max-width: 462px;
 }
 
 .matchup-item:hover {
@@ -167,7 +167,7 @@ span.score {
     
     /* Reduce size of GM names on mobile */
     .gm-matchup-container .gm-name {
-        font-size: 0.8rem; /* Even smaller font for names */
+        font-size: 1.0rem; /* Even smaller font for names */
         max-width: 65px; /* Narrower width limit */
     }
     
