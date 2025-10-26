@@ -593,7 +593,8 @@ async function submitNewSidebet() {
                 week: currentMatchupData.week,
                 gm1: currentMatchupData.gm1,
                 gm2: currentMatchupData.gm2
-            } : null
+            } : null,
+            matchupIndex: useCurrentMatchup && currentMatchupData ? currentMatchupData.matchupIndex : null
         };
 
         // Submit to your endpoint
@@ -614,21 +615,15 @@ async function submitNewSidebet() {
         // Success!
         messageDiv.innerHTML = `
             <div class="message message-success">
-                ✅ Sidebet created successfully!
+                ✅ Sidebet ${useCurrentMatchup ? 'created and assigned' : 'created'} successfully!
             </div>
         `;
         
-        // If the sidebet was assigned to the current matchup, automatically assign it
-        if (useCurrentMatchup && currentMatchupData && result.sidebetId) {
-            console.log('🎯 Auto-assigning new sidebet to matchup');
-            await assignSidebetToMatchup(result.sidebetId);
-        } else {
-            // Just close and refresh after a delay
-            setTimeout(() => {
-                closeSidebetModal();
-                location.reload();
-            }, 1500);
-        }
+        // Close and refresh after a short delay to show the success message
+        setTimeout(() => {
+            closeSidebetModal();
+            location.reload();
+        }, 1500);
 
     } catch (error) {
         console.error('Error submitting sidebet:', error);
@@ -659,3 +654,15 @@ closeSidebetModal = function() {
 // Make functions globally available
 window.toggleCreateSidebet = toggleCreateSidebet;
 window.submitNewSidebet = submitNewSidebet;
+
+// Update submit button text based on checkbox state
+function updateSubmitButtonText() {
+    const useCurrentMatchup = document.getElementById('useCurrentMatchup').checked;
+    const submitBtn = document.getElementById('submitNewSidebetBtn');
+    
+    if (useCurrentMatchup) {
+        submitBtn.textContent = 'Assign Sidebet';
+    } else {
+        submitBtn.textContent = 'Submit Sidebet';
+    }
+}
