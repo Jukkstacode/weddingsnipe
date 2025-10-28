@@ -52,7 +52,7 @@ body {
 /* Base style for matchup item - designed to flex on desktop */
 .matchup-item {
     background-color: #202020;
-    padding: 15px 25px; 
+    padding: 12px 16px; 
     border-radius: 6px;
     font-size: 1.2rem;
     font-weight: bold;
