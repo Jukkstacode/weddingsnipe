@@ -1,16 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-     // Initialize Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyDtbnBa_wok-tRS-A2xraRBMJE8oM5Hc6c",
-        authDomain: "wedding-snipe.firebaseapp.com",
-        projectId: "wedding-snipe",
-        storageBucket: "wedding-snipe.firebasestorage.app",
-        messagingSenderId: "347732622266",
-        appId: "1:347732622266:web:db85733e367e9c2ae37b83"
-    };
-    
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // Endpoint URL
+    const API_ENDPOINT = "https://nhl-stats-cacher-347732622266.us-west1.run.app";
+
     // Fantasy scoring system
     const FANTASY_SCORING = {
         goals: 3,
@@ -28,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function calculateSkaterFantasyPoints(stats) {
         if (!stats) return 0;
-        // This logic is now aligned with debug_stats.html
         const { goals = 0, assists = 0, plusMinus = 0, pim = 0, powerPlayPoints = 0, shorthandedPoints = 0, gameWinningGoals = 0 } = stats;
         return (goals * FANTASY_SCORING.goals) +
                (assists * FANTASY_SCORING.assists) +
@@ -41,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function calculateGoalieFantasyPoints(stats) {
         if (!stats) return 0;
-        // This logic is now aligned with debug_stats.html
         const { wins = 0, goalsAgainst = 0, shotsAgainst = 0, shutouts = 0 } = stats;
         const calculatedSaves = shotsAgainst - goalsAgainst;
         return (wins * FANTASY_SCORING.wins) +
@@ -50,16 +39,21 @@ document.addEventListener('DOMContentLoaded', function() {
                (shutouts * FANTASY_SCORING.shutouts);
     }
 
-    async function fetchAllPlayerStats() {
+    // Fetch stats from your Cloud Function
+    async function fetchCurrentSeasonStats(playerIds) {
         try {
-            const snapshot = await db.collection('player-stats').get();
-            const stats = {};
-            snapshot.forEach(doc => {
-                stats[doc.id] = doc.data();
-            });
-            return stats;
+            // Join IDs into a comma-separated string for the URL
+            const idsParam = playerIds.join(',');
+            const url = `${API_ENDPOINT}?requestType=currentSeasonStats&playerIds=${idsParam}`;
+            
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`API returned status: ${response.status}`);
+            }
+            
+            return await response.json();
         } catch (error) {
-            console.error('Error loading player stats:', error);
+            console.error('Error loading current season stats from endpoint:', error);
             return {};
         }
     }
@@ -67,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatStatsHtml(stats, position) {
         if (!stats) return '<span class="no-stats">No stats available for this season</span>';
         
-        // Use 'season' instead of 'seasonId' from the new API response
-        const season = stats.season; 
+        // Display the season from the stats, or default to 2025-2026
+        const season = stats.season || '20252026'; 
         const seasonDisplay = `${String(season).substring(0, 4)}-${String(season).substring(4)}`;
 
         if (position === 'G') {
@@ -76,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return `
                 <span class="stats-season">${seasonDisplay} Season</span>
                 <span class="stats-line">GP: ${stats.gamesPlayed || 0} | W: ${stats.wins || 0} | L: ${stats.losses || 0}</span>
-                <span class="stats-line">GAA: ${stats.goalAgainstAverage?.toFixed(2) || 'N/A'} | SV%: ${stats.savePctg?.toFixed(3) || 'N/A'}</span>
+                <span class="stats-line">GAA: ${stats.goalsAgainstAverage?.toFixed(2) || 'N/A'} | SV%: ${stats.savePctg?.toFixed(3) || 'N/A'}</span>
                 <span class="stats-line fantasy-pts">Fantasy Pts: ${fantasyPts}</span>
             `;
         } else {
@@ -91,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     Promise.all([
-        fetch('/contracts.json').then(response => response.json()),
-        fetch('/gm.json').then(response => response.json())
+        fetch('contracts.json').then(response => response.json()),
+        fetch('gm.json').then(response => response.json())
     ]).then(async ([contracts, gms]) => {
         const container = document.querySelector('.gm-list-container');
         if (!container) {
@@ -100,9 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const allPlayerIds = contracts.map(contract => contract.nhlId).filter(id => id);
-        const uniquePlayerIds = [...new Set(allPlayerIds)];
-        const allPlayerStats = await fetchAllPlayerStats(uniquePlayerIds);
+        // 1. Extract all Player IDs from the contracts
+        const allPlayerIds = contracts
+            .map(c => c.nhlId)
+            .filter(id => id); // Remove any empty/null IDs
+            
+        // 2. Fetch stats for these specific players using the endpoint
+        const allPlayerStats = await fetchCurrentSeasonStats(allPlayerIds);
 
         const gmsMap = new Map(gms.map(gm => [gm.name, gm]));
         const contractsByGm = contracts.reduce((acc, contract) => {
