@@ -37,7 +37,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     cursor: pointer;
 }
 
@@ -48,7 +48,7 @@ body {
 }
 
 .draft-pick:nth-child(1) {
-    border-color: #FFD700;
+    border-color: var(--accent-gold);
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
@@ -117,7 +117,7 @@ a.target-list {
     border: 2px solid #4a9eff;
     font-size: 2rem;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
 }
 
 a.target-list:hover {

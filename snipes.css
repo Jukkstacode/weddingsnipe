@@ -3,13 +3,13 @@
    ============================================ */
 
 html {
-    background-color: #1a1a1a;
+    background-color: var(--bg-dark);
 }
 
 body {
     min-height: 100vh;
     overflow-y: auto;
-    background-color: #1a1a1a;
+    background-color: var(--bg-dark);
 }
 
 .snipes-container {
@@ -62,7 +62,7 @@ body {
     border: 2px solid #4a9eff;
     border-radius: 15px;
     padding: 1.5rem;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     position: relative;
 }
 

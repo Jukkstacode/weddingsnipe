@@ -6,7 +6,7 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--gradient-purple);
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
     color: white;
     font-size: 24px;
 }
@@ -36,206 +36,31 @@
 /* Sidebet Modal Styles */
 .sidebet-modal {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1002;
     animation: fadeIn 0.3s ease;
 }
 
 .sidebet-modal.active {
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .sidebet-form-container {
-    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
-    border-radius: 12px;
+    background: var(--gradient-card);
+    border-radius: var(--border-radius-lg);
     padding: 30px;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     animation: slideUp 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .sidebet-form-container h2 {
-    color: #fff;
+    color: var(--text-white);
     margin-top: 0;
     margin-bottom: 20px;
     text-align: center;
     font-size: 1.8rem;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    color: #ddd;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    color: #fff;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: #667eea;
-    background-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
-}
-
-.form-group textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-group select option {
-    background-color: #2c2c2c;
-    color: #fff;
-}
-
-.form-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 25px;
-}
-
-.btn {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.btn-submit {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    flex: 1;
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-}
-
-.btn-cancel {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ddd;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    flex: 1;
-}
-
-.btn-cancel:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Success/Error Messages */
-.message {
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    text-align: center;
-    animation: slideDown 0.3s ease;
-}
-
-.message.success {
-    background-color: rgba(46, 213, 115, 0.2);
-    border: 1px solid rgba(46, 213, 115, 0.5);
-    color: #2ed573;
-}
-
-.message.error {
-    background-color: rgba(255, 71, 87, 0.2);
-    border: 1px solid rgba(255, 71, 87, 0.5);
-    color: #ff4757;
-}
-
-/* Loading State */
-.btn-submit.loading {
-    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
-    cursor: not-allowed;
-    position: relative;
-}
-
-.btn-submit.loading::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 2px solid transparent;
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 /* Mobile Responsive */
@@ -244,20 +69,20 @@
         bottom: 20px;
         right: 20px;
     }
-    
+
     .sidebet-form-container {
         padding: 20px;
         width: 95%;
     }
-    
+
     .sidebet-form-container h2 {
         font-size: 1.5rem;
     }
-    
+
     .form-buttons {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
     }

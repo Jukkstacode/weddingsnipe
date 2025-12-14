@@ -2,7 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #1a1a1a;  /* Changed from #202020 to #1a1a1a */
+    background-color: var(--bg-dark);
     font-size: 16px;
 }
 
@@ -18,7 +18,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     padding-top: 54px;
-    background-color: #1a1a1a;  /* Changed from #202020 to #1a1a1a */
+    background-color: var(--bg-dark);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     overflow-y: auto;
     box-sizing: border-box;
@@ -47,14 +47,14 @@ body {
 }
 
 .player-chip {
-    background-color: #3a3a3a; 
+    background-color: #3a3a3a;
     border-radius: 16px;
     padding: 12px 15px;
     font-size: 14px;
     font-weight: bold;
     position: relative;
     width: 296px; /* Fixed width instead of flexible */
-    color: #ffffff; 
+    color: #ffffff;
     box-sizing: border-box; /* Ensure padding is included in width */
 }
 
@@ -78,7 +78,7 @@ body {
 
 .player-stats {
     background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     padding: 8px 10px; /* Increased padding */
     margin-top: 6px; /* More space from position/team */
     font-family: 'Courier New', monospace;
@@ -96,7 +96,7 @@ body {
 .stats-line.fantasy-pts {
     background: #3a3a3a;
     padding: 4px 8px; /* More padding */
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     color: #2cd171;
     font-weight: 700; /* Extra bold */
     font-size: 17px; /* Larger */
@@ -106,7 +106,7 @@ body {
 
 .stats-season {
     display: block;
-    color: #ffd700; /* Gold color for season */
+    color: var(--accent-gold);
     font-weight: 700; /* Bolder */
     font-size: 11px; /* Slightly larger */
     margin-bottom: 4px; /* More space below */
