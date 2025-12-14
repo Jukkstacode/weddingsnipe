@@ -4,7 +4,7 @@
 
 /* Reset and Base Styles */
 html, body {
-    height: 100%;
+    min-height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -14,7 +14,7 @@ body {
     color: #ecf0f1;
     background-color: #1a1a1a;
     box-sizing: border-box;
-    
+
     /* Padding for fixed navbar - adjust per page if needed */
     padding-top: 60px;
 }
@@ -22,7 +22,7 @@ body {
 /* Dark overlay background (used on some pages) */
 body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
