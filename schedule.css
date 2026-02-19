@@ -53,6 +53,7 @@ body {
 .matchup-item {
     background-color: #202020;
     padding: 12px 16px;
+    border: 3px solid transparent;
     border-radius: var(--border-radius-sm);
     font-size: 1.2rem;
     font-weight: bold;
@@ -208,8 +209,6 @@ span.score {
    ============================================ */
 
 .matchup-item.on-fire {
-    border: 3px solid transparent;
-    position: relative;
     box-shadow: 0 0 10px rgba(255, 69, 0, 0.8),
                 0 0 20px rgba(255, 140, 0, 0.6),
                 0 0 30px rgba(255, 255, 0, 0.4);
@@ -236,8 +235,6 @@ span.score {
    ============================================ */
 
 .matchup-item.has-sidebet {
-    border: 3px solid transparent;
-    position: relative;
     box-shadow: 0 0 10px rgba(138, 43, 226, 0.8),
                 0 0 20px rgba(147, 51, 234, 0.6),
                 0 0 30px rgba(168, 85, 247, 0.4);

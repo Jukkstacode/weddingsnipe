@@ -241,8 +241,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     });
                     
                     matchupDiv.innerHTML = `
-                        ${assignedSidebet ?
-                            '<span></span><span></span><span></span><span></span>' : ''}
                         <div class="gm-matchup-container gm1 ${gm1WinnerClass}">
                             <img src="${gm1Image}" alt="${gm1Name}" class="gm-photo-matchup">
                             <span class="gm-name">${gm1Name}</span>

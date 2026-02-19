@@ -86,8 +86,8 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>
-                                <input type="checkbox" id="useCurrentMatchup" checked>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="useCurrentMatchup" checked style="width: auto;">
                                 <span>Assign to current matchup (<span id="currentMatchupDisplay"></span>)</span>
                             </label>
                         </div>
@@ -109,7 +109,7 @@
                 
                 <div id="createViewButtons" style="display: none; gap: 12px;">
                     <button class="btn-secondary" onclick="toggleCreateSidebet()">Back to List</button>
-                    <button class="btn-submit" onclick="submitNewSidebet()" id="submitNewSidebetBtn">Submit Sidebet</button>
+                    <button class="btn-create btn-submit" onclick="submitNewSidebet()" id="submitNewSidebetBtn">Submit Sidebet</button>
                 </div>
             </div>
         </div>

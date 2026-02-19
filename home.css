@@ -41,10 +41,10 @@ body {
 .quick-link-btn {
     padding: 0.75rem 1rem;
     background: rgba(74, 158, 255, 0.2);
-    color: #4a9eff;
+    color: var(--accent-blue);
     text-decoration: none;
     border-radius: var(--border-radius);
-    border: 2px solid #4a9eff;
+    border: 2px solid var(--accent-blue);
     font-size: 0.95rem;
     font-weight: 600;
     transition: var(--transition-base);
@@ -54,7 +54,7 @@ body {
 }
 
 .quick-link-btn:hover {
-    background: #4a9eff;
+    background: var(--accent-blue);
     color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(74, 158, 255, 0.4);
@@ -84,7 +84,7 @@ body {
 
 .gm-card:hover {
     background: rgba(74, 158, 255, 0.1);
-    border-color: #4a9eff;
+    border-color: var(--accent-blue);
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(74, 158, 255, 0.3);
 }
@@ -94,7 +94,7 @@ body {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #4a9eff;
+    border: 3px solid var(--accent-blue);
     margin-bottom: 0.75rem;
     transition: var(--transition-base);
 }
@@ -234,7 +234,7 @@ body {
 .standing-rank {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #4a9eff;
+    color: var(--accent-blue);
     min-width: 40px;
     text-align: center;
 }
@@ -268,7 +268,7 @@ body {
     height: 45px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #4a9eff;
+    border: 2px solid var(--accent-blue);
     flex-shrink: 0;
 }
 
@@ -347,7 +347,7 @@ body {
 }
 
 .stat-points .stat-value {
-    color: #4a9eff;
+    color: var(--accent-blue);
     font-size: 1rem;
 }
 

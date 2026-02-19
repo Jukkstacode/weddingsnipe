@@ -30,6 +30,7 @@
     --primary-purple-dark: #764ba2;
     --accent-gold: #ffd700;
     --accent-orange: #ff8c00;
+    --accent-blue: #4a9eff;
 
     /* State Colors */
     --success-bg: rgba(46, 213, 115, 0.2);
@@ -305,7 +306,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -423,4 +424,76 @@
     gap: 15px;
     justify-content: center;
     margin-top: 25px;
+}
+
+/* ============================================
+   SHARED CARD COMPONENTS (players.html, winners.html)
+   ============================================ */
+
+.card {
+    background-color: transparent;
+    width: 300px;
+    height: 420px;
+    perspective: 1000px;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-front {
+    color: white;
+}
+
+.card-back {
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 15px;
+}
+
+.card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.card-back > * {
+    position: relative;
+    z-index: 2;
+}
+
+.card-back h2 {
+    margin-top: 0;
+}
+
+.card-back ul {
+    list-style: none;
+    padding: 0;
 }

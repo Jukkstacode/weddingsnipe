@@ -88,7 +88,7 @@ body::before {
 
 .top-nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    color: #4a9eff;
+    color: var(--accent-blue);
 }
 
 /* Underline effect on hover */
@@ -99,7 +99,7 @@ body::before {
     left: 20px;
     right: 20px;
     height: 2px;
-    background-color: #4a9eff;
+    background-color: var(--accent-blue);
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
