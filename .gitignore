@@ -7,3 +7,4 @@ node_modules/
 service-account-key.json
 package-lock.json
 screenshots/
+endpoint/secret.txt

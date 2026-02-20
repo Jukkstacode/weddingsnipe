@@ -72,7 +72,7 @@ export const getNhlPlayerStats = async (req, res) => {
   } else if (requestType === 'currentSeasonStats') {
     await handleCurrentSeasonStatsRequest(res, playerIds);
   } else if (requestType === 'refreshCurrentSeasonStats') {
-    await handleRefreshCurrentSeasonStats(res, playerIds);
+    await handleRefreshCurrentSeasonStats(req, res, playerIds);
   } else {
     await handleSeasonTotalsRequest(res, playerIds, season);
   }
@@ -162,7 +162,15 @@ async function fetchPlayerStatsFromNHL(playerId) {
 }
 
 // --- Handle refresh of current season stats ---
-async function handleRefreshCurrentSeasonStats(res, playerIds) {
+async function handleRefreshCurrentSeasonStats(req, res, playerIds) {
+  const secret = process.env.REFRESH_SECRET;
+  const authHeader = req.headers['authorization'];
+
+  if (!secret || authHeader !== `Bearer ${secret}`) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
+
   if (!playerIds) {
     res.status(400).send('playerIds query parameter is required');
     return;
