@@ -1,2 +1,8 @@
 .DS_Store
 SESSION_NOTES.md
+sidebet-admin.css
+sidebet-admin.html
+sidebet-admin.js
+node_modules/
+service-account-key.json
+package-lock.json

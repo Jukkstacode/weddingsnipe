@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
+    <title>Bathouse Schedule</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="schedule.css">
+    
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="gm-list-container">
+        <h1>Bathouse Hockey League </br> 2025 Schedule</h1>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="gm-filter">Filter by GM:</label>
+                <select id="gm-filter">
+                    <option value="all">All Matchups</option>
+                </select>
+            </div>
+            
+            <!-- Sidebet Matchup Filter -->
+            <div class="filter-group spicy-filter">
+                <label class="spicy-checkbox-label">
+                    <input type="checkbox" id="spicy-filter">
+                    <span class="spicy-text">🎲 Sidebet Matchups Only</span>
+                </label>
+            </div>
+        </div>
+        
+        <div id="schedule-container">
+        </div>
+    </div>
+    
+    <!-- Sidebet Assignment Modal -->
+    <div id="sidebetModal" class="sidebet-modal" style="display: none;">
+        <div class="sidebet-modal-overlay"></div>
+        <div class="sidebet-modal-content">
+            <div class="sidebet-modal-header">
+                <h2 id="modalTitle">🎲 Assign Side Bet</h2>
+                <button class="sidebet-modal-close" onclick="closeSidebetModal()">&times;</button>
+            </div>
+            
+            <div class="sidebet-modal-body">
+                <div id="modalMatchupInfo" class="modal-matchup-info"></div>
+                
+                <!-- Existing Sidebets List Section -->
+                <div id="sidebetsListSection">
+                    <div id="modalSidebetsList" class="modal-sidebets-list">
+                        <div class="loading">Loading sidebets...</div>
+                    </div>
+                </div>
+                
+                <!-- Create New Sidebet Form Section (Hidden by default) -->
+                <div id="createSidebetSection" style="display: none;">
+                    <div id="newSidebetFormMessage"></div>
+                    <form id="newSidebetForm" class="new-sidebet-form">
+                        <div class="form-group">
+                            <label for="newSuggestion">Sidebet Suggestion *</label>
+                            <textarea 
+                                id="newSuggestion" 
+                                name="suggestion" 
+                                placeholder="Enter your sidebet idea (e.g., 'Loser has to wear the winner's jersey to the next game')"
+                                required
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newSubmittedBy">Your Name *</label>
+                            <input 
+                                type="text" 
+                                id="newSubmittedBy" 
+                                name="submittedBy" 
+                                placeholder="Enter your name"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="useCurrentMatchup" checked style="width: auto;">
+                                <span>Assign to current matchup (<span id="currentMatchupDisplay"></span>)</span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="sidebet-modal-footer">
+                <!-- Toggle between list view and create view -->
+                <button class="btn-create" onclick="toggleCreateSidebet()" id="toggleCreateBtn">
+                    + Create New Sidebet
+                </button>
+                
+                <!-- Action buttons that change based on view -->
+                <div id="listViewButtons" style="display: flex; gap: 12px;">
+                    <button class="btn-secondary" onclick="closeSidebetModal()">Cancel</button>
+                    <button class="btn-remove" onclick="removeSidebetFromMatchup()" id="removeSidebetBtn" style="display: none;">Remove Sidebet</button>
+                </div>
+                
+                <div id="createViewButtons" style="display: none; gap: 12px;">
+                    <button class="btn-secondary" onclick="toggleCreateSidebet()">Back to List</button>
+                    <button class="btn-create btn-submit" onclick="submitNewSidebet()" id="submitNewSidebetBtn">Submit Sidebet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="nav.js"></script>
+    <script src="schedule.js"></script>
+</body>
+</html>

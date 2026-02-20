@@ -1,0 +1,149 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-dark);
+    font-size: 16px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.gm-list-container {
+    flex-grow: 1;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 54px;
+    background-color: var(--bg-dark);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.gm-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.gm-photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.players-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 1;
+}
+
+.player-chip {
+    background-color: #3a3a3a;
+    border-radius: 16px;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    width: 296px; /* Fixed width instead of flexible */
+    color: #ffffff;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.player-name {
+    font-weight: bold;
+    font-size: 17px; /* Slightly larger */
+    margin-bottom: 6px;
+}
+
+.player-info {
+    font-weight: normal;
+    font-size: 14px;
+    color: #dcdcdc;
+}
+
+.position-team {
+    display: block;
+    margin-bottom: 8px; /* Increased spacing */
+    font-size: 13px; /* Slightly larger */
+}
+
+.player-stats {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: var(--border-radius);
+    padding: 8px 10px; /* Increased padding */
+    margin-top: 6px; /* More space from position/team */
+    font-family: 'Courier New', monospace;
+    font-size: 13px; /* Increased from 11.5px */
+    line-height: 1.6; /* More line spacing */
+}
+
+.stats-line {
+    display: block;
+    color: #ffffff;
+    font-weight: 600; /* Bolder */
+    margin-bottom: 3px; /* Space between lines */
+}
+
+.stats-line.fantasy-pts {
+    background: #3a3a3a;
+    padding: 4px 8px; /* More padding */
+    border-radius: var(--border-radius);
+    color: #2cd171;
+    font-weight: 700; /* Extra bold */
+    font-size: 17px; /* Larger */
+    margin-top: 6px; /* More space above */
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.stats-season {
+    display: block;
+    color: var(--accent-gold);
+    font-weight: 700; /* Bolder */
+    font-size: 11px; /* Slightly larger */
+    margin-bottom: 4px; /* More space below */
+    text-transform: uppercase;
+    letter-spacing: 0.5px; /* Spread letters slightly */
+}
+
+.no-stats {
+    color: #ffffff;
+    font-style: italic;
+    font-size: 12px; /* Larger */
+}
+
+.stolen-badge {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 40px;
+    height: 40px;
+    background-image: url('assets/stolen.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+    .player-chip {
+        width: 100%; /* Full width on mobile */
+        max-width: 350px; /* But not too wide */
+    }
+
+    .gm-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gm-photo {
+        margin-bottom: 15px;
+    }
+}

@@ -1,0 +1,88 @@
+/* Hero Button Styles */
+.hero-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gradient-purple);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+    color: white;
+    font-size: 24px;
+}
+
+.hero-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.hero-button:active {
+    transform: scale(0.95);
+}
+
+.hero-button.active {
+    transform: rotate(45deg);
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Sidebet Modal Styles */
+.sidebet-modal {
+    background-color: rgba(0, 0, 0, 0.7);
+    animation: fadeIn 0.3s ease;
+}
+
+.sidebet-modal.active {
+    display: flex;
+}
+
+.sidebet-form-container {
+    background: var(--gradient-card);
+    border-radius: var(--border-radius-lg);
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.sidebet-form-container h2 {
+    color: var(--text-white);
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+    .hero-button {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .sidebet-form-container {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .sidebet-form-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

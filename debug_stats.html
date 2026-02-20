@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Points Debugger</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e8e8e8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+        #loader {
+            text-align: center;
+            font-size: 1.5em;
+            padding: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        thead {
+            background-color: #333;
+            color: #fff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #2c2c2c;
+        }
+        tbody tr:hover {
+            background-color: #4a4a4a;
+        }
+        pre {
+            background-color: #111;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+        }
+        .highlight-goalie {
+            background-color: rgba(76, 175, 80, 0.2);
+        }
+        .total-points {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .breakdown-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        .breakdown-list li {
+            display: flex;
+            justify-content: space-between;
+        }
+        .breakdown-list span:last-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>NHL Fantasy Points Calculation Debugger (2024-2025)</h1>
+    <div id="loader">Loading player stats...</div>
+    <table id="stats-table" style="display:none;">
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Position</th>
+                <th>Calculation Breakdown</th>
+                <th>Total Fantasy Points</th>
+                <th>Raw API Stats</th>
+            </tr>
+        </thead>
+        <tbody id="stats-tbody">
+            <!-- Rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+           document.addEventListener('DOMContentLoaded', function() {
+        const playerNHLIds = {
+            "Robert Thomas": "8480023",
+            "Roope Hintz": "8478449",
+            "MacKenzie Weegar": "8477346",
+            "Dougie Hamilton": "8476462",
+            "Thatcher Demko": "8477967",
+            "Ryan Nugent-Hopkins": "8476454",
+            "Brayden Point": "8478010",
+            "Jake Oettinger": "8479979",
+            "Nikita Kucherov": "8476453",
+            "Jason Robertson": "8480027",
+            "Brady Tkachuk": "8480801",
+            "Ilya Sorokin": "8478009",
+            "Lane Hutson": "8483457",
+            "Evan Bouchard": "8480803",
+            "Macklin Celebrini": "8484801",
+            "David Pastrnak": "8477956",
+            "John Tavares": "8475166",
+            "Mason McTavish": "8482745", 
+            "Frederik Andersen": "8475883",
+            "Brandon Hagel": "8479542",
+            "Mitch Marner": "8478483",
+            "Josh Morrissey": "8477504",
+            "Pavel Buchnevich": "8477402",
+            "Rasmus Dahlin": "8480839",
+            "Dylan Larkin": "8477946",
+            "Mark Scheifele": "8476460",
+            "Tage Thompson": "8479420",
+            "Adrian Kempe": "8477960",
+            "Elias Pettersson": "8480012",
+            "Alex DeBrincat": "8479337",
+            "Zach Hyman": "8475786",
+            "Charlie McAvoy": "8479325",
+            "Tim Stützle": "8482116",
+            "Dylan Strome": "8478440",
+            "Nathan MacKinnon": "8477492",
+            "Auston Matthews": "8479318",
+            "Kyle Connor": "8478398",
+            "Jake Guentzel": "8477404",
+            "J.T. Miller": "8476468",
+            "Nazem Kadri": "8475172",
+            "Anthony Stolarz": "8476932", 
+            "Leon Draisaitl": "8477934",
+            "Matt Boldy": "8481557",
+            "Jack Hughes": "8481559",
+            "Connor Hellebuyck": "8476945",
+            "Juuse Saros": "8477424",
+            "Timo Meier": "8478414",
+            "Josh Norris": "8480064",
+            "Victor Hedman": "8475167",
+            "Mathew Barzal": "8478445",
+            "Joel Eriksson Ek": "8478493",
+            "Kirill Kaprizov": "8478864",
+            "Jordan Binnington": "8476412",
+            "Adam Fox": "8479323",
+            "Quinn Hughes": "8480800",
+            "Elias Lindholm": "8477496",
+            "Igor Shesterkin": "8478048",
+            "Artemi Panarin": "8478550",
+            "Alexis Lafrenière": "8482109",
+            "Jack Eichel": "8478403",
+            "Aleksander Barkov": "8477493",
+            "Gabriel Landeskog": "8476455",
+            "Cole Caufield": "8481540",
+            "Wyatt Johnston": "8482740",
+            "Sam Montembeault": "8478470",
+            "Cale Makar": "8480069",
+            "Sebastian Aho": "8478427",
+            "Andrei Vasilevskiy": "8476883",
+            "Connor Bedard": "8484144",
+            "Mikko Rantanen": "8478420",
+            "Mika Zibanejad": "8476459",
+            "Alex Tuch": "8477949",
+            "Martin Nečas": "8480039",
+            "Matthew Tkachuk": "8479314",
+            "Trevor Zegras": "8481533",
+            "Seth Jarvis": "8482093",
+            "Jesper Bratt": "8479407",
+            "Sam Reinhart": "8477933",
+            "Mackenzie Blackwood": "8478406",
+            "William Nylander": "8477939",
+            "Pierre-Luc Dubois": "8479400",
+            "Shea Theodore": "8477447",
+            "Nico Hischier": "8480002",
+            "Jacob Markstrom": "8474593",
+            "Sergei Bobrovsky": "8475683",
+            "Sidney Crosby": "8471675",
+            "Luke Hughes": "8480192",
+            "Adam Fantilli": "8484166",
+            "Connor McDavid": "8478402",
+            "Nick Suzuki": "8480018"
+        };
+
+            const FANTASY_SCORING = {
+                goals: 3, assists: 2, plusMinus: 1, pim: 0.25, powerPlayPoints: 1, shortHandedPoints: 1, gameWinningGoals: 1.5,
+                wins: 3, goalsAgainst: -1.5, saves: 0.2, shutouts: 6
+            };
+
+            function calculateSkaterFantasyPoints(stats) {
+                if (!stats) return { total: 0, breakdown: {} };
+                
+                const { goals = 0, assists = 0, plusMinus = 0, pim = 0, powerPlayPoints = 0, shorthandedPoints = 0, gameWinningGoals = 0 } = stats;
+
+                const breakdown = {
+                    'Goals': goals * FANTASY_SCORING.goals,
+                    'Assists': assists * FANTASY_SCORING.assists,
+                    'Plus/Minus': plusMinus * FANTASY_SCORING.plusMinus,
+                    'PIM': pim * FANTASY_SCORING.pim,
+                    'PP Points': powerPlayPoints * FANTASY_SCORING.powerPlayPoints,
+                    'SH Points': shorthandedPoints * FANTASY_SCORING.shortHandedPoints,
+                    'GWG': gameWinningGoals * FANTASY_SCORING.gameWinningGoals
+                };
+                
+                const total = Object.values(breakdown).reduce((sum, val) => sum + val, 0);
+                return { total, breakdown };
+            }
+
+            function calculateGoalieFantasyPoints(stats) {
+                if (!stats) return { total: 0, breakdown: {} };
+                
+                const { wins = 0, goalsAgainst = 0, shotsAgainst = 0, shutouts = 0 } = stats;
+                
+                const calculatedSaves = shotsAgainst - goalsAgainst;
+
+                const breakdown = {
+                    'Wins': wins * FANTASY_SCORING.wins,
+                    'Goals Against': goalsAgainst * FANTASY_SCORING.goalsAgainst,
+                    'Saves (Calc)': calculatedSaves * FANTASY_SCORING.saves,
+                    'Shutouts': shutouts * FANTASY_SCORING.shutouts
+                };
+
+                const total = Object.values(breakdown).reduce((sum, val) => sum + val, 0);
+                return { total, breakdown };
+            }
+
+            async function runDiagnostics() {
+                try {
+                    const contractsResponse = await fetch('/contracts.json');
+                    const contracts = await contractsResponse.json();
+                    const playerPositions = contracts.reduce((acc, p) => { acc[p.Player] = p.Position; return acc; }, {});
+
+                    const allPlayerIds = Object.values(playerNHLIds);
+                    const uniquePlayerIds = [...new Set(allPlayerIds)];
+                    const functionUrl = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
+                    const season = '20242025';
+                    const response = await fetch(`${functionUrl}?playerIds=${uniquePlayerIds.join(',')}&season=${season}`);
+                    const allPlayerStats = await response.json();
+
+                    const tableBody = document.getElementById('stats-tbody');
+                    
+                    for (const playerName in playerNHLIds) {
+                        const nhlId = playerNHLIds[playerName];
+                        const position = playerPositions[playerName] || 'N/A';
+                        const stats = allPlayerStats[nhlId];
+                        const newRow = document.createElement('tr');
+                        
+                        let calculation;
+                        if (position.includes('G')) {
+                            calculation = calculateGoalieFantasyPoints(stats);
+                            newRow.classList.add('highlight-goalie');
+                        } else {
+                            calculation = calculateSkaterFantasyPoints(stats);
+                        }
+
+                        let breakdownHtml = '<ul class="breakdown-list">';
+                        if (calculation.breakdown) {
+                            for (const [key, value] of Object.entries(calculation.breakdown)) {
+                                breakdownHtml += `<li><span>${key}:</span> <span>${value.toFixed(2)}</span></li>`;
+                            }
+                        }
+                        breakdownHtml += '</ul>';
+
+                        newRow.innerHTML = `
+                            <td>${playerName}</td>
+                            <td>${position}</td>
+                            <td>${breakdownHtml}</td>
+                            <td class="total-points">${calculation.total.toFixed(2)}</td>
+                            <td><pre>${stats ? JSON.stringify(stats, null, 2) : 'No Stats Found'}</pre></td>
+                        `;
+                        tableBody.appendChild(newRow);
+                    }
+
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('stats-table').style.display = 'table';
+
+                } catch (error) {
+                    console.error("Failed to run diagnostics:", error);
+                    document.getElementById('loader').textContent = 'Error loading data. Check the console.';
+                }
+            }
+
+            runDiagnostics();
+        });
+    </script>
+</body>
+</html>

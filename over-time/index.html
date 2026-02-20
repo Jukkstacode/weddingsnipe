@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Fantasy Points Comparison</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title-row">
+            <h1>Fantasy Point Chart 2024-2025</h1>
+            <div class="chart-legend">
+                <span class="legend-diamond">◆</span> Did not play
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="player-list-sidebar">
+                <button id="updateChartBtn">Update Chart</button>
+                <div class="clear-row">
+                    <button id="clearBtn">Clear</button>
+                    <label class="filter-label">
+                        <input type="checkbox" id="rfaFilter"> RFAs only
+                    </label>
+                </div>
+                <div class="player-search-container">
+                    <input type="text" id="playerSearch" placeholder="Search for a player..." autocomplete="off">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                <div id="player-selection-list"></div>
+            </div>
+            <div class="chart-container">
+                <canvas id="goalsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

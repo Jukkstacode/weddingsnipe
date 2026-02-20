@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Adam",
+    "image": "gm-assets/adam.jpeg",
+    "bimmbetOdds": "+600",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/13"
+  },
+  {
+    "name": "Bimm",
+    "image": "gm-assets/chris.png",
+    "bimmbetOdds": "+400",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/11"
+  },
+  {
+    "name": "Dan",
+    "image": "gm-assets/dan.jpeg",
+    "bimmbetOdds": "+350",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/7"
+  },
+  {
+    "name": "Dave",
+    "image": "gm-assets/dave.jpeg",
+    "bimmbetOdds": "+500",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/2"
+  },
+  {
+    "name": "Colin",
+    "image": "gm-assets/colin.jpeg",
+    "bimmbetOdds": "+800",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/3"
+  },
+  {
+    "name": "Hordo",
+    "image": "gm-assets/hordo.jpeg",
+    "bimmbetOdds": "+550",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/12"
+  },
+  {
+    "name": "Jordan",
+    "image": "gm-assets/jordan.jpeg",
+    "bimmbetOdds": "+800",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/8"
+  },
+  {
+    "name": "Marinos",
+    "image": "gm-assets/marinos.jpeg",
+    "bimmbetOdds": "+400",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/9"
+  },
+  {
+    "name": "Seedo",
+    "image": "gm-assets/seedo.jpeg",
+    "bimmbetOdds": "+200",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/6"
+  },
+  {
+    "name": "Mike",
+    "image": "gm-assets/mike.jpeg",
+    "bimmbetOdds": "+250",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/14"
+  },
+  {
+    "name": "Ryan",
+    "image": "gm-assets/mroki.jpeg",
+    "bimmbetOdds": "+∞",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/5"
+  },
+  {
+    "name": "Andy",
+    "image": "gm-assets/andy.jpeg",
+    "bimmbetOdds": "N/A",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/1"
+  },
+  {
+    "name": "Charlie",
+    "image": "gm-assets/charlie.jpeg",
+    "bimmbetOdds": "N/A",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/4"
+  },
+  {
+    "name": "Trevor",
+    "image": "gm-assets/trevor.jpeg",
+    "bimmbetOdds": "N/A",
+    "teamUrl": "https://hockey.fantasysports.yahoo.com/hockey/8655/10"
+  }
+]
