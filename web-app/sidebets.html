@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8TZ69H67W"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-F8TZ69H67W');
+    </script>
+    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Bets - Wedding Snipe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="sidebets.css">
+    <link rel="stylesheet" href="hero-button.css">
+    
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    
+    <div class="sidebets-container">
+        <h1>🎲 Side Bets</h1>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <!-- Status Filter (UPDATED) -->
+            <div class="filter-group">
+                <label>Status:</label>
+                <div class="sidebets-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="fulfilled">Fulfilled</button>
+                </div>
+            </div>
+
+            <!-- Matchup Filter -->
+            <div class="filter-group">
+                <label>Matchup:</label>
+                <select id="matchupFilter" class="matchup-dropdown">
+                    <option value="all">All Matchups</option>
+                </select>
+            </div>
+
+            <!-- Hide No Matchup Checkbox -->
+            <div class="filter-group checkbox-group">
+                <label>
+                    <input type="checkbox" id="hideNoMatchup">
+                    <span>Hide bets without target matchup</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Sidebets List -->
+        <div id="sidebets-list" class="sidebets-list">
+            <div class="loading">Loading sidebets...</div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="no-results" style="display: none;">
+            <p>No side bets match your filters.</p>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script src="hero-button.js"></script>
+    <script src="sidebets.js"></script>
+</body>
+</html>
