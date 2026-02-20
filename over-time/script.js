@@ -109,11 +109,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             currentChart.destroy();
         }
 
-        const allLabels = datasets.map(d => [...d.labels, ...d.missedDates]).flat();
-        const masterXAxisLabels = [...new Set(allLabels)].sort((a, b) => new Date(a) - new Date(b));
+        // Each dataset gets its own chronological date sequence so seasons
+        // both start at game 1 and overlay directly on the x-axis.
+        const datasetDates = [];
 
         const processedDatasets = datasets.map((playerData, index) => {
             const color = chartColors[index % chartColors.length];
+
+            const allDates = [...new Set([...playerData.labels, ...playerData.missedDates])]
+                .sort((a, b) => new Date(a) - new Date(b));
+            datasetDates.push(allDates);
+
             const dataMap = new Map(playerData.labels.map((label, i) => [label, playerData.data[i]]));
             let lastValue = 0;
             const fullData = [];
@@ -121,24 +127,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             const pointStyles = [];
             const pointColors = [];
 
-            masterXAxisLabels.forEach(date => {
+            allDates.forEach(date => {
                 if (dataMap.has(date)) {
                     lastValue = dataMap.get(date);
                 }
                 fullData.push(lastValue);
 
                 if (playerData.playedDates.has(date)) {
-                    // Player played this game
                     pointRadii.push(4);
                     pointStyles.push('circle');
                     pointColors.push(color);
                 } else if (playerData.missedDates.has(date)) {
-                    // Team played but player didn't
                     pointRadii.push(5);
                     pointStyles.push('rectRot');
                     pointColors.push('#FFD700');
                 } else {
-                    // No game that day
                     pointRadii.push(0);
                     pointStyles.push('circle');
                     pointColors.push(color);
@@ -159,10 +162,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             };
         });
 
+        const maxGames = Math.max(...processedDatasets.map(d => d.data.length));
+        const gameNumberLabels = Array.from({ length: maxGames }, (_, i) => i + 1);
+
         currentChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: masterXAxisLabels,
+                labels: gameNumberLabels,
                 datasets: processedDatasets
             },
             options: {
@@ -176,12 +182,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                         grid: { color: 'rgba(255, 255, 255, 0.1)' }
                     },
                     x: {
+                        title: { display: true, text: 'Game Number', color: '#e8e8e8' },
                         ticks: { color: '#e8e8e8' },
                         grid: { color: 'rgba(255, 255, 255, 0.1)' }
                     }
                 },
                 plugins: {
-                    legend: { labels: { color: '#e8e8e8' } }
+                    legend: { labels: { color: '#e8e8e8' } },
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => {
+                                const { datasetIndex, dataIndex } = items[0];
+                                const date = datasetDates[datasetIndex]?.[dataIndex];
+                                return date ? `Game ${dataIndex + 1} — ${date}` : `Game ${dataIndex + 1}`;
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -201,51 +217,65 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         const allPlayers = contracts.filter(c => c.nhlId).sort((a,b) => a.Player.localeCompare(b.Player));
 
+        const SEASONS = [
+            { value: '20242025', label: '24-25' },
+            { value: '20252026', label: '25-26' }
+        ];
+
         function renderPlayerList(players) {
             selectionListDiv.innerHTML = '';
+
+            // Season column header
+            const header = document.createElement('div');
+            header.className = 'season-header';
+            header.innerHTML = `
+                <div class="gm-info-placeholder"></div>
+                <div class="season-labels">
+                    ${SEASONS.map(s => `<span>${s.label}</span>`).join('')}
+                </div>
+            `;
+            selectionListDiv.appendChild(header);
+
             players.forEach(player => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'player-item';
 
-                const label = document.createElement('label');
-                label.htmlFor = `player-${player.nhlId}`;
-
-                // 1. Create the new GM Info component
+                // GM info
                 const gmInfoDiv = document.createElement('div');
                 gmInfoDiv.className = 'gm-info';
-
                 const gmPhoto = document.createElement('img');
                 gmPhoto.className = 'gm-photo';
-                // Use placeholder image if GM isn't found in gm.json
                 gmPhoto.src = `../${gmMap.get(player.GM) || 'assets/placeholder.jpg'}`;
-                
                 const contractSpan = document.createElement('span');
                 contractSpan.className = 'contract-years';
                 const yearText = player['Contract Length'] === 1 ? 'year' : 'years';
                 contractSpan.textContent = `${player['Contract Length']} ${yearText}`;
-
                 gmInfoDiv.appendChild(gmPhoto);
                 gmInfoDiv.appendChild(contractSpan);
 
-                // 2. Create the checkbox
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = player.nhlId;
-                checkbox.dataset.name = player.Player;
-                checkbox.dataset.position = player.Position;
-                checkbox.id = `player-${player.nhlId}`;
+                // Two season checkboxes
+                const checkboxesDiv = document.createElement('div');
+                checkboxesDiv.className = 'season-checkboxes';
+                SEASONS.forEach(season => {
+                    const cb = document.createElement('input');
+                    cb.type = 'checkbox';
+                    cb.value = player.nhlId;
+                    cb.dataset.name = player.Player;
+                    cb.dataset.position = player.Position;
+                    cb.dataset.season = season.value;
+                    cb.dataset.seasonLabel = season.label;
+                    cb.id = `player-${player.nhlId}-${season.value}`;
+                    checkboxesDiv.appendChild(cb);
+                });
 
-                // 3. Create the player name span
+                // Player name
                 const playerNameSpan = document.createElement('span');
                 playerNameSpan.className = 'player-name';
                 playerNameSpan.textContent = `${player.Player} (${player.Position})`;
 
-                // 4. Append all parts to the label in the desired order
-                label.appendChild(gmInfoDiv);
-                label.appendChild(checkbox);
-                label.appendChild(playerNameSpan);
-                
-                itemDiv.appendChild(label);
+                itemDiv.appendChild(gmInfoDiv);
+                itemDiv.appendChild(checkboxesDiv);
+                itemDiv.appendChild(playerNameSpan);
                 selectionListDiv.appendChild(itemDiv);
             });
         }
@@ -271,7 +301,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectedPlayers.push({
                     id: checkbox.value,
                     name: checkbox.dataset.name,
-                    position: checkbox.dataset.position
+                    position: checkbox.dataset.position,
+                    season: checkbox.dataset.season,
+                    seasonLabel: checkbox.dataset.seasonLabel
                 });
             });
 
@@ -282,12 +314,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const datasets = [];
             for (const player of selectedPlayers) {
-                const gameLog = await fetchPlayerGameLog(player.id, SEASON);
+                const gameLog = await fetchPlayerGameLog(player.id, player.season);
                 const processedData = processGameLogForChart(gameLog, player.position);
 
                 // Fetch schedules for all teams the player appeared for, in parallel
                 const teamAbbrevs = [...new Set(gameLog.map(g => g.teamAbbrev).filter(Boolean))];
-                const schedules = await Promise.all(teamAbbrevs.map(abbrev => fetchTeamSchedule(abbrev, SEASON)));
+                const schedules = await Promise.all(teamAbbrevs.map(abbrev => fetchTeamSchedule(abbrev, player.season)));
                 const allTeamGameDates = new Set(schedules.flat());
 
                 const missedDates = new Set(
@@ -295,7 +327,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 );
 
                 datasets.push({
-                    playerName: player.name,
+                    playerName: `${player.name} (${player.seasonLabel})`,
                     labels: processedData.labels,
                     data: processedData.data,
                     playedDates: processedData.playedDates,

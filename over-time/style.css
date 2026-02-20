@@ -57,29 +57,56 @@ h1 {
 }
 
 .player-item {
-    display: block;
-    margin-bottom: 8px;
-}
-
-.player-item label {
     display: flex;
     align-items: center;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease-in-out;
     gap: 12px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.player-item label:hover {
+.player-item:hover {
     background-color: #3d3d3d;
 }
 
 .player-item input[type="checkbox"] {
-    margin-right: 0;
     width: 18px;
     height: 18px;
     cursor: pointer;
+    flex-shrink: 0;
+}
+
+.season-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 10px 8px;
+    border-bottom: 1px solid #3d3d3d;
+    margin-bottom: 6px;
+}
+
+.gm-info-placeholder {
+    width: 50px;
+    flex-shrink: 0;
+}
+
+.season-labels {
+    display: flex;
+    gap: 6px;
+}
+
+.season-labels span {
+    width: 18px;
+    text-align: center;
+    font-size: 0.7em;
+    color: #aaa;
+}
+
+.season-checkboxes {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
 }
 
 #updateChartBtn {
@@ -205,7 +232,7 @@ h1 {
         flex: 1 1 auto; /* Allow the sidebar to grow and shrink as needed */
         max-height: 40vh; /* Give the sidebar a max height to prevent it from taking up the whole screen */
     }
-    .player-item label{
-        height: 40px;
+    .player-item {
+        min-height: 40px;
     }
 }
