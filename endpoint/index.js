@@ -1,5 +1,6 @@
 // weddingsnipe-endpoint/index.js
 
+import http from 'http';
 import fetch from 'node-fetch';
 import admin from 'firebase-admin';
 
@@ -550,3 +551,51 @@ async function handlePlayerPositionRequest(res, playerIds) {
     res.status(500).send('Error fetching player positions');
   }
 }
+
+// --- HTTP server for Cloud Run ---
+const PORT = process.env.PORT || 8080;
+
+const server = http.createServer((req, res) => {
+  const url = new URL(req.url, `http://localhost:${PORT}`);
+
+  // Parse query params
+  req.query = Object.fromEntries(url.searchParams);
+
+  // Parse JSON body for POST/PUT
+  if (req.method === 'POST' || req.method === 'PUT') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try { req.body = JSON.parse(body); } catch { req.body = {}; }
+      // Add Express-like helpers
+      res.set = (key, value) => res.setHeader(key, value);
+      res.status = (code) => { res.statusCode = code; return res; };
+      res.send = (data) => {
+        if (typeof data === 'object') {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(data));
+        } else {
+          res.end(data);
+        }
+      };
+      getNhlPlayerStats(req, res);
+    });
+  } else {
+    // Add Express-like helpers
+    res.set = (key, value) => res.setHeader(key, value);
+    res.status = (code) => { res.statusCode = code; return res; };
+    res.send = (data) => {
+      if (typeof data === 'object') {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(data));
+      } else {
+        res.end(data);
+      }
+    };
+    getNhlPlayerStats(req, res);
+  }
+});
+
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
