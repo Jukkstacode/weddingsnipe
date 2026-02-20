@@ -214,8 +214,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const gmMap = new Map(gms.map(gm => [gm.name, gm.image]));
 
         const selectionListDiv = document.getElementById('player-selection-list');
-        
+
         const allPlayers = contracts.filter(c => c.nhlId).sort((a,b) => a.Player.localeCompare(b.Player));
+        const extraPlayers = [];
 
         const SEASONS = [
             { value: '20242025', label: '24-25' },
@@ -240,18 +241,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'player-item';
 
-                // GM info
+                // GM info (or grey placeholder for ad-hoc players)
                 const gmInfoDiv = document.createElement('div');
                 gmInfoDiv.className = 'gm-info';
-                const gmPhoto = document.createElement('img');
-                gmPhoto.className = 'gm-photo';
-                gmPhoto.src = `../${gmMap.get(player.GM) || 'assets/placeholder.jpg'}`;
-                const contractSpan = document.createElement('span');
-                contractSpan.className = 'contract-years';
-                const yearText = player['Contract Length'] === 1 ? 'year' : 'years';
-                contractSpan.textContent = `${player['Contract Length']} ${yearText}`;
-                gmInfoDiv.appendChild(gmPhoto);
-                gmInfoDiv.appendChild(contractSpan);
+                if (player.isExtra) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'gm-photo-placeholder';
+                    gmInfoDiv.appendChild(placeholder);
+                } else {
+                    const gmPhoto = document.createElement('img');
+                    gmPhoto.className = 'gm-photo';
+                    gmPhoto.src = `../${gmMap.get(player.GM) || 'assets/placeholder.jpg'}`;
+                    const contractSpan = document.createElement('span');
+                    contractSpan.className = 'contract-years';
+                    const yearText = player['Contract Length'] === 1 ? 'year' : 'years';
+                    contractSpan.textContent = `${player['Contract Length']} ${yearText}`;
+                    gmInfoDiv.appendChild(gmPhoto);
+                    gmInfoDiv.appendChild(contractSpan);
+                }
 
                 // Two season checkboxes
                 const checkboxesDiv = document.createElement('div');
@@ -280,11 +287,74 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        renderPlayerList(allPlayers);
+        function getPlayersToRender(rfaOnly) {
+            const base = rfaOnly ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
+            return [...extraPlayers, ...base];
+        }
+
+        renderPlayerList(getPlayersToRender(false));
 
         document.getElementById('rfaFilter').addEventListener('change', function() {
-            const filtered = this.checked ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
-            renderPlayerList(filtered);
+            renderPlayerList(getPlayersToRender(this.checked));
+        });
+
+        const searchInput = document.getElementById('playerSearch');
+        const searchResultsDiv = document.getElementById('searchResults');
+        let searchTimeout = null;
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            const query = searchInput.value.trim();
+            if (query.length < 2) {
+                searchResultsDiv.innerHTML = '';
+                searchResultsDiv.style.display = 'none';
+                return;
+            }
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const url = `https://search.d3.nhle.com/api/v1/search/player?culture=en-us&limit=10&q=${encodeURIComponent(query)}&active=true`;
+                    const response = await fetch(url);
+                    const results = await response.json();
+                    searchResultsDiv.innerHTML = '';
+                    if (!results || results.length === 0) {
+                        searchResultsDiv.style.display = 'none';
+                        return;
+                    }
+                    results.forEach(p => {
+                        const item = document.createElement('div');
+                        item.className = 'search-result-item';
+                        item.textContent = `${p.name} (${p.positionCode})`;
+                        item.addEventListener('click', () => {
+                            const alreadyAdded = allPlayers.some(ap => String(ap.nhlId) === String(p.playerId)) ||
+                                extraPlayers.some(ep => String(ep.nhlId) === String(p.playerId));
+                            if (!alreadyAdded) {
+                                extraPlayers.push({
+                                    nhlId: String(p.playerId),
+                                    Player: p.name,
+                                    Position: p.positionCode,
+                                    isExtra: true
+                                });
+                                const rfaOnly = document.getElementById('rfaFilter').checked;
+                                renderPlayerList(getPlayersToRender(rfaOnly));
+                            }
+                            searchInput.value = '';
+                            searchResultsDiv.innerHTML = '';
+                            searchResultsDiv.style.display = 'none';
+                        });
+                        searchResultsDiv.appendChild(item);
+                    });
+                    searchResultsDiv.style.display = 'block';
+                } catch (e) {
+                    console.error('Player search failed:', e);
+                }
+            }, 300);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResultsDiv.contains(e.target)) {
+                searchResultsDiv.innerHTML = '';
+                searchResultsDiv.style.display = 'none';
+            }
         });
 
         document.getElementById('clearBtn').addEventListener('click', () => {
@@ -317,14 +387,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const gameLog = await fetchPlayerGameLog(player.id, player.season);
                 const processedData = processGameLogForChart(gameLog, player.position);
 
-                // Fetch schedules for all teams the player appeared for, in parallel
-                const teamAbbrevs = [...new Set(gameLog.map(g => g.teamAbbrev).filter(Boolean))];
-                const schedules = await Promise.all(teamAbbrevs.map(abbrev => fetchTeamSchedule(abbrev, player.season)));
-                const allTeamGameDates = new Set(schedules.flat());
+                // Build per-team date ranges from game log (only count missed games
+                // while the player was on that team, to handle trades correctly)
+                const teamDateRanges = {};
+                gameLog.forEach(g => {
+                    if (!g.teamAbbrev) return;
+                    if (!teamDateRanges[g.teamAbbrev]) {
+                        teamDateRanges[g.teamAbbrev] = { first: g.gameDate, last: g.gameDate };
+                    } else {
+                        if (g.gameDate < teamDateRanges[g.teamAbbrev].first) teamDateRanges[g.teamAbbrev].first = g.gameDate;
+                        if (g.gameDate > teamDateRanges[g.teamAbbrev].last) teamDateRanges[g.teamAbbrev].last = g.gameDate;
+                    }
+                });
 
-                const missedDates = new Set(
-                    [...allTeamGameDates].filter(d => !processedData.playedDates.has(d))
-                );
+                const teamAbbrevs = Object.keys(teamDateRanges);
+                const schedules = await Promise.all(teamAbbrevs.map(abbrev => fetchTeamSchedule(abbrev, player.season)));
+
+                const missedDatesArr = [];
+                teamAbbrevs.forEach((abbrev, i) => {
+                    const { first, last } = teamDateRanges[abbrev];
+                    schedules[i].forEach(d => {
+                        if (!processedData.playedDates.has(d) && d >= first && d <= last) {
+                            missedDatesArr.push(d);
+                        }
+                    });
+                });
+                const missedDates = new Set(missedDatesArr);
 
                 datasets.push({
                     playerName: `${player.name} (${player.seasonLabel})`,
