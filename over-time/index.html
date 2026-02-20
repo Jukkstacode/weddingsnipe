@@ -9,10 +9,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Player Cumulative Fantasy Points Comparison (2024-2025)</h1>
+        <div class="title-row">
+            <h1>Player Cumulative Fantasy Points Comparison (2024-2025)</h1>
+            <div class="chart-legend">
+                <span class="legend-diamond">◆</span> Did not play
+            </div>
+        </div>
         <div class="main-content">
             <div class="player-list-sidebar">
                 <button id="updateChartBtn">Update Chart</button>
+                <button id="clearBtn">Clear</button>
+                <label class="filter-label">
+                    <input type="checkbox" id="rfaFilter"> RFAs only
+                </label>
                 <div id="player-selection-list"></div>
             </div>
             <div class="chart-container">

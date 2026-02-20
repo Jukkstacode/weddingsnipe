@@ -64,17 +64,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    async function fetchTeamSchedule(teamAbbrev, season) {
+        const apiUrl = `${ENDPOINT_URL}?requestType=teamSchedule&teamAbbrev=${teamAbbrev}&season=${season}`;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) return [];
+            const data = await response.json();
+            return data.gameDates || [];
+        } catch (error) {
+            console.error(`Failed to fetch team schedule for ${teamAbbrev}:`, error);
+            return [];
+        }
+    }
+
     function processGameLogForChart(gameLog, position) {
         const labels = [];
         const cumulativeFantasyPointsData = [];
+        const playedDates = new Set();
         let cumulativeFantasyPoints = 0;
-        
-        if (!gameLog || gameLog.length === 0) return { labels, data: [] };
-        
+
+        if (!gameLog || gameLog.length === 0) return { labels, data: [], playedDates };
+
         const sortedGameLog = gameLog.slice().sort((a, b) => new Date(a.gameDate) - new Date(b.gameDate));
 
         sortedGameLog.forEach(game => {
             labels.push(game.gameDate);
+            playedDates.add(game.gameDate);
             let gamePoints = 0;
             if (position.includes('G')) {
                 gamePoints = calculateFantasyPointsForGoalieGame(game);
@@ -85,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             cumulativeFantasyPointsData.push(parseFloat(cumulativeFantasyPoints.toFixed(2)));
         });
 
-        return { labels, data: cumulativeFantasyPointsData };
+        return { labels, data: cumulativeFantasyPointsData, playedDates };
     }
     
     function createOrUpdateChart(datasets) {
@@ -94,27 +109,53 @@ document.addEventListener('DOMContentLoaded', async () => {
             currentChart.destroy();
         }
 
-        const allLabels = datasets.map(d => d.labels).flat();
+        const allLabels = datasets.map(d => [...d.labels, ...d.missedDates]).flat();
         const masterXAxisLabels = [...new Set(allLabels)].sort((a, b) => new Date(a) - new Date(b));
 
         const processedDatasets = datasets.map((playerData, index) => {
+            const color = chartColors[index % chartColors.length];
             const dataMap = new Map(playerData.labels.map((label, i) => [label, playerData.data[i]]));
             let lastValue = 0;
-            const fullData = masterXAxisLabels.map(date => {
+            const fullData = [];
+            const pointRadii = [];
+            const pointStyles = [];
+            const pointColors = [];
+
+            masterXAxisLabels.forEach(date => {
                 if (dataMap.has(date)) {
                     lastValue = dataMap.get(date);
                 }
-                return lastValue;
+                fullData.push(lastValue);
+
+                if (playerData.playedDates.has(date)) {
+                    // Player played this game
+                    pointRadii.push(4);
+                    pointStyles.push('circle');
+                    pointColors.push(color);
+                } else if (playerData.missedDates.has(date)) {
+                    // Team played but player didn't
+                    pointRadii.push(5);
+                    pointStyles.push('rectRot');
+                    pointColors.push('#FFD700');
+                } else {
+                    // No game that day
+                    pointRadii.push(0);
+                    pointStyles.push('circle');
+                    pointColors.push(color);
+                }
             });
 
             return {
                 label: playerData.playerName,
                 data: fullData,
-                borderColor: chartColors[index % chartColors.length],
-                backgroundColor: chartColors[index % chartColors.length] + '33',
+                borderColor: color,
+                backgroundColor: color + '33',
                 fill: false,
                 tension: 0.1,
-                pointRadius: 2,
+                pointRadius: pointRadii,
+                pointStyle: pointStyles,
+                pointBackgroundColor: pointColors,
+                pointBorderColor: pointColors,
             };
         });
 
@@ -158,10 +199,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const selectionListDiv = document.getElementById('player-selection-list');
         
-        contracts
-            .filter(c => c.nhlId) 
-            .sort((a,b) => a.Player.localeCompare(b.Player))
-            .forEach(player => {
+        const allPlayers = contracts.filter(c => c.nhlId).sort((a,b) => a.Player.localeCompare(b.Player));
+
+        function renderPlayerList(players) {
+            selectionListDiv.innerHTML = '';
+            players.forEach(player => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'player-item';
 
@@ -206,6 +248,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                 itemDiv.appendChild(label);
                 selectionListDiv.appendChild(itemDiv);
             });
+        }
+
+        renderPlayerList(allPlayers);
+
+        document.getElementById('rfaFilter').addEventListener('change', function() {
+            const filtered = this.checked ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
+            renderPlayerList(filtered);
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.querySelectorAll('#player-selection-list input:checked').forEach(cb => cb.checked = false);
+            if (currentChart) {
+                currentChart.destroy();
+                currentChart = null;
+            }
+        });
 
         document.getElementById('updateChartBtn').addEventListener('click', async () => {
             const selectedPlayers = [];
@@ -226,10 +284,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             for (const player of selectedPlayers) {
                 const gameLog = await fetchPlayerGameLog(player.id, SEASON);
                 const processedData = processGameLogForChart(gameLog, player.position);
+
+                // Fetch schedules for all teams the player appeared for, in parallel
+                const teamAbbrevs = [...new Set(gameLog.map(g => g.teamAbbrev).filter(Boolean))];
+                const schedules = await Promise.all(teamAbbrevs.map(abbrev => fetchTeamSchedule(abbrev, SEASON)));
+                const allTeamGameDates = new Set(schedules.flat());
+
+                const missedDates = new Set(
+                    [...allTeamGameDates].filter(d => !processedData.playedDates.has(d))
+                );
+
                 datasets.push({
                     playerName: player.name,
                     labels: processedData.labels,
-                    data: processedData.data
+                    data: processedData.data,
+                    playedDates: processedData.playedDates,
+                    missedDates
                 });
             }
             createOrUpdateChart(datasets);
