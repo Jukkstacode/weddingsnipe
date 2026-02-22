@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Endpoint URL
     const API_ENDPOINT = "https://nhl-stats-cacher-347732622266.us-west1.run.app";
 
-    // Fantasy scoring system
     const FANTASY_SCORING = {
         goals: 3,
         assists: 2,
@@ -39,18 +37,19 @@ document.addEventListener('DOMContentLoaded', function() {
                (shutouts * FANTASY_SCORING.shutouts);
     }
 
-    // Fetch stats from your Cloud Function
+    function getFantasyPoints(stats, position) {
+        if (!stats) return 0;
+        return position === 'G'
+            ? calculateGoalieFantasyPoints(stats)
+            : calculateSkaterFantasyPoints(stats);
+    }
+
     async function fetchCurrentSeasonStats(playerIds) {
         try {
-            // Join IDs into a comma-separated string for the URL
             const idsParam = playerIds.join(',');
             const url = `${API_ENDPOINT}?requestType=currentSeasonStats&playerIds=${idsParam}`;
-            
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`API returned status: ${response.status}`);
-            }
-            
+            if (!response.ok) throw new Error(`API returned status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error('Error loading current season stats from endpoint:', error);
@@ -58,95 +57,152 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function formatStatsHtml(stats, position) {
-        if (!stats) return '<span class="no-stats">No stats available for this season</span>';
-        
-        // Display the season from the stats, or default to 2025-2026
-        const season = stats.season || '20252026'; 
-        const seasonDisplay = `${String(season).substring(0, 4)}-${String(season).substring(4)}`;
-
-        if (position === 'G') {
-            const fantasyPts = calculateGoalieFantasyPoints(stats).toFixed(2);
-            return `
-                <span class="stats-season">${seasonDisplay} Season</span>
-                <span class="stats-line">GP: ${stats.gamesPlayed || 0} | W: ${stats.wins || 0} | L: ${stats.losses || 0}</span>
-                <span class="stats-line">GAA: ${stats.goalsAgainstAverage?.toFixed(2) || 'N/A'} | SV%: ${stats.savePctg?.toFixed(3) || 'N/A'}</span>
-                <span class="stats-line fantasy-pts">Fantasy Pts: ${fantasyPts}</span>
-            `;
-        } else {
-            const fantasyPts = calculateSkaterFantasyPoints(stats).toFixed(2);
-            return `
-                <span class="stats-season">${seasonDisplay} Season</span>
-                <span class="stats-line">GP: ${stats.gamesPlayed || 0} | G: ${stats.goals || 0} | A: ${stats.assists || 0} | P: ${stats.points || 0}</span>
-                <span class="stats-line">+/-: ${stats.plusMinus > 0 ? '+' : ''}${stats.plusMinus || 0} | PIM: ${stats.pim || 0}</span>
-                <span class="stats-line fantasy-pts">Fantasy Pts: ${fantasyPts}</span>
-            `;
+    function getPositionClass(position) {
+        const primary = position.split(',')[0].trim();
+        if (position.includes(',')) return 'pos-multi';
+        switch (primary) {
+            case 'C':  return 'pos-c';
+            case 'LW': return 'pos-lw';
+            case 'RW': return 'pos-rw';
+            case 'D':  return 'pos-d';
+            case 'G':  return 'pos-g';
+            default:   return 'pos-c';
         }
     }
 
-    Promise.all([
-        fetch('contracts.json').then(response => response.json()),
-        fetch('gm.json').then(response => response.json())
-    ]).then(async ([contracts, gms]) => {
-        const container = document.querySelector('.gm-list-container');
-        if (!container) {
-            console.error('GM list container not found!');
-            return;
+    function buildContractDots(length) {
+        let dots = '';
+        for (let i = 0; i < length; i++) {
+            dots += `<span class="contract-dot year-${length}"></span>`;
         }
+        const yearLabel = length === 1 ? '1 yr' : `${length} yrs`;
+        return `<div class="contract-length">${dots}<span class="contract-label">${yearLabel}</span></div>`;
+    }
 
-        // 1. Extract all Player IDs from the contracts
-        const allPlayerIds = contracts
-            .map(c => c.nhlId)
-            .filter(id => id); // Remove any empty/null IDs
-            
-        // 2. Fetch stats for these specific players using the endpoint
+    function buildStatsHtml(stats, position) {
+        if (!stats) return '<div class="no-stats">No stats available</div>';
+
+        const season = stats.season || '20252026';
+        const seasonDisplay = `${String(season).substring(0, 4)}-${String(season).substring(4)}`;
+
+        if (position === 'G') {
+            const fantasyPts = calculateGoalieFantasyPoints(stats).toFixed(1);
+            return `
+                <div class="stats-season-label">${seasonDisplay}</div>
+                <div class="player-stats-row">
+                    <div class="stat-cell"><span class="stat-label">GP</span><span class="stat-value">${stats.gamesPlayed || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">W</span><span class="stat-value">${stats.wins || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">L</span><span class="stat-value">${stats.losses || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">GAA</span><span class="stat-value">${stats.goalsAgainstAverage?.toFixed(2) || '—'}</span></div>
+                    <div class="stat-cell"><span class="stat-label">SV%</span><span class="stat-value">${stats.savePctg?.toFixed(3) || '—'}</span></div>
+                    <div class="stat-cell fantasy-cell"><span class="stat-label">FPTS</span><span class="stat-value">${fantasyPts}</span></div>
+                </div>`;
+        } else {
+            const fantasyPts = calculateSkaterFantasyPoints(stats).toFixed(1);
+            return `
+                <div class="stats-season-label">${seasonDisplay}</div>
+                <div class="player-stats-row">
+                    <div class="stat-cell"><span class="stat-label">GP</span><span class="stat-value">${stats.gamesPlayed || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">G</span><span class="stat-value">${stats.goals || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">A</span><span class="stat-value">${stats.assists || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">P</span><span class="stat-value">${stats.points || 0}</span></div>
+                    <div class="stat-cell"><span class="stat-label">+/-</span><span class="stat-value">${stats.plusMinus > 0 ? '+' : ''}${stats.plusMinus || 0}</span></div>
+                    <div class="stat-cell fantasy-cell"><span class="stat-label">FPTS</span><span class="stat-value">${fantasyPts}</span></div>
+                </div>`;
+        }
+    }
+
+    function buildPlayerCard(contract, stats) {
+        const posClass = getPositionClass(contract.Position);
+        const stolenHtml = contract['Stolen?'] ? '<div class="stolen-indicator"></div>' : '';
+        const statsHtml = buildStatsHtml(stats, contract.Position);
+        const contractDots = buildContractDots(contract['Contract Length']);
+
+        return `
+            <div class="player-card">
+                ${stolenHtml}
+                <div class="player-card-top">
+                    <div class="player-card-identity">
+                        <div class="player-card-name">${contract.Player}</div>
+                        <div class="player-card-detail">
+                            <span class="position-badge ${posClass}">${contract.Position}</span>
+                            <span>${contract.Team}</span>
+                        </div>
+                    </div>
+                    <div class="player-card-right">
+                        ${contractDots}
+                    </div>
+                </div>
+                ${statsHtml}
+            </div>`;
+    }
+
+    // Show loading state
+    const container = document.querySelector('.gm-list-container');
+    container.innerHTML = '<div class="contracts-loading"><div class="spinner"></div>Loading contracts &amp; stats...</div>';
+
+    Promise.all([
+        fetch('contracts.json').then(r => r.json()),
+        fetch('gm.json').then(r => r.json())
+    ]).then(async ([contracts, gms]) => {
+        const allPlayerIds = contracts.map(c => c.nhlId).filter(Boolean);
         const allPlayerStats = await fetchCurrentSeasonStats(allPlayerIds);
 
         const gmsMap = new Map(gms.map(gm => [gm.name, gm]));
-        const contractsByGm = contracts.reduce((acc, contract) => {
-            const gmName = contract.GM;
-            if (!acc[gmName]) acc[gmName] = [];
-            acc[gmName].push(contract);
-            return acc;
-        }, {});
+        const contractsByGm = {};
+        for (const contract of contracts) {
+            if (!contractsByGm[contract.GM]) contractsByGm[contract.GM] = [];
+            contractsByGm[contract.GM].push(contract);
+        }
 
-        for (const gmName in contractsByGm) {
-            const gm = gmsMap.get(gmName);
-            if (gm) {
-                const gmDiv = document.createElement('div');
-                gmDiv.className = 'gm-container';
-                const photoDiv = document.createElement('div');
-                photoDiv.className = 'gm-photo';
-                const img = document.createElement('img');
-                img.src = gm.image;
-                img.alt = gm.name;
-                photoDiv.appendChild(img);
-                const playersDiv = document.createElement('div');
-                playersDiv.className = 'players-container';
-
-                for (const contract of contractsByGm[gmName]) {
-                    const playerChip = document.createElement('div');
-                    playerChip.className = 'player-chip';
-                    const nhlId = contract.nhlId;
-                    const stats = allPlayerStats[nhlId];
-                    const statsHtml = formatStatsHtml(stats, contract.Position);
-                    let stolenBadge = contract['Stolen?'] ? `<div class="stolen-badge"></div>` : '';
-                    playerChip.innerHTML = `
-                        <div class="player-name">${contract.Player}</div>
-                        <div class="player-info">
-                            <span class="position-team">${contract.Position} | ${contract.Team} | ${contract['Contract Length']} years</span>
-                            <div class="player-stats">${statsHtml}</div>
-                        </div>
-                        ${stolenBadge}
-                    `;
-                    playersDiv.appendChild(playerChip);
-                }
-                gmDiv.appendChild(photoDiv);
-                gmDiv.appendChild(playersDiv);
-                container.appendChild(gmDiv);
+        // Calculate total fantasy points per GM and sort GMs by total
+        const gmEntries = Object.entries(contractsByGm).map(([gmName, gmContracts]) => {
+            let totalPts = 0;
+            for (const c of gmContracts) {
+                const stats = allPlayerStats[c.nhlId];
+                totalPts += getFantasyPoints(stats, c.Position);
             }
+            return { gmName, contracts: gmContracts, totalPts };
+        });
+        gmEntries.sort((a, b) => b.totalPts - a.totalPts);
+
+        container.innerHTML = '';
+
+        for (const { gmName, contracts: gmContracts, totalPts } of gmEntries) {
+            const gm = gmsMap.get(gmName);
+            if (!gm) continue;
+
+            // Sort players within GM by contract length (longest first), then fantasy points
+            gmContracts.sort((a, b) => {
+                const lengthDiff = b['Contract Length'] - a['Contract Length'];
+                if (lengthDiff !== 0) return lengthDiff;
+                const ptsA = getFantasyPoints(allPlayerStats[a.nhlId], a.Position);
+                const ptsB = getFantasyPoints(allPlayerStats[b.nhlId], b.Position);
+                return ptsB - ptsA;
+            });
+
+            const playerCards = gmContracts.map(c => buildPlayerCard(c, allPlayerStats[c.nhlId])).join('');
+
+            const section = document.createElement('div');
+            section.className = 'gm-section';
+            section.innerHTML = `
+                <div class="gm-section-header">
+                    <img src="${gm.image}" alt="${gm.name}">
+                    <div class="gm-info">
+                        <div class="gm-name">${gm.name}</div>
+                        <div class="gm-meta">${gmContracts.length} contracts</div>
+                    </div>
+                    <div class="gm-total-pts">
+                        <div class="label">Total FPTS</div>
+                        <div class="value">${totalPts.toFixed(1)}</div>
+                    </div>
+                </div>
+                <div class="players-grid">${playerCards}</div>`;
+
+            container.appendChild(section);
         }
     }).catch(error => {
         console.error('Error fetching initial data:', error);
+        container.innerHTML = '<div class="contracts-loading">Failed to load contracts. Please refresh.</div>';
     });
 });
