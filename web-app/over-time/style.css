@@ -46,7 +46,7 @@ body {
     max-width: 1500px;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 60px - 32px);
+    height: calc(100dvh - 60px - 32px);
     margin-top: 60px;
 }
 
@@ -454,7 +454,7 @@ body {
     }
 
     .container {
-        height: calc(100vh - 50px - 16px);
+        height: calc(100dvh - 50px - 16px);
         margin-top: 50px;
     }
 
