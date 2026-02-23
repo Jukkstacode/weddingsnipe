@@ -375,6 +375,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             const emptyState = document.getElementById('chartEmptyState');
             if (emptyState) emptyState.classList.remove('hidden');
+            document.getElementById('chartInset').style.display = 'none';
             history.replaceState(null, '', window.location.pathname);
         });
 
@@ -441,6 +442,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             createOrUpdateChart(datasets);
+
+            // Populate the FP/G inset
+            const insetEl = document.getElementById('chartInset');
+            if (datasets.length > 0) {
+                const rows = datasets.map((d, i) => {
+                    const gamesPlayed = d.playedDates.size;
+                    const totalPts = d.data.length > 0 ? d.data[d.data.length - 1] : 0;
+                    const fpg = gamesPlayed > 0 ? (totalPts / gamesPlayed).toFixed(2) : '—';
+                    const color = chartColors[i % chartColors.length];
+                    return `<tr>
+                        <td><span class="inset-color" style="background:${color}"></span>${d.playerName}</td>
+                        <td>${fpg}</td>
+                    </tr>`;
+                }).join('');
+                insetEl.innerHTML = `<button class="inset-toggle" onclick="this.parentElement.classList.toggle('collapsed')"></button>
+                <table>
+                    <thead><tr><th colspan="2">Avg points / game</th></tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>`;
+                insetEl.style.display = 'block';
+                insetEl.classList.remove('collapsed');
+            } else {
+                insetEl.style.display = 'none';
+            }
 
             // Update URL with selected players
             const paramParts = selectedPlayers.map(p => `${p.id}.${p.season}`);
