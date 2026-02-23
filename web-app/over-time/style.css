@@ -56,8 +56,6 @@ body {
 .controls-legend {
     display: flex;
     gap: 10px;
-    margin-left: auto;
-    flex-shrink: 0;
 }
 
 .legend-item {
@@ -108,6 +106,7 @@ body {
 .sidebar-controls {
     padding: 10px 14px;
     border-bottom: 1px solid var(--border-color);
+    overflow: visible;
 }
 
 /* Buttons */
@@ -158,6 +157,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 #clearBtn {
