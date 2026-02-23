@@ -118,7 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const statsHtml = buildStatsHtml(stats, contract.Position);
         const contractDots = buildContractDots(contract['Contract Length']);
 
+        const chartUrl = `over-time/index.html?playerId=${contract.nhlId}&season=20252026`;
+
         return `
+            <a href="${chartUrl}" class="player-card-link">
             <div class="player-card">
                 ${stolenHtml}
                 <div class="player-card-top">
@@ -134,7 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
                 ${statsHtml}
-            </div>`;
+            </div>
+            </a>`;
     }
 
     // Show loading state

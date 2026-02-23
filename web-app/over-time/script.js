@@ -219,23 +219,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const extraPlayers = [];
 
         const SEASONS = [
-            { value: '20242025', label: '24-25' },
-            { value: '20252026', label: '25-26' }
+            { value: '20242025', label: 'S25' },
+            { value: '20252026', label: 'S26' }
         ];
+
+        // Populate the static season header (outside the scrollable list)
+        const seasonLabelsDiv = document.getElementById('seasonLabels');
+        seasonLabelsDiv.innerHTML = SEASONS.map(s => `<span>${s.label}</span>`).join('');
 
         function renderPlayerList(players) {
             selectionListDiv.innerHTML = '';
-
-            // Season column header
-            const header = document.createElement('div');
-            header.className = 'season-header';
-            header.innerHTML = `
-                <div class="gm-info-placeholder"></div>
-                <div class="season-labels">
-                    ${SEASONS.map(s => `<span>${s.label}</span>`).join('')}
-                </div>
-            `;
-            selectionListDiv.appendChild(header);
 
             players.forEach(player => {
                 const itemDiv = document.createElement('div');
@@ -363,6 +356,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 currentChart.destroy();
                 currentChart = null;
             }
+            const emptyState = document.getElementById('chartEmptyState');
+            if (emptyState) emptyState.classList.remove('hidden');
         });
 
         document.getElementById('updateChartBtn').addEventListener('click', async () => {
@@ -381,6 +376,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 alert('Please select at least one player.');
                 return;
             }
+
+            const updateBtn = document.getElementById('updateChartBtn');
+            updateBtn.classList.add('loading');
+            updateBtn.disabled = true;
 
             const datasets = [];
             for (const player of selectedPlayers) {
@@ -414,8 +413,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
                 const missedDates = new Set(missedDatesArr);
 
+                const fullSeasonLabel = player.season === '20242025' ? '24-25' : '25-26';
                 datasets.push({
-                    playerName: `${player.name} (${player.seasonLabel})`,
+                    playerName: `${player.name} (${fullSeasonLabel})`,
                     labels: processedData.labels,
                     data: processedData.data,
                     playedDates: processedData.playedDates,
@@ -423,7 +423,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             createOrUpdateChart(datasets);
+
+            // Hide empty state, show chart
+            const emptyState = document.getElementById('chartEmptyState');
+            if (emptyState) emptyState.classList.add('hidden');
+
+            updateBtn.classList.remove('loading');
+            updateBtn.disabled = false;
         });
+
+        // Auto-load from URL params (e.g. ?playerId=8478483&season=20252026)
+        const urlParams = new URLSearchParams(window.location.search);
+        const preselectedId = urlParams.get('playerId');
+        const preselectedSeason = urlParams.get('season');
+        if (preselectedId && preselectedSeason) {
+            const checkbox = document.getElementById(`player-${preselectedId}-${preselectedSeason}`);
+            if (checkbox) {
+                checkbox.checked = true;
+                checkbox.scrollIntoView({ block: 'center' });
+                document.getElementById('updateChartBtn').click();
+            }
+        }
     }
 
     initialize();

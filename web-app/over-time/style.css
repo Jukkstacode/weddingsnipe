@@ -1,106 +1,310 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #e8e8e8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
+/* ============================================
+   VARIABLES
+   ============================================ */
+:root {
+    --bg-dark: #1a1a1a;
+    --bg-card: #2c2c2c;
+    --bg-sidebar: #222;
+    --bg-input: #333;
+    --text-primary: #e8e8e8;
+    --text-muted: #999;
+    --text-white: #fff;
+    --accent-blue: #36A2EB;
+    --accent-blue-hover: #2a8dd4;
+    --accent-gold: #FFD700;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color-strong: rgba(255, 255, 255, 0.15);
+    --radius: 8px;
+    --radius-sm: 6px;
+    --transition: all 0.2s ease;
+}
+
+/* ============================================
+   BASE
+   ============================================ */
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
-.container {
-    width: 95%;
-    max-width: 1400px;
-    background-color: #2c2c2c;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-h1 {
-    color: #fff;
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1.5rem;
-}
-
-.main-content {
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 16px;
+    min-height: 100vh;
     display: flex;
-    flex-direction: row; /* Default direction for desktop */
-    gap: 25px;
-    height: 70vh;
+    justify-content: center;
+    overflow: hidden;
 }
 
-.player-list-sidebar {
-    flex: 0 0 250px;
-    background-color: #202020;
-    padding: 15px;
-    border-radius: 6px;
+/* ============================================
+   CONTAINER
+   ============================================ */
+.container {
+    width: 100%;
+    max-width: 1500px;
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 60px - 32px);
+    margin-top: 60px;
 }
 
-#player-selection-list {
-    overflow-y: auto; /* Make the list scrollable */
-    flex-grow: 1; /* Allow the list to fill the available space */
+/* ============================================
+   LEGEND (inside sidebar controls)
+   ============================================ */
+.controls-legend {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    flex-shrink: 0;
 }
 
-
-.chart-container {
-    flex-grow: 1;
-    position: relative;
-    min-height: 300px; /* Ensures the chart has a minimum height on mobile */
-}
-
-.player-item {
+.legend-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 6px 10px;
-    border-radius: 4px;
-    margin-bottom: 2px;
-    transition: background-color 0.2s ease-in-out;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-muted);
 }
 
-.player-item:hover {
-    background-color: #3d3d3d;
+.legend-circle {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    display: inline-block;
 }
 
-.player-item input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+.legend-diamond {
+    color: var(--accent-gold);
+    font-size: 9px;
+    line-height: 1;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main-content {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.sidebar {
+    flex: 0 0 290px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-controls {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Buttons */
+#updateChartBtn {
+    padding: 6px 14px;
+    background: var(--accent-blue);
+    color: var(--text-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    flex-shrink: 0;
+    transition: var(--transition);
+    position: relative;
+}
+
+#updateChartBtn:hover {
+    background: var(--accent-blue-hover);
+}
+
+#updateChartBtn.loading .btn-label {
+    opacity: 0;
+}
+
+#updateChartBtn.loading .btn-spinner {
+    display: block;
+}
+
+.btn-spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--text-white);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.controls-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#clearBtn {
+    padding: 6px 10px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#clearBtn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    user-select: none;
+    transition: var(--transition);
+}
+
+.toggle-label:hover {
+    color: var(--text-primary);
+}
+
+.toggle-label input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    accent-color: var(--accent-blue);
+}
+
+/* Search */
+.player-search-container {
+    position: relative;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#playerSearch {
+    width: 100%;
+    padding: 8px 10px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    transition: var(--transition);
+}
+
+#playerSearch::placeholder {
+    color: #666;
+}
+
+#playerSearch:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(54, 162, 235, 0.15);
+}
+
+.search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% - 6px);
+    left: 14px;
+    right: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-sm);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.search-result-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.search-result-item:hover {
+    background: rgba(54, 162, 235, 0.1);
+    color: var(--text-white);
+}
+
+/* Player list */
+.player-list {
+    overflow-y: auto;
+    flex: 1;
+    padding: 4px 0;
 }
 
 .season-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 4px 10px 8px;
-    border-bottom: 1px solid #3d3d3d;
-    margin-bottom: 6px;
+    gap: 10px;
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-sidebar);
+    flex-shrink: 0;
 }
 
 .gm-info-placeholder {
-    width: 50px;
+    width: 44px;
     flex-shrink: 0;
 }
 
 .season-labels {
     display: flex;
     gap: 6px;
+    flex-shrink: 0;
 }
 
 .season-labels span {
-    width: 18px;
-    text-align: center;
-    font-size: 0.7em;
-    color: #aaa;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 14px;
+    transition: var(--transition);
+}
+
+.player-item:hover {
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .season-checkboxes {
@@ -109,201 +313,138 @@ h1 {
     flex-shrink: 0;
 }
 
-#updateChartBtn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px; /* Add space below the button */
-    background-color: #36A2EB;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
+.season-checkboxes input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#updateChartBtn:hover {
-    background-color: #2785c4;
-}
-
-.clear-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.clear-row .filter-label {
-    margin-bottom: 0;
-}
-
-#clearBtn {
-    display: block;
-    width: auto;
-    flex-shrink: 0;
-    padding: 12px;
-    margin-bottom: 0;
-    background-color: #36A2EB;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#clearBtn:hover {
-    background-color: #2785c4;
-}
-
-.title-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 25px;
-}
-
-.title-row h1 {
-    margin: 0;
-}
-
-.chart-legend {
-    font-size: 13px;
-    color: #aaa;
-    white-space: nowrap;
-}
-
-.legend-diamond {
-    color: #FFD700;
-    font-size: 11px;
-}
-
-.filter-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 4px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #e8e8e8;
+    accent-color: var(--accent-blue);
 }
 
 .gm-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 50px;
-    flex-shrink: 0; /* Prevents the component from shrinking */
+    width: 44px;
+    flex-shrink: 0;
+    gap: 2px;
 }
 
 .gm-photo {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid #555;
+    border: 1.5px solid var(--border-color-strong);
 }
 
 .contract-years {
-    font-size: 0.7em;
-    color: #aaa;
-    margin-top: 3px;
+    font-size: 10px;
+    color: var(--text-muted);
     white-space: nowrap;
 }
 
-.player-name {
-    font-weight: 500;
-}
-
 .gm-photo-placeholder {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    background-color: #555;
-    border: 1px solid #777;
-    flex-shrink: 0;
+    background: #444;
+    border: 1.5px solid var(--border-color-strong);
 }
 
-.player-search-container {
+.player-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+/* ============================================
+   CHART AREA
+   ============================================ */
+.chart-area {
+    flex: 1;
     position: relative;
-    margin-bottom: 10px;
+    min-width: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
 }
 
-#playerSearch {
-    width: 100%;
-    padding: 8px 10px;
-    background-color: #333;
-    border: 1px solid #555;
-    border-radius: 5px;
-    color: #e8e8e8;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-#playerSearch::placeholder {
-    color: #888;
-}
-
-#playerSearch:focus {
-    outline: none;
-    border-color: #36A2EB;
-}
-
-.search-results {
-    display: none;
+.chart-container {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: #2c2c2c;
-    border: 1px solid #555;
-    border-radius: 5px;
-    z-index: 10;
-    max-height: 200px;
-    overflow-y: auto;
+    inset: 12px;
 }
 
-.search-result-item {
-    padding: 8px 12px;
-    cursor: pointer;
+.chart-empty-state {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.chart-empty-state.hidden {
+    display: none;
+}
+
+.empty-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+}
+
+.chart-empty-state p {
     font-size: 14px;
-    color: #e8e8e8;
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0;
 }
 
-.search-result-item:hover {
-    background-color: #3d3d3d;
+.chart-empty-state strong {
+    color: var(--text-primary);
 }
 
-/* --- MOBILE RESPONSIVE STYLES --- */
+/* ============================================
+   MOBILE
+   ============================================ */
 @media screen and (max-width: 768px) {
     body {
-        padding: 10px; /* Reduce padding on smaller screens */
-        align-items: flex-start; /* Align content to the top */
+        padding: 8px;
     }
 
     .container {
-        padding: 15px;
-    }
-
-    h1 {
-        font-size: 1.2rem; /* Make the title smaller on mobile */
+        height: calc(100vh - 50px - 16px);
+        margin-top: 50px;
     }
 
     .main-content {
-        flex-direction: column; /* Stack the sidebar and chart vertically */
-        height: auto; /* Let the content determine the height */
+        flex-direction: column;
+        gap: 8px;
     }
 
-    .player-list-sidebar {
-        flex: 1 1 auto; /* Allow the sidebar to grow and shrink as needed */
-        max-height: 40vh; /* Give the sidebar a max height to prevent it from taking up the whole screen */
+    .sidebar {
+        flex: 0 0 40%;
     }
+
+    .chart-area {
+        flex: 1;
+        min-height: 0;
+    }
+
+    .chart-container {
+        inset: 8px;
+    }
+
     .player-item {
-        min-height: 40px;
+        padding: 5px 10px;
     }
 }

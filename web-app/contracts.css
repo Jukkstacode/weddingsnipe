@@ -141,15 +141,22 @@ body {
 }
 
 /* Player card */
+.player-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .player-card {
     background: var(--bg-card);
     padding: 16px 18px;
     position: relative;
     transition: background 0.2s ease;
+    cursor: pointer;
 }
 
 .player-card:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .player-card-top {
