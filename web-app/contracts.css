@@ -247,13 +247,14 @@ body {
 /* Stolen badge */
 .stolen-indicator {
     position: absolute;
-    right: 10px;
+    left: 10px;
     top: 10px;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background-image: url('assets/stolen.webp');
     background-size: contain;
     background-repeat: no-repeat;
+    opacity: 0.8;
 }
 
 /* Stats section */
