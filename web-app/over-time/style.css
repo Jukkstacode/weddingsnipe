@@ -109,6 +109,38 @@ body {
     overflow: visible;
 }
 
+/* Position filters */
+.position-filters {
+    display: flex;
+    gap: 4px;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pos-filter {
+    flex: 1;
+    padding: 4px 0;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pos-filter:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.pos-filter.active {
+    background: var(--accent-blue);
+    color: var(--text-white);
+    border-color: var(--accent-blue);
+}
+
 /* Buttons */
 #updateChartBtn {
     padding: 6px 14px;

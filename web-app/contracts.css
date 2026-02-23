@@ -351,16 +351,48 @@ body {
     }
 
     .player-card {
-        padding: 14px 16px;
+        padding: 16px;
     }
-}
 
-@media screen and (max-width: 480px) {
-    .player-stats-row {
-        flex-wrap: wrap;
+    .player-card-name {
+        font-size: 18px;
+    }
+
+    .player-card-detail {
+        font-size: 14px;
+    }
+
+    .position-badge {
+        font-size: 12px;
+        padding: 3px 9px;
+    }
+
+    .stats-season-label {
+        font-size: 12px;
     }
 
     .stat-cell {
-        min-width: calc(33% - 1px);
+        padding: 8px 4px;
+    }
+
+    .stat-cell .stat-label {
+        font-size: 11px;
+    }
+
+    .stat-cell .stat-value {
+        font-size: 16px;
+    }
+
+    .stat-cell.fantasy-cell .stat-value {
+        font-size: 17px;
+    }
+
+    .contract-label {
+        font-size: 12px;
+    }
+
+    .contract-dot {
+        width: 9px;
+        height: 9px;
     }
 }

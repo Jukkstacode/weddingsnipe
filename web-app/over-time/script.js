@@ -280,15 +280,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        function getPlayersToRender(rfaOnly) {
-            const base = rfaOnly ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
+        let activePositionFilter = 'ALL';
+
+        function getPlayersToRender() {
+            const rfaOnly = document.getElementById('rfaFilter').checked;
+            let base = rfaOnly ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
+            if (activePositionFilter !== 'ALL') {
+                base = base.filter(p => p.Position.split(',').some(pos => pos.trim() === activePositionFilter));
+            }
             return [...extraPlayers, ...base];
         }
 
-        renderPlayerList(getPlayersToRender(false));
+        renderPlayerList(getPlayersToRender());
 
         document.getElementById('rfaFilter').addEventListener('change', function() {
-            renderPlayerList(getPlayersToRender(this.checked));
+            renderPlayerList(getPlayersToRender());
+        });
+
+        document.querySelectorAll('.pos-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.pos-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activePositionFilter = btn.dataset.pos;
+                renderPlayerList(getPlayersToRender());
+            });
         });
 
         const searchInput = document.getElementById('playerSearch');
