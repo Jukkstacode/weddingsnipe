@@ -43,13 +43,13 @@ body {
 
 .matchups-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
+    gap: 12px;
     margin-top: 20px;
-    justify-content: center;
+    align-items: center;
 }
 
-/* Base style for matchup item - designed to flex on desktop */
+/* Base style for matchup item - single column, consistent width */
 .matchup-item {
     background-color: #202020;
     padding: 12px 16px;
@@ -60,12 +60,12 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex: 1 1 350px;
+    width: 100%;
+    max-width: 500px;
     color: var(--text-primary);
     justify-content: space-between;
     box-sizing: border-box;
     position: relative;
-    max-width: 462px;
 }
 
 /* Ensure content is above the glow effects */
@@ -144,61 +144,45 @@ span.score {
 
     .week-container {
         margin: 0 auto 40px auto;
-        max-width: 95%; /* Slightly wider */
-        padding: 12px; /* Reduced padding */
+        max-width: 95%;
+        padding: 12px;
     }
 
     .gm-list-container {
         padding-top: 5px;
-        padding-left: 5px; /* Reduced from 10px */
+        padding-left: 5px;
         padding-right: 5px;
     }
 
-    .matchups-list {
-        flex-direction: column;
-        gap: 12px; /* Reduced gap */
-        justify-content: center;
-    }
-
     .matchup-item {
-        flex: 1 1 100%;
-        min-width: 0;
         max-width: 100%;
-        padding: 8px 10px; /* Even tighter padding */
-        margin: 0 auto;
-        width: calc(100% - 10px); /* Slightly wider, accounting for margins */
-        box-sizing: border-box;
-        font-size: 0.95rem; /* Smaller base font */
-        gap: 4px; /* Tighter gaps */
+        padding: 8px 10px;
+        font-size: 0.95rem;
+        gap: 4px;
     }
 
-    /* Reduce size of GM names on mobile */
     .gm-matchup-container .gm-name {
-        font-size: 1.0rem; /* Even smaller font for names */
-        max-width: 65px; /* Narrower width limit */
+        font-size: 1.0rem;
+        max-width: 65px;
     }
 
-    /* Make photos smaller on mobile */
     .gm-photo-matchup {
-        width: 24px; /* Reduced from 30px */
+        width: 24px;
         height: 24px;
     }
 
-    /* Adjust VS label */
     .vs-label {
-        font-size: 0.7em; /* Smaller */
-        margin: 0 1px; /* Minimal spacing */
+        font-size: 0.7em;
+        margin: 0 1px;
     }
 
-    /* Reduce stat box size */
     .gm-matchup-container {
-        gap: 4px; /* Tighter gaps */
+        gap: 4px;
     }
 
-    /* CRITICAL: Remove padding from score boxes on mobile */
     span.score {
-        padding: 2px 4px !important; /* Minimal padding */
-        font-size: 1.0em !important; /* Smaller font */
+        padding: 2px 4px !important;
+        font-size: 1.0em !important;
         border-radius: 3px;
     }
 }
@@ -254,6 +238,22 @@ span.score {
     z-index: 0;
     pointer-events: none;
     animation: border-flicker 0.15s infinite alternate;
+}
+
+/* Sidebet badge on matchup cards */
+.matchup-sidebet-badge {
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    background: linear-gradient(135deg, #8a2be2 0%, #9333ea 100%);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
 }
 
 /* ============================================
@@ -728,12 +728,6 @@ span.score {
 
 /* Mobile adjustments for scores */
 @media screen and (max-width: 768px) {
-    .matchup-item {
-        min-width: 0;  /* Allow shrinking on mobile */
-        max-width: 100%;
-        flex: 1 1 100%;
-    }
-
     .score {
         font-size: 0.9em;
         padding: 3px 0px;
@@ -748,4 +742,89 @@ span.score {
     .gm-matchup-container .gm-name {
         min-width: 50px;
     }
+}
+
+/* ============================================
+   CURRENT WEEK HIGHLIGHT
+   ============================================ */
+
+.week-container.current-week {
+    border: 1px solid var(--primary-blue);
+    border-left: 4px solid var(--primary-blue);
+    background: linear-gradient(135deg, rgba(54, 162, 235, 0.08) 0%, var(--bg-card-secondary) 100%);
+}
+
+.current-week-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #1e90ff 100%);
+    color: white;
+    font-size: 0.6em;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-left: 10px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   PAST WEEK COLLAPSE / EXPAND
+   ============================================ */
+
+.week-container.past-week {
+    opacity: 0.7;
+    border-color: #333;
+}
+
+.week-container.past-week:hover {
+    opacity: 0.85;
+}
+
+.week-container.past-week .matchups-list {
+    display: none;
+}
+
+.week-container.past-week.expanded .matchups-list {
+    display: flex;
+}
+
+.collapsible-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.collapsible-header:hover {
+    color: var(--primary-blue-light);
+}
+
+.chevron {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-size: 1.2em;
+    transform: rotate(0deg);
+}
+
+.week-container.past-week.expanded .chevron {
+    transform: rotate(90deg);
+}
+
+/* ============================================
+   SECTION LABELS
+   ============================================ */
+
+.section-label {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 30px 0 15px 0;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
 }

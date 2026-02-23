@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let gmMap = new Map();
     let currentGMFilter = 'all';
     let currentSpicyFilter = false;
+    const CURRENT_WEEK_FALLBACK = 18;
     
     // Initialize Firebase (using the existing configuration)
     const firebaseConfig = {
@@ -172,94 +173,160 @@ document.addEventListener('DOMContentLoaded', async function() {
         displayMatchups(filteredData);
     }
     
+    // Detect the current week from matchup data
+    function detectCurrentWeek(matchupsData) {
+        // Current week = lowest week number with at least one incomplete matchup
+        const incompleteWeeks = matchupsData
+            .filter(week => week.Matchups.some(m => !m.isComplete))
+            .map(week => week.Week);
+        return incompleteWeeks.length > 0 ? Math.min(...incompleteWeeks) : CURRENT_WEEK_FALLBACK;
+    }
+
     // Display matchups on the page
     function displayMatchups(matchupsData) {
         const container = document.getElementById('schedule-container');
         if (!container) return;
-        
+
         // Clear existing content
         container.innerHTML = '';
-        
-        matchupsData.forEach(week => {
-            // Create container for the week
-            const weekContainer = document.createElement('div');
-            weekContainer.className = 'week-container';
-            
-            const weekTitle = document.createElement('h2');
-            weekTitle.textContent = `Week ${week.Week}`;
-            weekContainer.appendChild(weekTitle);
 
-            const matchupsList = document.createElement('div');
-            matchupsList.className = 'matchups-list';
+        // Determine current week
+        const currentWeek = detectCurrentWeek(allMatchupsData.length > 0 ? allMatchupsData : matchupsData);
 
-            // Check if there are matchups to display
-            if (week.Matchups.length === 0) {
-                // Show "No matchups found" message
-                const noMatchupsDiv = document.createElement('div');
-                noMatchupsDiv.className = 'no-matchups-message';
-                noMatchupsDiv.textContent = currentSpicyFilter 
-                    ? '🎲 No sidebet matchups this week' 
-                    : 'No matchups found';
-                matchupsList.appendChild(noMatchupsDiv);
-            } else {
-                // Display matchups
-                week.Matchups.forEach(matchup => {
-                    const gm1Name = matchup.GM1;
-                    const gm2Name = matchup.GM2;
-                    const assignedSidebet = matchup.assignedSidebet;
-                    
-                    // NEW: Get score data
-                    const hasScores = matchup.score1 !== undefined && matchup.score2 !== undefined;
-                    const isComplete = matchup.isComplete || false;
-                    const winner = matchup.winner;
-                    
-                    // Get image paths
-                    const gm1Image = gmMap.get(gm1Name) || 'assets/placeholder.jpg';
-                    const gm2Image = gmMap.get(gm2Name) || 'assets/placeholder.jpg';
+        // Split into current, future, and past
+        const currentWeekData = matchupsData.filter(w => w.Week === currentWeek);
+        const futureWeeks = matchupsData.filter(w => w.Week > currentWeek).sort((a, b) => a.Week - b.Week);
+        const pastWeeks = matchupsData.filter(w => w.Week < currentWeek).sort((a, b) => b.Week - a.Week);
 
-                    const matchupDiv = document.createElement('div');
-                    matchupDiv.className = 'matchup-item';
-                    
-                    // Add winner classes
-                    const gm1WinnerClass = (isComplete && winner === gm1Name) ? 'winner' : '';
-                    const gm2WinnerClass = (isComplete && winner === gm2Name) ? 'winner' : '';
-                    
-                    // Add has-sidebet class if a sidebet is assigned
-                    if (assignedSidebet) {
-                        matchupDiv.classList.add('has-sidebet');
-                    }
-                    
-                    // Add special styling if needed (legacy isSpecial support)
-                    if (matchup.isSpecial) {
-                        matchupDiv.classList.add('on-fire'); 
-                    }
-                    
-                    // Add click handler to open modal
-                    matchupDiv.style.cursor = 'pointer';
-                    matchupDiv.addEventListener('click', () => {
-                        openSidebetModal(week.Week, gm1Name, gm2Name, matchup.matchupIndex, assignedSidebet);
-                    });
-                    
-                    matchupDiv.innerHTML = `
-                        <div class="gm-matchup-container gm1 ${gm1WinnerClass}">
-                            <img src="${gm1Image}" alt="${gm1Name}" class="gm-photo-matchup">
-                            <span class="gm-name">${gm1Name}</span>
-                            ${hasScores ? `<span class="score">${matchup.score1}</span>` : ''}
-                        </div>
-                        <span class="vs-label">vs</span>
-                        <div class="gm-matchup-container gm2 ${gm2WinnerClass}">
-                            ${hasScores ? `<span class="score">${matchup.score2}</span>` : ''}
-                            <span class="gm-name">${gm2Name}</span>
-                            <img src="${gm2Image}" alt="${gm2Name}" class="gm-photo-matchup">
-                        </div>
-                    `;
-                    matchupsList.appendChild(matchupDiv);
-                });
-            }
-
-            weekContainer.appendChild(matchupsList);
-            container.appendChild(weekContainer);
+        // Render current week
+        currentWeekData.forEach(week => {
+            renderWeekContainer(week, container, 'current');
         });
+
+        // Render future weeks with section label
+        if (futureWeeks.length > 0) {
+            const upcomingLabel = document.createElement('div');
+            upcomingLabel.className = 'section-label';
+            upcomingLabel.textContent = 'Upcoming';
+            container.appendChild(upcomingLabel);
+            futureWeeks.forEach(week => {
+                renderWeekContainer(week, container, 'future');
+            });
+        }
+
+        // Render past weeks with section label
+        if (pastWeeks.length > 0) {
+            const completedLabel = document.createElement('div');
+            completedLabel.className = 'section-label';
+            completedLabel.textContent = 'Completed';
+            container.appendChild(completedLabel);
+            pastWeeks.forEach(week => {
+                renderWeekContainer(week, container, 'past');
+            });
+        }
+    }
+
+    // Render a single week container
+    function renderWeekContainer(week, container, weekType) {
+        const weekContainer = document.createElement('div');
+        weekContainer.className = 'week-container';
+
+        if (weekType === 'current') {
+            weekContainer.classList.add('current-week');
+        } else if (weekType === 'past') {
+            weekContainer.classList.add('past-week');
+        }
+
+        const weekTitle = document.createElement('h2');
+
+        if (weekType === 'current') {
+            weekTitle.innerHTML = `Week ${week.Week} <span class="current-week-badge">Current Week</span>`;
+        } else {
+            weekTitle.textContent = `Week ${week.Week}`;
+        }
+
+        // Make past week headers clickable for collapse/expand
+        if (weekType === 'past') {
+            weekTitle.classList.add('collapsible-header');
+            const chevron = document.createElement('span');
+            chevron.className = 'chevron';
+            chevron.textContent = '\u203A'; // ›
+            weekTitle.prepend(chevron);
+            weekTitle.addEventListener('click', () => {
+                weekContainer.classList.toggle('expanded');
+            });
+        }
+
+        weekContainer.appendChild(weekTitle);
+
+        const matchupsList = document.createElement('div');
+        matchupsList.className = 'matchups-list';
+
+        // Check if there are matchups to display
+        if (week.Matchups.length === 0) {
+            const noMatchupsDiv = document.createElement('div');
+            noMatchupsDiv.className = 'no-matchups-message';
+            noMatchupsDiv.textContent = currentSpicyFilter
+                ? '🎲 No sidebet matchups this week'
+                : 'No matchups found';
+            matchupsList.appendChild(noMatchupsDiv);
+        } else {
+            // Display matchups
+            week.Matchups.forEach(matchup => {
+                const gm1Name = matchup.GM1;
+                const gm2Name = matchup.GM2;
+                const assignedSidebet = matchup.assignedSidebet;
+
+                const hasScores = matchup.score1 !== undefined && matchup.score2 !== undefined;
+                const isComplete = matchup.isComplete || false;
+                const winner = matchup.winner;
+
+                const gm1Image = gmMap.get(gm1Name) || 'assets/placeholder.jpg';
+                const gm2Image = gmMap.get(gm2Name) || 'assets/placeholder.jpg';
+
+                const matchupDiv = document.createElement('div');
+                matchupDiv.className = 'matchup-item';
+
+                const gm1WinnerClass = (isComplete && winner === gm1Name) ? 'winner' : '';
+                const gm2WinnerClass = (isComplete && winner === gm2Name) ? 'winner' : '';
+
+                if (assignedSidebet) {
+                    matchupDiv.classList.add('has-sidebet');
+                }
+
+                if (matchup.isSpecial) {
+                    matchupDiv.classList.add('on-fire');
+                }
+
+                matchupDiv.style.cursor = 'pointer';
+                matchupDiv.addEventListener('click', () => {
+                    openSidebetModal(week.Week, gm1Name, gm2Name, matchup.matchupIndex, assignedSidebet);
+                });
+
+                const sidebetBadge = assignedSidebet
+                    ? '<span class="matchup-sidebet-badge">🎲 Sidebet</span>'
+                    : '';
+
+                matchupDiv.innerHTML = `
+                    ${sidebetBadge}
+                    <div class="gm-matchup-container gm1 ${gm1WinnerClass}">
+                        <img src="${gm1Image}" alt="${gm1Name}" class="gm-photo-matchup">
+                        <span class="gm-name">${gm1Name}</span>
+                        ${hasScores ? `<span class="score">${matchup.score1}</span>` : ''}
+                    </div>
+                    <span class="vs-label">vs</span>
+                    <div class="gm-matchup-container gm2 ${gm2WinnerClass}">
+                        ${hasScores ? `<span class="score">${matchup.score2}</span>` : ''}
+                        <span class="gm-name">${gm2Name}</span>
+                        <img src="${gm2Image}" alt="${gm2Name}" class="gm-photo-matchup">
+                    </div>
+                `;
+                matchupsList.appendChild(matchupDiv);
+            });
+        }
+
+        weekContainer.appendChild(matchupsList);
+        container.appendChild(weekContainer);
     }
 });
 
