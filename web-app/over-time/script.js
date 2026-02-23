@@ -358,6 +358,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             const emptyState = document.getElementById('chartEmptyState');
             if (emptyState) emptyState.classList.remove('hidden');
+            history.replaceState(null, '', window.location.pathname);
         });
 
         document.getElementById('updateChartBtn').addEventListener('click', async () => {
@@ -424,6 +425,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             createOrUpdateChart(datasets);
 
+            // Update URL with selected players
+            const paramParts = selectedPlayers.map(p => `${p.id}.${p.season}`);
+            const newUrl = `${window.location.pathname}?p=${paramParts.join(',')}`;
+            history.replaceState(null, '', newUrl);
+
             // Hide empty state, show chart
             const emptyState = document.getElementById('chartEmptyState');
             if (emptyState) emptyState.classList.add('hidden');
@@ -432,15 +438,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateBtn.disabled = false;
         });
 
-        // Auto-load from URL params (e.g. ?playerId=8478483&season=20252026)
+        // Auto-load from URL params
+        // Supports: ?p=id.season,id.season  OR  ?playerId=id&season=season (single player from contracts page)
         const urlParams = new URLSearchParams(window.location.search);
-        const preselectedId = urlParams.get('playerId');
-        const preselectedSeason = urlParams.get('season');
-        if (preselectedId && preselectedSeason) {
-            const checkbox = document.getElementById(`player-${preselectedId}-${preselectedSeason}`);
-            if (checkbox) {
-                checkbox.checked = true;
-                checkbox.scrollIntoView({ block: 'center' });
+        const pParam = urlParams.get('p');
+        const singleId = urlParams.get('playerId');
+        const singleSeason = urlParams.get('season');
+
+        let preselections = [];
+        if (pParam) {
+            preselections = pParam.split(',').map(entry => {
+                const [id, season] = entry.split('.');
+                return { id, season };
+            });
+        } else if (singleId && singleSeason) {
+            preselections = [{ id: singleId, season: singleSeason }];
+        }
+
+        if (preselections.length > 0) {
+            let firstMatch = null;
+            for (const { id, season } of preselections) {
+                const checkbox = document.getElementById(`player-${id}-${season}`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    if (!firstMatch) firstMatch = checkbox;
+                }
+            }
+            if (firstMatch) {
+                firstMatch.scrollIntoView({ block: 'center' });
                 document.getElementById('updateChartBtn').click();
             }
         }
