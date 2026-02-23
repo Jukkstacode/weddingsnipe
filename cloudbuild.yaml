@@ -1,9 +1,11 @@
 steps:
 # Step 1: Install dependencies and run the stats script
 - name: 'gcr.io/cloud-builders/npm'
+  dir: 'web-app'
   args: ['install']
 
 - name: 'gcr.io/cloud-builders/npm'
+  dir: 'web-app'
   args: ['run', 'fetch-stats']
 
 # Step 2: Deploy the static files
@@ -14,7 +16,8 @@ steps:
     '-r',
     '-c',
     '-d',
-    '.', # Assuming the files to sync are in the root
+    '-x', 'node_modules/|\.git/|package\.json|package-lock\.json|fetch-stats\.js',
+    'web-app/',
     'gs://wedding-snipe-countdown-site'
   ]
 options:
