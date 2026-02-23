@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 },
                 plugins: {
-                    legend: { labels: { color: '#e8e8e8' } },
+                    legend: { display: false },
                     tooltip: {
                         callbacks: {
                             title: (items) => {
