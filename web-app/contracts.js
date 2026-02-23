@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const chartUrl = `over-time/index.html?playerId=${contract.nhlId}&season=20252026`;
 
         return `
-            <a href="${chartUrl}" class="player-card-link">
+            <a href="${chartUrl}" class="player-card-link" data-position="${contract.Position}" data-contract-length="${contract['Contract Length']}">
             <div class="player-card">
                 ${stolenHtml}
                 <div class="player-card-top">
@@ -205,6 +205,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
             container.appendChild(section);
         }
+
+        // Shared filter logic
+        let activePos = 'ALL';
+        let rfaOnly = false;
+
+        function applyCardFilters() {
+            document.querySelectorAll('.player-card-link').forEach(card => {
+                const posMatch = activePos === 'ALL' || card.dataset.position.split(',').some(p => p.trim() === activePos);
+                const rfaMatch = !rfaOnly || card.dataset.contractLength === '1';
+                card.style.display = (posMatch && rfaMatch) ? '' : 'none';
+            });
+        }
+
+        document.querySelectorAll('.pos-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.pos-filter').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activePos = btn.dataset.pos;
+                applyCardFilters();
+            });
+        });
+
+        document.getElementById('rfaFilter').addEventListener('click', function() {
+            rfaOnly = !rfaOnly;
+            this.classList.toggle('active', rfaOnly);
+            applyCardFilters();
+        });
     }).catch(error => {
         console.error('Error fetching initial data:', error);
         container.innerHTML = '<div class="contracts-loading">Failed to load contracts. Please refresh.</div>';

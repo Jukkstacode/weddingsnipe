@@ -281,9 +281,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         let activePositionFilter = 'ALL';
+        let rfaOnly = false;
 
         function getPlayersToRender() {
-            const rfaOnly = document.getElementById('rfaFilter').checked;
             let base = rfaOnly ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
             if (activePositionFilter !== 'ALL') {
                 base = base.filter(p => p.Position.split(',').some(pos => pos.trim() === activePositionFilter));
@@ -293,7 +293,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         renderPlayerList(getPlayersToRender());
 
-        document.getElementById('rfaFilter').addEventListener('change', function() {
+        document.getElementById('rfaFilter').addEventListener('click', function() {
+            rfaOnly = !rfaOnly;
+            this.classList.toggle('active', rfaOnly);
             renderPlayerList(getPlayersToRender());
         });
 

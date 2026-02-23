@@ -210,26 +210,29 @@ body {
     border-color: rgba(255, 255, 255, 0.25);
 }
 
-.toggle-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    font-size: 13px;
+.rfa-filter {
+    margin-left: 8px;
+    flex: 1;
+    padding: 4px 0;
+    background: transparent;
     color: var(--text-muted);
-    user-select: none;
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
     transition: var(--transition);
 }
 
-.toggle-label:hover {
+.rfa-filter:hover {
     color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
-.toggle-label input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-    accent-color: var(--accent-blue);
+.rfa-filter.active {
+    background: var(--accent-orange, #ff8c00);
+    color: var(--text-white);
+    border-color: var(--accent-orange, #ff8c00);
 }
 
 /* Search */

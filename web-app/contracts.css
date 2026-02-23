@@ -36,7 +36,62 @@ body {
 .contracts-subtitle {
     color: var(--text-muted);
     font-size: 14px;
-    margin: 0 0 24px;
+    margin: 0 0 16px;
+}
+
+/* Position filters */
+.position-filters {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.pos-filter {
+    padding: 5px 14px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color-strong);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pos-filter:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.pos-filter.active {
+    background: var(--primary-blue);
+    color: var(--text-white);
+    border-color: var(--primary-blue);
+}
+
+.rfa-filter {
+    margin-left: 12px;
+    padding: 5px 14px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color-strong);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rfa-filter:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.rfa-filter.active {
+    background: var(--accent-orange, #ff8c00);
+    color: var(--text-white);
+    border-color: var(--accent-orange, #ff8c00);
 }
 
 /* GM list */
