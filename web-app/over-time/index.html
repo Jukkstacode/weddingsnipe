@@ -59,6 +59,12 @@
         </div>
     </div>
     <script>
+        // iOS Safari/Chrome: force reflow on navigation to fix layout under fixed nav
+        window.addEventListener('pageshow', function() {
+            window.scrollTo(0, 0);
+            document.body.offsetHeight;
+        });
+
         fetch('../nav.html')
             .then(r => r.text())
             .then(data => {
