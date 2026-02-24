@@ -58,31 +58,7 @@
             </div>
         </div>
     </div>
-    <script>
-        // iOS Safari/Chrome: force reflow on navigation to fix layout under fixed nav
-        window.addEventListener('pageshow', function() {
-            window.scrollTo(0, 0);
-            document.body.offsetHeight;
-        });
-
-        fetch('../nav.html')
-            .then(r => r.text())
-            .then(data => {
-                document.getElementById('nav-placeholder').innerHTML = data;
-                const hamburger = document.querySelector('.hamburger');
-                const navLinks = document.querySelector('.nav-links');
-                if (hamburger && navLinks) {
-                    hamburger.addEventListener('click', () => navLinks.classList.toggle('nav-active'));
-                }
-                // Fix nav links to point to parent directory
-                document.querySelectorAll('.top-nav a[href]').forEach(a => {
-                    const href = a.getAttribute('href');
-                    if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('../')) {
-                        a.setAttribute('href', '../' + href);
-                    }
-                });
-            });
-    </script>
+    <script src="../nav.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

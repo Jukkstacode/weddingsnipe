@@ -16,7 +16,7 @@ body {
     box-sizing: border-box;
 
     /* Padding for fixed navbar - adjust per page if needed */
-    padding-top: 60px;
+    padding-top: 48px;
 }
 
 /* Dark overlay background (used on some pages) */
@@ -45,11 +45,10 @@ body::before {
     left: 0;
     z-index: 1001;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    height: 60px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    height: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-links {
@@ -70,42 +69,32 @@ body::before {
 /* Separator line between nav sections */
 .nav-separator {
     width: 1px;
-    height: 30px;
-    background-color: rgba(255, 255, 255, 0.3);
-    margin: 0 10px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 0 6px;
 }
 
 .top-nav a {
-    color: white;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    padding: 20px 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
-    position: relative;
+    padding: 0 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    height: 48px;
+    border-bottom: 2px solid transparent;
 }
 
 .top-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.top-nav a.active {
     color: var(--accent-blue);
-}
-
-/* Underline effect on hover */
-.top-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    right: 20px;
-    height: 2px;
-    background-color: var(--accent-blue);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.top-nav a:hover::after {
-    transform: scaleX(1);
+    border-bottom-color: var(--accent-blue);
+    font-weight: 600;
 }
 
 /* Hamburger menu icon (hidden on desktop) */
@@ -119,17 +108,17 @@ body::before {
 }
 
 .hamburger .line {
-    width: 25px;
-    height: 3px;
+    width: 20px;
+    height: 2px;
     background: white;
     margin: 3px 0;
     transition: all 0.3s ease;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 /* Hamburger animation when active */
 .hamburger.active .line:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
+    transform: rotate(45deg) translate(5px, 5px);
 }
 
 .hamburger.active .line:nth-child(2) {
@@ -137,7 +126,7 @@ body::before {
 }
 
 .hamburger.active .line:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* ============================================
@@ -147,11 +136,11 @@ body::before {
 @media screen and (max-width: 768px) {
     /* Reduce padding on mobile */
     body {
-        padding-top: 50px;
+        padding-top: 48px;
     }
-    
+
     .top-nav {
-        height: 50px;
+        height: 48px;
         padding: 0;
     }
 
@@ -160,15 +149,15 @@ body::before {
         flex-direction: column;
         position: fixed;
         left: -100%;
-        top: 50px;
+        top: 48px;
         width: 70%;
         max-width: 300px;
         background-color: rgba(0, 0, 0, 0.98);
         transition: left 0.3s ease-in-out;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-        height: calc(100vh - 50px);
+        height: calc(100vh - 48px);
         overflow-y: auto;
-        padding-top: 20px;
+        padding-top: 10px;
     }
 
     .nav-links.nav-active {
@@ -186,8 +175,8 @@ body::before {
     .nav-separator {
         width: 80%;
         height: 1px;
-        background-color: rgba(255, 255, 255, 0.3);
-        margin: 15px auto;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin: 8px auto;
         align-self: center;
     }
 
@@ -195,25 +184,23 @@ body::before {
         display: block;
         width: 100%;
         text-align: left;
-        padding: 18px 25px;
-        margin-left: 32px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 1.1rem;
-        transition: background-color 0.2s ease, padding-left 0.2s ease;
-    }
-
-    .top-nav a::after {
-        display: none;
+        padding: 14px 20px;
+        margin-left: 0;
+        height: auto;
+        border-bottom: none;
+        border-left: 3px solid transparent;
+        font-size: 0.95rem;
+        transition: color 0.2s ease;
     }
 
     .top-nav a:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        padding-left: 35px;
+        color: #fff;
     }
 
-    /* Remove border from last item in each section */
-    .nav-section a:last-child {
-        border-bottom: none;
+    .top-nav a.active {
+        color: var(--accent-blue);
+        border-left-color: var(--accent-blue);
+        border-bottom-color: transparent;
     }
 
     .hamburger {

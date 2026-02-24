@@ -31,10 +31,10 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
     margin: 0;
-    padding: 76px 16px 16px;
-    min-height: 100vh;
+    height: 100dvh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     overflow: hidden;
 }
 
@@ -46,7 +46,9 @@ body {
     max-width: 1500px;
     display: flex;
     flex-direction: column;
-    height: calc(100dvh - 76px - 16px);
+    flex: 1;
+    min-height: 0;
+    padding: 16px;
 }
 
 /* ============================================
@@ -572,12 +574,8 @@ body {
    MOBILE
    ============================================ */
 @media screen and (max-width: 768px) {
-    body {
-        padding: 58px 8px 8px;
-    }
-
     .container {
-        height: calc(100dvh - 58px - 8px);
+        padding: 8px;
     }
 
     .main-content {

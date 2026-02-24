@@ -139,7 +139,7 @@ span.score {
 
 @media screen and (max-width: 768px) {
     body {
-        padding-top: 50px !important;
+        padding-top: 48px !important;
     }
 
     .week-container {

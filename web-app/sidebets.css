@@ -3,7 +3,7 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
     min-height: 100vh;
-    padding-top: 100px;
+    padding-top: 88px;
 }
 
 .sidebets-container {
