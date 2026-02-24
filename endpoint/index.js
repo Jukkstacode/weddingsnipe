@@ -94,7 +94,27 @@ async function fetchPlayerStatsFromNHL(playerId) {
     let currentSeasonStats = null;
 
     if (data.featuredStats?.regularSeason?.subSeason) {
+      const featuredSeason = String(data.featuredStats.season);
       const subSeason = data.featuredStats.regularSeason.subSeason;
+
+      // If the NHL API returns stats from a previous season (player hasn't
+      // played this year), store zeroed-out stats instead of stale data.
+      if (featuredSeason !== CURRENT_SEASON) {
+        currentSeasonStats = {
+          season: CURRENT_SEASON,
+          gamesPlayed: 0, goals: 0, assists: 0, points: 0, plusMinus: 0,
+          pim: 0, powerPlayGoals: 0, powerPlayPoints: 0,
+          shorthandedGoals: 0, shorthandedPoints: 0, gameWinningGoals: 0,
+          shots: 0, wins: 0, losses: 0, otLosses: 0, goalsAgainst: 0,
+          goalsAgainstAverage: 0, savePctg: 0, shotsAgainst: 0, shutouts: 0,
+          position: data.position || null,
+          fullName: `${data.firstName?.default || ''} ${data.lastName?.default || ''}`.trim(),
+          teamAbbrev: data.currentTeamAbbrev || null,
+          lastUpdated: new Date().toISOString()
+        };
+        return currentSeasonStats;
+      }
+
       currentSeasonStats = {
         season: CURRENT_SEASON,
         gamesPlayed: subSeason.gamesPlayed || 0,
