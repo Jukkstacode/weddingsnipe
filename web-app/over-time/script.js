@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 backgroundColor: color + '33',
                 fill: false,
                 tension: 0.1,
+                borderDash: playerData.season === '20242025' ? [6, 3] : [],
                 pointRadius: pointRadii,
                 pointStyle: pointStyles,
                 pointBackgroundColor: pointColors,
@@ -223,9 +224,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             { value: '20252026', label: 'S26' }
         ];
 
-        // Populate the static season header (outside the scrollable list)
+        // Populate the static season header with toggle-all buttons
         const seasonLabelsDiv = document.getElementById('seasonLabels');
-        seasonLabelsDiv.innerHTML = SEASONS.map(s => `<span>${s.label}</span>`).join('');
+        seasonLabelsDiv.innerHTML = SEASONS.map(s =>
+            `<button class="season-toggle-btn" id="toggle-${s.label}" data-season="${s.value}">${s.label}</button>`
+        ).join('');
+
+        document.querySelectorAll('.season-toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const season = btn.dataset.season;
+                const visibleCheckboxes = selectionListDiv.querySelectorAll(
+                    `input[type="checkbox"][data-season="${season}"]`
+                );
+                const anyUnchecked = Array.from(visibleCheckboxes).some(cb => !cb.checked);
+                visibleCheckboxes.forEach(cb => { cb.checked = anyUnchecked; });
+                btn.classList.toggle('active', anyUnchecked);
+            });
+        });
 
         function renderPlayerList(players) {
             selectionListDiv.innerHTML = '';
@@ -435,6 +450,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const fullSeasonLabel = player.season === '20242025' ? '24-25' : '25-26';
                 datasets.push({
                     playerName: `${player.name} (${fullSeasonLabel})`,
+                    season: player.season,
                     labels: processedData.labels,
                     data: processedData.data,
                     playedDates: processedData.playedDates,
@@ -455,16 +471,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                     .filter(p => p.season === '20252026' && aggrievedMap[p.id])
                     .map(p => aggrievedMap[p.id]);
 
-                const rows = datasets.map((d, i) => {
+                const rowData = datasets.map((d, i) => {
                     const gamesPlayed = d.playedDates.size;
                     const totalPts = d.data.length > 0 ? d.data[d.data.length - 1] : 0;
-                    const fpg = gamesPlayed > 0 ? (totalPts / gamesPlayed).toFixed(2) : '—';
+                    const fpgNum = gamesPlayed > 0 ? totalPts / gamesPlayed : -1;
+                    const fpg = fpgNum >= 0 ? fpgNum.toFixed(2) : '—';
                     const color = chartColors[i % chartColors.length];
-                    return `<tr>
+                    return { fpgNum, html: `<tr>
                         <td><span class="inset-color" style="background:${color}"></span>${d.playerName}</td>
                         <td>${fpg}</td>
-                    </tr>`;
-                }).join('');
+                    </tr>` };
+                });
+                rowData.sort((a, b) => b.fpgNum - a.fpgNum);
+                const rows = rowData.map(r => r.html).join('');
 
                 const aggrievedRows = aggrievedHits.map(a =>
                     `<tr class="aggrieved-row">

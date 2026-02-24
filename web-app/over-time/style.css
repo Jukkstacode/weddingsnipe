@@ -303,9 +303,9 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 6px 14px;
+    padding: 8px 14px;
     border-bottom: 1px solid var(--border-color);
-    background: var(--bg-sidebar);
+    background: var(--bg-card);
     flex-shrink: 0;
 }
 
@@ -316,19 +316,38 @@ body {
 
 .season-labels {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
+    margin-left: 2px;
 }
 
-.season-labels span {
+.season-toggle-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    font-size: 9px;
-    font-weight: 600;
-    color: var(--text-muted);
+    min-width: 28px;
+    height: 22px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent-blue);
     white-space: nowrap;
+    background: rgba(54, 162, 235, 0.1);
+    border: 1.5px solid rgba(54, 162, 235, 0.35);
+    border-radius: 12px;
+    padding: 0 6px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.season-toggle-btn:hover {
+    background: rgba(54, 162, 235, 0.2);
+    border-color: var(--accent-blue);
+}
+
+.season-toggle-btn.active {
+    background: var(--accent-blue);
+    color: var(--text-white);
+    border-color: var(--accent-blue);
 }
 
 .player-item {
