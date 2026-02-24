@@ -517,6 +517,24 @@ body {
     vertical-align: middle;
 }
 
+.aggrieved-row td {
+    padding-top: 6px !important;
+    border-top: 1px solid var(--border-color);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: left !important;
+}
+
+.aggrieved-photo {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    margin-left: 4px;
+    border: 1px solid var(--border-color-strong);
+}
+
 .chart-empty-state {
     position: absolute;
     inset: 0;

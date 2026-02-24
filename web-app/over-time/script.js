@@ -446,6 +446,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Populate the FP/G inset
             const insetEl = document.getElementById('chartInset');
             if (datasets.length > 0) {
+                // "Most aggrieved" easter eggs for stolen players (25-26 only)
+                const aggrievedMap = {
+                    '8484144': { name: 'Connor Bedard', photo: '../gm-assets/adam.jpeg' },
+                    '8476453': { name: 'Nikita Kucherov', photo: '../gm-assets/seedo.jpeg' },
+                };
+                const aggrievedHits = selectedPlayers
+                    .filter(p => p.season === '20252026' && aggrievedMap[p.id])
+                    .map(p => aggrievedMap[p.id]);
+
                 const rows = datasets.map((d, i) => {
                     const gamesPlayed = d.playedDates.size;
                     const totalPts = d.data.length > 0 ? d.data[d.data.length - 1] : 0;
@@ -456,10 +465,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <td>${fpg}</td>
                     </tr>`;
                 }).join('');
+
+                const aggrievedRows = aggrievedHits.map(a =>
+                    `<tr class="aggrieved-row">
+                        <td colspan="2">Most aggrieved: <img src="${a.photo}" class="aggrieved-photo"></td>
+                    </tr>`
+                ).join('');
+
                 insetEl.innerHTML = `<button class="inset-toggle" onclick="this.parentElement.classList.toggle('collapsed')"></button>
                 <table>
                     <thead><tr><th colspan="2">Avg points / game</th></tr></thead>
-                    <tbody>${rows}</tbody>
+                    <tbody>${rows}${aggrievedRows}</tbody>
                 </table>`;
                 insetEl.style.display = 'block';
                 insetEl.classList.remove('collapsed');
