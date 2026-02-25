@@ -391,7 +391,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             const emptyState = document.getElementById('chartEmptyState');
             if (emptyState) emptyState.classList.remove('hidden');
             document.getElementById('chartInset').style.display = 'none';
+            document.getElementById('chartFlipBack').innerHTML = '';
+            const chartArea = document.querySelector('.chart-area');
+            chartArea.classList.remove('flipped');
+            const flipBtn = document.getElementById('chartFlipBtn');
+            flipBtn.textContent = 'FP/G';
+            flipBtn.classList.add('hidden');
             history.replaceState(null, '', window.location.pathname);
+        });
+
+        // Card-flip toggle (mobile only visually, but handler works everywhere)
+        const flipBtn = document.getElementById('chartFlipBtn');
+        flipBtn.classList.add('hidden');
+        flipBtn.addEventListener('click', () => {
+            const chartArea = document.querySelector('.chart-area');
+            chartArea.classList.toggle('flipped');
+            flipBtn.textContent = chartArea.classList.contains('flipped') ? 'Chart' : 'FP/G';
         });
 
         document.getElementById('updateChartBtn').addEventListener('click', async () => {
@@ -459,6 +474,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             createOrUpdateChart(datasets);
 
+            // Reset flip state when chart updates
+            const chartArea = document.querySelector('.chart-area');
+            chartArea.classList.remove('flipped');
+            document.getElementById('chartFlipBtn').textContent = 'FP/G';
+
             // Populate the FP/G inset
             const insetEl = document.getElementById('chartInset');
             if (datasets.length > 0) {
@@ -498,8 +518,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </table>`;
                 insetEl.style.display = 'block';
                 insetEl.classList.remove('collapsed');
+
+                // Populate back-face for mobile card flip
+                const flipBackEl = document.getElementById('chartFlipBack');
+                flipBackEl.innerHTML = `<table>
+                    <thead><tr><th colspan="2">Avg points / game</th></tr></thead>
+                    <tbody>${rows}${aggrievedRows}</tbody>
+                </table>`;
+                document.getElementById('chartFlipBtn').classList.remove('hidden');
             } else {
                 insetEl.style.display = 'none';
+                document.getElementById('chartFlipBack').innerHTML = '';
+                document.getElementById('chartFlipBtn').classList.add('hidden');
             }
 
             // Update URL with selected players
