@@ -224,9 +224,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             { value: '20252026', label: 'S26' }
         ];
 
-        // Populate the static season header with toggle-all buttons
-        const seasonLabelsDiv = document.getElementById('seasonLabels');
-        seasonLabelsDiv.innerHTML = SEASONS.map(s =>
+        // Populate season toggle-all buttons in the filter bar
+        const seasonTogglesDiv = document.getElementById('seasonToggles');
+        seasonTogglesDiv.innerHTML = SEASONS.map(s =>
             `<button class="season-toggle-btn" id="toggle-${s.label}" data-season="${s.value}">${s.label}</button>`
         ).join('');
 

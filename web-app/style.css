@@ -118,7 +118,7 @@ body::before {
 
 /* Hamburger animation when active */
 .hamburger.active .line:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: translateY(8px) rotate(45deg);
 }
 
 .hamburger.active .line:nth-child(2) {
@@ -126,7 +126,7 @@ body::before {
 }
 
 .hamburger.active .line:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* ============================================

@@ -299,52 +299,44 @@ body {
     padding: 4px 0;
 }
 
-.season-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 14px;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-card);
-    flex-shrink: 0;
+/* Season select-all toggles in the filter bar */
+.filter-separator {
+    width: 1px;
+    height: 18px;
+    background: var(--border-color-strong);
+    margin: 0 2px;
 }
 
-.gm-info-placeholder {
-    width: 44px;
-    flex-shrink: 0;
-}
-
-.season-labels {
+.season-toggles {
     display: flex;
     gap: 4px;
-    flex-shrink: 0;
-    margin-left: 2px;
 }
 
 .season-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    height: 22px;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--accent-blue);
-    white-space: nowrap;
-    background: rgba(54, 162, 235, 0.1);
-    border: 1.5px solid rgba(54, 162, 235, 0.35);
-    border-radius: 12px;
-    padding: 0 6px;
+    padding: 4px 0;
+    min-width: 32px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
 }
 
 .season-toggle-btn:hover {
-    background: rgba(54, 162, 235, 0.2);
-    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
-.season-toggle-btn.active {
+.season-toggle-btn[data-season="20242025"].active {
+    background: var(--accent-orange, #ff8c00);
+    color: var(--text-white);
+    border-color: var(--accent-orange, #ff8c00);
+}
+
+.season-toggle-btn[data-season="20252026"].active {
     background: var(--accent-blue);
     color: var(--text-white);
     border-color: var(--accent-blue);
@@ -372,6 +364,13 @@ body {
     width: 16px;
     height: 16px;
     cursor: pointer;
+}
+
+.season-checkboxes input[data-season="20242025"] {
+    accent-color: var(--accent-orange, #ff8c00);
+}
+
+.season-checkboxes input[data-season="20252026"] {
     accent-color: var(--accent-blue);
 }
 
