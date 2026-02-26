@@ -255,16 +255,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         function renderPlayerList(players) {
             selectionListDiv.innerHTML = '';
 
-            // Sort checked players to the top (stable: checked keep alpha order, unchecked keep alpha order)
-            const sorted = players.slice().sort((a, b) => {
-                const aChecked = SEASONS.some(s => checkedSet.has(`player-${a.nhlId}-${s.value}`));
-                const bChecked = SEASONS.some(s => checkedSet.has(`player-${b.nhlId}-${s.value}`));
-                if (aChecked && !bChecked) return -1;
-                if (!aChecked && bChecked) return 1;
-                return 0;
-            });
-
-            sorted.forEach(player => {
+            players.forEach(player => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'player-item';
 
@@ -303,7 +294,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Restore checked state from persistent set
                     if (checkedSet.has(cb.id)) cb.checked = true;
 
-                    // Sync checkedSet on toggle and re-render to move player to/from top
+                    // Sync checkedSet on toggle and update pending pills
                     cb.addEventListener('change', () => {
                         if (cb.checked) {
                             checkedSet.add(cb.id);
@@ -311,7 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             checkedSet.delete(cb.id);
                             chartedSet.delete(cb.id);
                         }
-                        renderPlayerList(getPlayersToRender());
+                        updatePendingList();
                     });
 
                     checkboxesDiv.appendChild(cb);
