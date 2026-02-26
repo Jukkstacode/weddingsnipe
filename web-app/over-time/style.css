@@ -426,17 +426,21 @@ body {
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Card-flip containers (pass-through on desktop) */
 .chart-flip-inner {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    flex: 1;
+    min-height: 0;
 }
 
 .chart-flip-front {
     position: absolute;
     inset: 0;
+    overflow: hidden;
 }
 
 .chart-flip-back {
@@ -546,6 +550,11 @@ body {
     margin-right: 20px;
 }
 
+.inset-team {
+    opacity: 0.5;
+    font-size: 0.8em;
+}
+
 .inset-color {
     display: inline-block;
     width: 8px;
@@ -571,6 +580,61 @@ body {
     vertical-align: middle;
     margin-left: 4px;
     border: 1px solid var(--border-color-strong);
+}
+
+/* Pending selection chips */
+.pending-selection {
+    display: none;
+    padding: 6px 12px;
+    z-index: 20;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.pending-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.pending-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color-strong);
+    border-radius: 12px;
+    font-size: 11px;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.pending-season {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.pending-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0 0 2px;
+    transition: color 0.15s;
+}
+
+.pending-remove:hover {
+    color: var(--text-primary);
 }
 
 .chart-empty-state {
@@ -631,6 +695,9 @@ body {
     }
 
     .chart-flip-inner {
+        position: relative;
+        flex: 1;
+        min-height: 0;
         transform-style: preserve-3d;
         transition: transform 0.6s;
     }

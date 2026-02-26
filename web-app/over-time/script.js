@@ -218,6 +218,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const allPlayers = contracts.filter(c => c.nhlId).sort((a,b) => a.Player.localeCompare(b.Player));
         const extraPlayers = [];
+        const checkedSet = new Set();
+        const chartedSet = new Set(); // IDs currently shown on the chart
 
         const SEASONS = [
             { value: '20242025', label: 'S25' },
@@ -237,20 +239,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `input[type="checkbox"][data-season="${season}"]`
                 );
                 const anyUnchecked = Array.from(visibleCheckboxes).some(cb => !cb.checked);
-                visibleCheckboxes.forEach(cb => { cb.checked = anyUnchecked; });
+                visibleCheckboxes.forEach(cb => {
+                    cb.checked = anyUnchecked;
+                    if (anyUnchecked) {
+                        checkedSet.add(cb.id);
+                    } else {
+                        checkedSet.delete(cb.id);
+                    }
+                });
                 btn.classList.toggle('active', anyUnchecked);
+                renderPlayerList(getPlayersToRender());
             });
         });
 
         function renderPlayerList(players) {
-            // Save checked state before re-render
-            const checkedIds = new Set(
-                Array.from(selectionListDiv.querySelectorAll('input[type="checkbox"]:checked'))
-                    .map(cb => cb.id)
-            );
             selectionListDiv.innerHTML = '';
 
-            players.forEach(player => {
+            // Sort checked players to the top (stable: checked keep alpha order, unchecked keep alpha order)
+            const sorted = players.slice().sort((a, b) => {
+                const aChecked = SEASONS.some(s => checkedSet.has(`player-${a.nhlId}-${s.value}`));
+                const bChecked = SEASONS.some(s => checkedSet.has(`player-${b.nhlId}-${s.value}`));
+                if (aChecked && !bChecked) return -1;
+                if (!aChecked && bChecked) return 1;
+                return 0;
+            });
+
+            sorted.forEach(player => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'player-item';
 
@@ -285,6 +299,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     cb.dataset.season = season.value;
                     cb.dataset.seasonLabel = season.label;
                     cb.id = `player-${player.nhlId}-${season.value}`;
+
+                    // Restore checked state from persistent set
+                    if (checkedSet.has(cb.id)) cb.checked = true;
+
+                    // Sync checkedSet on toggle and re-render to move player to/from top
+                    cb.addEventListener('change', () => {
+                        if (cb.checked) {
+                            checkedSet.add(cb.id);
+                        } else {
+                            checkedSet.delete(cb.id);
+                            chartedSet.delete(cb.id);
+                        }
+                        renderPlayerList(getPlayersToRender());
+                    });
+
                     checkboxesDiv.appendChild(cb);
                 });
 
@@ -298,11 +327,40 @@ document.addEventListener('DOMContentLoaded', async () => {
                 itemDiv.appendChild(playerNameSpan);
                 selectionListDiv.appendChild(itemDiv);
             });
+            updatePendingList();
+        }
 
-            // Restore checked state after re-render
-            checkedIds.forEach(id => {
-                const cb = document.getElementById(id);
-                if (cb) cb.checked = true;
+        function updatePendingList() {
+            const pendingEl = document.getElementById('pendingSelection');
+            const allKnown = [...allPlayers, ...extraPlayers];
+            const pending = [];
+            for (const cbId of checkedSet) {
+                if (chartedSet.has(cbId)) continue;
+                const match = cbId.match(/^player-(\d+)-(\d+)$/);
+                if (!match) continue;
+                const [, nhlId, season] = match;
+                const player = allKnown.find(p => String(p.nhlId) === nhlId);
+                if (!player) continue;
+                const seasonLabel = season === '20242025' ? 'S25' : 'S26';
+                pending.push({ name: player.Player, seasonLabel, cbId });
+            }
+            if (pending.length === 0) {
+                pendingEl.style.display = 'none';
+                return;
+            }
+            const chips = pending.map(p =>
+                `<span class="pending-chip" data-id="${p.cbId}">${p.name} <span class="pending-season">${p.seasonLabel}</span><button class="pending-remove" data-id="${p.cbId}">&times;</button></span>`
+            ).join('');
+            pendingEl.innerHTML = `<span class="pending-label">Selected:</span>${chips}`;
+            pendingEl.style.display = 'flex';
+
+            pendingEl.querySelectorAll('.pending-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    checkedSet.delete(btn.dataset.id);
+                    renderPlayerList(getPlayersToRender());
+                    updatePendingList();
+                });
             });
         }
 
@@ -394,7 +452,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.getElementById('clearBtn').addEventListener('click', () => {
+            checkedSet.clear();
+            chartedSet.clear();
             document.querySelectorAll('#player-selection-list input:checked').forEach(cb => cb.checked = false);
+            renderPlayerList(getPlayersToRender());
             if (currentChart) {
                 currentChart.destroy();
                 currentChart = null;
@@ -422,15 +483,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('updateChartBtn').addEventListener('click', async () => {
             const selectedPlayers = [];
-            document.querySelectorAll('#player-selection-list input:checked').forEach(checkbox => {
+            const allKnown = [...allPlayers, ...extraPlayers];
+            for (const cbId of checkedSet) {
+                // Parse ID format: player-{nhlId}-{season}
+                const match = cbId.match(/^player-(\d+)-(\d+)$/);
+                if (!match) continue;
+                const [, nhlId, season] = match;
+                const player = allKnown.find(p => String(p.nhlId) === nhlId);
+                if (!player) continue;
+                const seasonObj = SEASONS.find(s => s.value === season);
                 selectedPlayers.push({
-                    id: checkbox.value,
-                    name: checkbox.dataset.name,
-                    position: checkbox.dataset.position,
-                    season: checkbox.dataset.season,
-                    seasonLabel: checkbox.dataset.seasonLabel
+                    id: nhlId,
+                    name: player.Player,
+                    position: player.Position,
+                    season: season,
+                    seasonLabel: seasonObj ? seasonObj.label : season
                 });
-            });
+            }
 
             if (selectedPlayers.length === 0) {
                 alert('Please select at least one player.');
@@ -474,9 +543,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const missedDates = new Set(missedDatesArr);
 
                 const fullSeasonLabel = player.season === '20242025' ? '24-25' : '25-26';
+                const sortedLog = gameLog.slice().sort((a, b) => new Date(a.gameDate) - new Date(b.gameDate));
+                const teamAbbrev = sortedLog.length > 0 ? sortedLog[sortedLog.length - 1].teamAbbrev : '';
                 datasets.push({
                     playerName: `${player.name} (${fullSeasonLabel})`,
                     season: player.season,
+                    teamAbbrev,
                     labels: processedData.labels,
                     data: processedData.data,
                     playedDates: processedData.playedDates,
@@ -484,6 +556,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             createOrUpdateChart(datasets);
+
+            // Sync chartedSet so pending list clears for these players
+            chartedSet.clear();
+            for (const cbId of checkedSet) chartedSet.add(cbId);
+            updatePendingList();
 
             // Reset flip state when chart updates
             const chartArea = document.querySelector('.chart-area');
@@ -508,8 +585,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const fpgNum = gamesPlayed > 0 ? totalPts / gamesPlayed : -1;
                     const fpg = fpgNum >= 0 ? fpgNum.toFixed(2) : '—';
                     const color = chartColors[i % chartColors.length];
+                    const teamLabel = d.teamAbbrev ? ` <span class="inset-team">${d.teamAbbrev}</span>` : '';
                     return { fpgNum, html: `<tr>
-                        <td><span class="inset-color" style="background:${color}"></span>${d.playerName}</td>
+                        <td><span class="inset-color" style="background:${color}"></span>${d.playerName}${teamLabel}</td>
                         <td>${fpg}</td>
                     </tr>` };
                 });
@@ -574,16 +652,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (preselections.length > 0) {
-            let firstMatch = null;
             for (const { id, season } of preselections) {
-                const checkbox = document.getElementById(`player-${id}-${season}`);
-                if (checkbox) {
-                    checkbox.checked = true;
-                    if (!firstMatch) firstMatch = checkbox;
+                const cbId = `player-${id}-${season}`;
+                // Verify the player exists in our data before adding
+                const allKnown = [...allPlayers, ...extraPlayers];
+                if (allKnown.some(p => String(p.nhlId) === id)) {
+                    checkedSet.add(cbId);
                 }
             }
-            if (firstMatch) {
-                firstMatch.scrollIntoView({ block: 'center' });
+            // Re-render so checked players are pinned to top and checked
+            renderPlayerList(getPlayersToRender());
+            const firstCb = document.getElementById(`player-${preselections[0].id}-${preselections[0].season}`);
+            if (firstCb) {
+                firstCb.scrollIntoView({ block: 'center' });
                 document.getElementById('updateChartBtn').click();
             }
         }
