@@ -243,6 +243,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         function renderPlayerList(players) {
+            // Save checked state before re-render
+            const checkedIds = new Set(
+                Array.from(selectionListDiv.querySelectorAll('input[type="checkbox"]:checked'))
+                    .map(cb => cb.id)
+            );
             selectionListDiv.innerHTML = '';
 
             players.forEach(player => {
@@ -292,6 +297,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 itemDiv.appendChild(checkboxesDiv);
                 itemDiv.appendChild(playerNameSpan);
                 selectionListDiv.appendChild(itemDiv);
+            });
+
+            // Restore checked state after re-render
+            checkedIds.forEach(id => {
+                const cb = document.getElementById(id);
+                if (cb) cb.checked = true;
             });
         }
 
