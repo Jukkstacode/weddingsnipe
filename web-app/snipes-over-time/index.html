@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8TZ69H67W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F8TZ69H67W');
+    </script>
+    <link rel="icon" href="../assets/mike-favicon.jpeg" type="image/jpeg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snipe Over Time - Bathouse Hockey League</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="snipe-ot-container">
+        <div class="snipe-ot-header">
+            <a href="../snipes.html" class="back-link">&larr; Back to Snipes</a>
+            <h1 id="playerName"></h1>
+            <p class="snipe-context" id="snipeContext"></p>
+        </div>
+        <div class="chart-wrapper">
+            <div class="stat-box" id="statBox">
+                <span class="stat-label">Total FP since stolen</span>
+                <span class="stat-value" id="totalFP">--</span>
+                <span class="stat-label stat-label-secondary">Games since stolen</span>
+                <span class="stat-value stat-value-secondary" id="totalGames">--</span>
+                <span class="stat-label stat-label-tertiary">Avg FP / game</span>
+                <span class="stat-value stat-value-secondary" id="avgFPG">--</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="snipeChart"></canvas>
+            </div>
+            <div class="loading-state" id="loadingState">Loading game data...</div>
+        </div>
+    </div>
+    <script src="../nav.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

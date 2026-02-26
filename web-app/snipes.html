@@ -28,7 +28,7 @@
         
         <div class="snipes-list">
             <!-- Snipe 7: Andy steals Kucherov from Seedo - Aug 31, 2025 -->
-            <div class="snipe-card">
+            <div class="snipe-card" data-nhl-id="8476453" data-player="Nikita Kucherov" data-position="RW" data-snipe-date="2025-08-31">
                 <div class="snipe-date">Aug 31, 2025</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -56,7 +56,7 @@
             </div>
 
             <!-- Snipe 6: Dan steals Draisaitl from Colin - Jun 29, 2024 -->
-            <div class="snipe-card">
+            <div class="snipe-card" data-nhl-id="8477934" data-player="Leon Draisaitl" data-position="C" data-snipe-date="2024-06-29">
                 <div class="snipe-date">Jun 29, 2024</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -84,7 +84,7 @@
             </div>
 
             <!-- Snipe 5: Mike steals Bedard from Adam - Oct 28, 2023 -->
-            <div class="snipe-card">
+            <div class="snipe-card" data-nhl-id="8484144" data-player="Connor Bedard" data-position="C" data-snipe-date="2023-10-28">
                 <div class="snipe-date">Oct 28, 2023</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -111,8 +111,8 @@
                 </div>
             </div>
 
-            <!-- Snipe 4: Colin steals Makar from Dan - Jun 30, 2022 -->
-            <div class="snipe-card">
+            <!-- Snipe 4: Colin steals Matthews from Dan - Jun 30, 2022 -->
+            <div class="snipe-card" data-nhl-id="8479318" data-player="Auston Matthews" data-position="C" data-snipe-date="2022-06-30">
                 <div class="snipe-date">Jun 30, 2022</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -140,7 +140,7 @@
             </div>
 
             <!-- Snipe 3: Marinos steals Marner from Jordan - Oct 2, 2021 -->
-            <div class="snipe-card">
+            <div class="snipe-card" data-nhl-id="8478483" data-player="Mitch Marner" data-position="RW" data-snipe-date="2021-10-02">
                 <div class="snipe-date">Oct 2, 2021</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -168,7 +168,7 @@
             </div>
 
             <!-- Snipe 2: Dave steals Ovechkin from Dan - Sept 1, 2018 -->
-            <div class="snipe-card">
+            <div class="snipe-card" data-nhl-id="8471214" data-player="Alex Ovechkin" data-position="LW" data-snipe-date="2018-09-01">
                 <div class="snipe-date">Sept 1, 2018</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -196,7 +196,7 @@
             </div>
 
             <!-- Snipe 1: Jordan steals Matthews from Charlie - Dec 9, 2017 -->
-            <div class="snipe-card">
+            <div class="snipe-card" data-nhl-id="8479318" data-player="Auston Matthews" data-position="C" data-snipe-date="2017-12-09">
                 <div class="snipe-date">Dec 9, 2017</div>
                 <div class="snipe-content">
                     <div class="gm-section">
@@ -226,5 +226,19 @@
     </div>
 
     <script src="nav.js"></script>
+    <script>
+        document.querySelectorAll('.snipe-card[data-nhl-id]').forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                const params = new URLSearchParams({
+                    nhlId: card.dataset.nhlId,
+                    name: card.dataset.player,
+                    position: card.dataset.position,
+                    snipeDate: card.dataset.snipeDate
+                });
+                window.location.href = `snipes-over-time/?${params}`;
+            });
+        });
+    </script>
 </body>
 </html>
