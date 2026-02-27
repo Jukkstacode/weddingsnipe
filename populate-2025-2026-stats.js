@@ -91,15 +91,11 @@ async function fetchPlayerStatsFromNHL(playerId) {
 async function main() {
     console.log('📊 Starting 2025-2026 stats population...\n');
     
-    // Get all player IDs from the existing player-stats collection
-    console.log('📖 Reading existing player IDs from player-stats collection...');
-    const existingSnapshot = await db.collection('player-stats').get();
-    const playerIds = existingSnapshot.docs.map(doc => doc.id);
+    // Get all player IDs from contracts.json
+    console.log('📖 Reading player IDs from contracts.json...');
+    const contracts = JSON.parse(fs.readFileSync('./web-app/contracts.json', 'utf8'));
+    const playerIds = contracts.map(c => c.nhlId).filter(id => id);
     console.log(`✅ Found ${playerIds.length} players\n`);
-    
-    // Alternatively, you can read from contracts.json if available
-    // const contracts = JSON.parse(fs.readFileSync('./contracts.json', 'utf8'));
-    // const playerIds = contracts.map(c => c.nhlId).filter(id => id);
     
     let successCount = 0;
     let errorCount = 0;
