@@ -214,6 +214,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Create a map for easy lookup of GM images
         const gmMap = new Map(gms.map(gm => [gm.name, gm.image]));
 
+        // Populate GM dropdown
+        const gmFilterSelect = document.getElementById('gmFilter');
+        gms.map(gm => gm.name).sort().forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            gmFilterSelect.appendChild(opt);
+        });
+        gmFilterSelect.addEventListener('change', () => {
+            activeGmFilter = gmFilterSelect.value;
+            renderPlayerList(getPlayersToRender());
+        });
+
         const selectionListDiv = document.getElementById('player-selection-list');
 
         const allPlayers = contracts.filter(c => c.nhlId).sort((a,b) => a.Player.localeCompare(b.Player));
@@ -357,11 +370,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         let activePositionFilter = 'ALL';
         let rfaOnly = false;
+        let activeGmFilter = '';
 
         function getPlayersToRender() {
             let base = rfaOnly ? allPlayers.filter(p => p['Contract Length'] === 1) : allPlayers;
             if (activePositionFilter !== 'ALL') {
                 base = base.filter(p => p.Position.split(',').some(pos => pos.trim() === activePositionFilter));
+            }
+            if (activeGmFilter) {
+                const gmPlayers = base.filter(p => p.GM === activeGmFilter);
+                const otherPlayers = base.filter(p => p.GM !== activeGmFilter);
+                base = [...gmPlayers, ...otherPlayers];
             }
             return [...extraPlayers, ...base];
         }
@@ -454,6 +473,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const emptyState = document.getElementById('chartEmptyState');
             if (emptyState) emptyState.classList.remove('hidden');
             document.getElementById('chartInset').style.display = 'none';
+            document.getElementById('chartLegend').style.display = 'none';
             document.getElementById('chartFlipBack').innerHTML = '';
             const chartArea = document.querySelector('.chart-area');
             chartArea.classList.remove('flipped');
@@ -598,6 +618,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </table>`;
                 insetEl.style.display = 'block';
                 insetEl.classList.remove('collapsed');
+                document.getElementById('chartLegend').style.display = 'flex';
 
                 // Populate back-face for mobile card flip
                 const flipBackEl = document.getElementById('chartFlipBack');
@@ -608,6 +629,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.getElementById('chartFlipBtn').classList.remove('hidden');
             } else {
                 insetEl.style.display = 'none';
+                document.getElementById('chartLegend').style.display = 'none';
                 document.getElementById('chartFlipBack').innerHTML = '';
                 document.getElementById('chartFlipBtn').classList.add('hidden');
             }

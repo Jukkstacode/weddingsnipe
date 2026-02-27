@@ -20,11 +20,10 @@
                             <span class="btn-label">Update</span>
                             <span class="btn-spinner"></span>
                         </button>
+                        <select id="gmFilter">
+                            <option value="">None</option>
+                        </select>
                         <button id="clearBtn">Clear</button>
-                        <div class="controls-legend">
-                            <span class="legend-item"><span class="legend-circle"></span> Played</span>
-                            <span class="legend-item"><span class="legend-diamond">&#9670;</span> Missed</span>
-                        </div>
                     </div>
                 </div>
                 <div class="position-filters">
@@ -52,6 +51,10 @@
                             <canvas id="goalsChart"></canvas>
                         </div>
                         <div class="chart-inset" id="chartInset"></div>
+                        <div class="chart-legend" id="chartLegend">
+                            <span class="legend-item"><span class="legend-circle"></span> Played</span>
+                            <span class="legend-item"><span class="legend-diamond">&#9670;</span> Missed</span>
+                        </div>
                         <div class="chart-empty-state" id="chartEmptyState">
                             <div class="empty-icon">&#9898;</div>
                             <p>Select players from the sidebar and click <strong>Update Chart</strong> to compare fantasy production.</p>
