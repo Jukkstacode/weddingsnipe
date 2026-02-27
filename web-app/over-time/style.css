@@ -201,7 +201,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 #clearBtn {
@@ -756,6 +756,27 @@ body {
 
     .sidebar {
         flex: 0 0 40%;
+    }
+
+    .controls-row {
+        gap: 5px;
+    }
+
+    #updateChartBtn,
+    #clearBtn {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    #gmFilter {
+        padding: 6px 6px;
+        font-size: 12px;
+        min-width: 0;
+    }
+
+    .season-toggle-btn {
+        padding: 6px 7px;
+        font-size: 12px;
     }
 
     .chart-area {
