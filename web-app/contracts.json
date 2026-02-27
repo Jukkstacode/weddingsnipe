@@ -54,6 +54,15 @@
     "nhlId": "8476454"
   },
   {
+    "GM": "Adam",
+    "Player": "Jake Sanderson",
+    "Position": "D",
+    "Team": "OTT",
+    "Contract Length": 4,
+    "Stolen?": false,
+    "nhlId": "8482105"
+  },
+  {
     "GM": "Andy",
     "Player": "Brayden Point",
     "Position": "C",
@@ -115,6 +124,15 @@
     "Contract Length": 1,
     "Stolen?": false,
     "nhlId": "8483457"
+  },
+  {
+    "GM": "Andy",
+    "Player": "Matthew Knies",
+    "Position": "LW",
+    "Team": "TOR",
+    "Contract Length": 2,
+    "Stolen?": false,
+    "nhlId": "8482720"
   },
   {
     "GM": "Charlie",
@@ -495,6 +513,15 @@
     "nhlId": "8480192"
   },
   {
+    "GM": "Hordo",
+    "Player": "Logan Cooley",
+    "Position": "C",
+    "Team": "UTA",
+    "Contract Length": 4,
+    "Stolen?": false,
+    "nhlId": "8483431"
+  },
+  {
     "GM": "Jordan",
     "Player": "Adam Fox",
     "Position": "D",
@@ -603,6 +630,15 @@
     "nhlId": "8476455"
   },
   {
+    "GM": "Marinos",
+    "Player": "Kirill Marchenko",
+    "Position": "RW",
+    "Team": "CBJ",
+    "Contract Length": 2,
+    "Stolen?": false,
+    "nhlId": "8480893"
+  },
+  {
     "GM": "Seedo",
     "Player": "Cole Caufield",
     "Position": "LW,RW",
@@ -628,6 +664,15 @@
     "Contract Length": 1,
     "Stolen?": false,
     "nhlId": "8478470"
+  },
+  {
+    "GM": "Seedo",
+    "Player": "Anthony Cirelli",
+    "Position": "C",
+    "Team": "TBL",
+    "Contract Length": 2,
+    "Stolen?": false,
+    "nhlId": "8478519"
   },
   {
     "GM": "Mike",
@@ -756,6 +801,15 @@
     "nhlId": "8478406"
   },
   {
+    "GM": "Ryan",
+    "Player": "Clayton Keller",
+    "Position": "LW,RW",
+    "Team": "UTA",
+    "Contract Length": 4,
+    "Stolen?": false,
+    "nhlId": "8479343"
+  },
+  {
     "GM": "Trevor",
     "Player": "William Nylander",
     "Position": "C,RW",
@@ -808,5 +862,14 @@
     "Contract Length": 1,
     "Stolen?": false,
     "nhlId": "8475683"
+  },
+  {
+    "GM": "Trevor",
+    "Player": "Jake Neighbours",
+    "Position": "LW,RW",
+    "Team": "STL",
+    "Contract Length": 4,
+    "Stolen?": false,
+    "nhlId": "8482089"
   }
 ]
