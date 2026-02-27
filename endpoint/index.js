@@ -214,6 +214,13 @@ async function handleRefreshCurrentSeasonStats(req, res, playerIds) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
 
+    // Invalidate any cached currentSeasonStats responses containing these players
+    for (const key of Object.keys(cache)) {
+      if (key.startsWith('currentSeason_') && playerIdsArray.some(id => key.includes(id))) {
+        delete cache[key];
+      }
+    }
+
     sendResponse(res, {
       success: true,
       updated: Object.keys(results).length,
