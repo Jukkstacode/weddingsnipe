@@ -461,6 +461,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
+        document.getElementById('chartMobileOverlay').addEventListener('click', () => {
+            document.getElementById('chartMobileOverlay').classList.toggle('collapsed');
+        });
+
         document.getElementById('clearBtn').addEventListener('click', () => {
             checkedSet.clear();
             chartedSet.clear();
@@ -474,6 +478,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (emptyState) emptyState.classList.remove('hidden');
             document.getElementById('chartInset').style.display = 'none';
             document.getElementById('chartLegend').style.display = 'none';
+            document.getElementById('chartMobileOverlay').classList.add('hidden');
             document.getElementById('chartFlipBack').innerHTML = '';
             const chartArea = document.querySelector('.chart-area');
             chartArea.classList.remove('flipped');
@@ -558,6 +563,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const teamAbbrev = sortedLog.length > 0 ? sortedLog[sortedLog.length - 1].teamAbbrev : '';
                 datasets.push({
                     playerName: `${player.name} (${fullSeasonLabel})`,
+                    position: player.position,
                     season: player.season,
                     teamAbbrev,
                     labels: processedData.labels,
@@ -597,39 +603,57 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const fpg = fpgNum >= 0 ? fpgNum.toFixed(2) : '—';
                     const color = chartColors[i % chartColors.length];
                     const teamLabel = d.teamAbbrev ? ` <span class="inset-team">${d.teamAbbrev}</span>` : '';
-                    return { fpgNum, html: `<tr>
+                    const sharedHtml = `<tr>
                         <td><span class="inset-color" style="background:${color}"></span>${d.playerName}${teamLabel}</td>
+                        <td>${d.position || '—'}</td>
+                        <td>${gamesPlayed}</td>
                         <td>${fpg}</td>
-                    </tr>` };
+                    </tr>`;
+                    return { fpgNum, gamesPlayed, html: sharedHtml, mobileHtml: sharedHtml };
                 });
                 rowData.sort((a, b) => b.fpgNum - a.fpgNum);
                 const rows = rowData.map(r => r.html).join('');
+                const mobileRows = rowData.map(r => r.mobileHtml).join('');
 
                 const aggrievedRows = aggrievedHits.map(a =>
                     `<tr class="aggrieved-row">
-                        <td colspan="2">Most aggrieved: <img src="${a.photo}" class="aggrieved-photo"></td>
+                        <td colspan="4">Most aggrieved: <img src="${a.photo}" class="aggrieved-photo"></td>
                     </tr>`
                 ).join('');
 
                 insetEl.innerHTML = `<button class="inset-toggle" onclick="this.parentElement.classList.toggle('collapsed')"></button>
                 <table>
-                    <thead><tr><th colspan="2">Avg points / game</th></tr></thead>
+                    <thead><tr><th>Stats</th><th>Pos</th><th>GP</th><th>FP/G</th></tr></thead>
                     <tbody>${rows}${aggrievedRows}</tbody>
                 </table>`;
                 insetEl.style.display = 'block';
                 insetEl.classList.remove('collapsed');
                 document.getElementById('chartLegend').style.display = 'flex';
 
+                // Mobile chart overlay — color dot + player name only, sorted by total FP desc
+                const mobileOverlayEl = document.getElementById('chartMobileOverlay');
+                const overlayRowsHtml = datasets
+                    .map((d, i) => ({ d, i, totalFp: d.data.length > 0 ? d.data[d.data.length - 1] : 0 }))
+                    .sort((a, b) => b.totalFp - a.totalFp)
+                    .map(({ d, i }) => {
+                        const color = chartColors[i % chartColors.length];
+                        return `<div class="chart-mobile-overlay-row"><span class="inset-color" style="background:${color}"></span>${d.playerName}</div>`;
+                    }).join('');
+                mobileOverlayEl.innerHTML = `<div class="chart-mobile-overlay-header">Players <span class="overlay-chevron">▾</span></div><div class="chart-mobile-overlay-body">${overlayRowsHtml}</div>`;
+                mobileOverlayEl.classList.remove('hidden');
+                mobileOverlayEl.classList.remove('collapsed');
+
                 // Populate back-face for mobile card flip
                 const flipBackEl = document.getElementById('chartFlipBack');
                 flipBackEl.innerHTML = `<table>
-                    <thead><tr><th colspan="2">Avg points / game</th></tr></thead>
-                    <tbody>${rows}${aggrievedRows}</tbody>
+                    <thead><tr><th>Stats</th><th>Pos</th><th>GP</th><th>FP/G</th></tr></thead>
+                    <tbody>${mobileRows}${aggrievedRows}</tbody>
                 </table>`;
                 document.getElementById('chartFlipBtn').classList.remove('hidden');
             } else {
                 insetEl.style.display = 'none';
                 document.getElementById('chartLegend').style.display = 'none';
+                document.getElementById('chartMobileOverlay').classList.add('hidden');
                 document.getElementById('chartFlipBack').innerHTML = '';
                 document.getElementById('chartFlipBtn').classList.add('hidden');
             }
