@@ -155,12 +155,12 @@ body {
 
 /* Buttons */
 #updateChartBtn {
-    padding: 6px 14px;
+    padding: 6px 10px;
     background: var(--accent-blue);
     color: var(--text-white);
     border: none;
     border-radius: var(--radius-sm);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -200,17 +200,17 @@ body {
 .controls-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     flex-wrap: nowrap;
 }
 
 #clearBtn {
-    padding: 6px 10px;
+    padding: 6px 8px;
     background: transparent;
     color: var(--text-muted);
     border: 1px solid var(--border-color-strong);
     border-radius: var(--radius-sm);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
@@ -223,12 +223,13 @@ body {
 }
 
 #gmFilter {
-    padding: 6px 8px;
+    padding: 6px 6px;
     background: transparent;
     color: var(--text-muted);
     border: 1px solid var(--border-color-strong);
     border-radius: var(--radius-sm);
-    font-size: 13px;
+    font-size: 12px;
+    min-width: 0;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
@@ -349,16 +350,15 @@ body {
 .season-toggles {
     display: flex;
     gap: 4px;
-    margin-left: auto;
 }
 
 .season-toggle-btn {
-    padding: 6px 10px;
+    padding: 6px 7px;
     background: transparent;
     color: var(--text-muted);
     border: 1px solid var(--border-color-strong);
     border-radius: var(--radius-sm);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
