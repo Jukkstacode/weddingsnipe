@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api-web.nhle.com)",
+      "WebFetch(domain:search.d3.nhle.com)",
+      "Bash(node -e \"JSON.parse\\(require\\(''fs''\\).readFileSync\\(''./contracts.json'',''utf8''\\)\\); console.log\\(''Valid JSON''\\);\")",
+      "WebFetch(domain:nhl-stats-cacher-347732622266.us-west1.run.app)",
+      "Bash(curl -s -I \"https://api-web.nhle.com/v1/player/8478460/landing\")"
+    ]
+  }
+}

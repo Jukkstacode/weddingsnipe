@@ -63,6 +63,8 @@ export const getNhlPlayerStats = async (req, res) => {
     await handleGameLogRequest(res, playerIds, season);
   } else if (requestType === 'teamSchedule') {
     await handleTeamScheduleRequest(res, req.query.teamAbbrev, season);
+  } else if (requestType === 'playerInfo') {
+    await handlePlayerInfoRequest(res, playerIds);
   } else if (requestType === 'playerName') {
     await handlePlayerNameRequest(res, playerIds);
   } else if (requestType === 'playerPosition') {
@@ -511,6 +513,42 @@ async function handleTeamScheduleRequest(res, teamAbbrev, season) {
     console.error('Error fetching team schedule from NHL API:', error);
     res.status(500).send('Error fetching team schedule');
   }
+}
+
+// --- Logic for fetching Player Info (name + position) from NHL API ---
+async function handlePlayerInfoRequest(res, playerIds) {
+  if (!playerIds) {
+    res.status(400).send('playerIds query parameter is required for playerInfo.');
+    return;
+  }
+
+  const playerIdsArray = playerIds.split(',');
+  const cacheKey = `playerInfo_${playerIds}`;
+
+  if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
+    sendResponse(res, cache[cacheKey].data, 'hit');
+    return;
+  }
+
+  const result = {};
+  await Promise.all(playerIdsArray.map(async (id) => {
+    try {
+      const nhlRes = await fetch(`https://api-web.nhle.com/v1/player/${id}/landing`);
+      if (!nhlRes.ok) return;
+      const data = await nhlRes.json();
+      if (data && data.firstName) {
+        result[id] = {
+          name: `${data.firstName?.default || ''} ${data.lastName?.default || ''}`.trim(),
+          position: data.position || '?'
+        };
+      }
+    } catch (e) {
+      console.warn(`Could not fetch player info for ${id}:`, e.message);
+    }
+  }));
+
+  cache[cacheKey] = { data: result, timestamp: Date.now() };
+  sendResponse(res, result, 'miss');
 }
 
 // --- Logic for fetching Player Names ---

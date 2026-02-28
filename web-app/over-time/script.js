@@ -438,6 +438,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     Position: p.positionCode,
                                     isExtra: true
                                 });
+                                // Cache name/position so shared URLs can restore this player
+                                try { localStorage.setItem(`nhl_player_${p.playerId}`, JSON.stringify({ name: p.name, position: p.positionCode })); } catch (_) {}
                                 const rfaOnly = document.getElementById('rfaFilter').checked;
                                 renderPlayerList(getPlayersToRender(rfaOnly));
                             }
@@ -689,9 +691,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (preselections.length > 0) {
+            // For player IDs not in the league data, fetch from NHL API and add to extraPlayers
+            const unknownIds = [...new Set(preselections.map(p => p.id))]
+                .filter(id => !allPlayers.some(p => String(p.nhlId) === id));
+
+            if (unknownIds.length > 0) {
+                // Add placeholders immediately so checkboxes exist
+                unknownIds.forEach(id => {
+                    extraPlayers.push({ nhlId: String(id), Player: `#${id}`, Position: '?', isExtra: true });
+                });
+
+                // Fetch real names via backend (proxies NHL API server-side, no CORS issue)
+                try {
+                    const infoRes = await fetch(`${ENDPOINT_URL}?requestType=playerInfo&playerIds=${unknownIds.join(',')}`);
+                    const infoData = await infoRes.json();
+                    unknownIds.forEach(id => {
+                        const info = infoData[id];
+                        if (info) {
+                            const entry = extraPlayers.find(p => p.nhlId === String(id));
+                            if (entry) { entry.Player = info.name; entry.Position = info.position; }
+                            try { localStorage.setItem(`nhl_player_${id}`, JSON.stringify(info)); } catch (_) {}
+                        }
+                    });
+                } catch (e) {
+                    // Fall back to localStorage cache if backend unavailable
+                    unknownIds.forEach(id => {
+                        try {
+                            const cached = localStorage.getItem(`nhl_player_${id}`);
+                            if (cached) {
+                                const info = JSON.parse(cached);
+                                const entry = extraPlayers.find(p => p.nhlId === String(id));
+                                if (entry) { entry.Player = info.name; entry.Position = info.position; }
+                            }
+                        } catch (_) {}
+                    });
+                }
+                renderPlayerList(getPlayersToRender());
+            }
+
             for (const { id, season } of preselections) {
                 const cbId = `player-${id}-${season}`;
-                // Verify the player exists in our data before adding
                 const allKnown = [...allPlayers, ...extraPlayers];
                 if (allKnown.some(p => String(p.nhlId) === id)) {
                     checkedSet.add(cbId);
@@ -699,9 +738,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             // Re-render so checked players are pinned to top and checked
             renderPlayerList(getPlayersToRender());
-            const firstCb = document.getElementById(`player-${preselections[0].id}-${preselections[0].season}`);
-            if (firstCb) {
-                firstCb.scrollIntoView({ block: 'center' });
+            if (checkedSet.size > 0) {
+                const firstCb = document.getElementById(`player-${preselections[0].id}-${preselections[0].season}`);
+                if (firstCb) firstCb.scrollIntoView({ block: 'center' });
                 document.getElementById('updateChartBtn').click();
             }
         }
