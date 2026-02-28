@@ -13,8 +13,8 @@ body {
 }
 
 .snipes-container {
-    max-width: 1200px;
-    width: 95%;
+    max-width: 900px;
+    width: 90%;
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
@@ -56,13 +56,6 @@ body {
     padding-bottom: 2rem;
 }
 
-/* Snipe Row - side-by-side card + chart */
-.snipe-row {
-    display: flex;
-    gap: 1.5rem;
-    align-items: stretch;
-}
-
 /* Individual Snipe Card */
 .snipe-card {
     background-color: rgba(0, 0, 0, 0.5);
@@ -71,43 +64,12 @@ body {
     padding: 1.5rem;
     transition: var(--transition-base);
     position: relative;
-    flex: 0 0 auto;
-    width: 50%;
-    box-sizing: border-box;
 }
 
 .snipe-card:hover {
     background-color: rgba(74, 158, 255, 0.1);
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(74, 158, 255, 0.3);
-}
-
-/* Chart wrapper beside card */
-.snipe-chart-wrapper {
-    flex: 1;
-    position: relative;
-    min-height: 200px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 2px solid var(--accent-blue);
-    border-radius: 15px;
-    padding: 1rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-
-.snipe-chart-wrapper canvas {
-    flex: 1;
-}
-
-.chart-stats {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    color: #e8e8e8;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding-top: 0.5rem;
 }
 
 /* Date Badge - Top Left */
@@ -207,10 +169,6 @@ body {
 
 /* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
-    .snipes-container {
-        width: 90%;
-    }
-
     .title-container {
         gap: 1rem;
     }
@@ -229,19 +187,9 @@ body {
         margin-bottom: 2rem;
     }
 
-    .snipe-row {
-        flex-direction: column;
-    }
-
     .snipe-card {
-        width: 100%;
         padding: 1rem;
         padding-top: 3rem;
-    }
-
-    .snipe-chart-wrapper {
-        min-height: 180px;
-        height: 220px;
     }
 
     .snipe-date {

@@ -15,254 +15,211 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="shared.css">
     <link rel="stylesheet" href="snipes.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="nav-placeholder"></div>
-    
+
     <div class="snipes-container">
         <div class="title-container">
             <img src="assets/stolen.webp" alt="Stolen" class="stolen-icon">
             <h1>The Snipes</h1>
         </div>
         <p class="snipes-subtitle">Victims and beneficiaries of 'The Wedding Rule'</p>
-        
+
         <div class="snipes-list">
             <!-- Snipe 7: Andy steals Kucherov from Seedo - Aug 31, 2025 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8476453" data-player="Nikita Kucherov" data-position="RW" data-snipe-date="2025-08-31">
-                    <div class="snipe-date">Aug 31, 2025</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/seedo.jpeg" alt="Seedo" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Seedo</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/andy.jpeg" alt="Andy" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Andy</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8476453" data-player="Nikita Kucherov" data-position="RW" data-snipe-date="2025-08-31">
+                <div class="snipe-date">Aug 31, 2025</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/seedo.jpeg" alt="Seedo" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Seedo</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Nikita Kucherov</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/andy.jpeg" alt="Andy" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Andy</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-0"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Nikita Kucherov</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Snipe 6: Dan steals Draisaitl from Colin - Jun 29, 2024 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8477934" data-player="Leon Draisaitl" data-position="C" data-snipe-date="2024-06-29">
-                    <div class="snipe-date">Jun 29, 2024</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/colin.jpeg" alt="Colin" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Colin</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/dan.jpeg" alt="Dan" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Dan</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8477934" data-player="Leon Draisaitl" data-position="C" data-snipe-date="2024-06-29">
+                <div class="snipe-date">Jun 29, 2024</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/colin.jpeg" alt="Colin" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Colin</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Leon Draisaitl</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/dan.jpeg" alt="Dan" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Dan</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-1"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Leon Draisaitl</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Snipe 5: Mike steals Bedard from Adam - Oct 28, 2023 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8484144" data-player="Connor Bedard" data-position="C" data-snipe-date="2023-10-28">
-                    <div class="snipe-date">Oct 28, 2023</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/adam.jpeg" alt="Adam" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Adam</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/mike.jpeg" alt="Mike" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Mike</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8484144" data-player="Connor Bedard" data-position="C" data-snipe-date="2023-10-28">
+                <div class="snipe-date">Oct 28, 2023</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/adam.jpeg" alt="Adam" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Adam</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Connor Bedard</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/mike.jpeg" alt="Mike" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Mike</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-2"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Connor Bedard</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Snipe 4: Colin steals Matthews from Dan - Jun 30, 2022 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8479318" data-player="Auston Matthews" data-position="C" data-snipe-date="2022-06-30">
-                    <div class="snipe-date">Jun 30, 2022</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/dan.jpeg" alt="Dan" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Dan</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/colin.jpeg" alt="Colin" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Colin</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8479318" data-player="Auston Matthews" data-position="C" data-snipe-date="2022-06-30">
+                <div class="snipe-date">Jun 30, 2022</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/dan.jpeg" alt="Dan" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Dan</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Auston Matthews</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/colin.jpeg" alt="Colin" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Colin</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-3"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Auston Matthews</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Snipe 3: Marinos steals Marner from Jordan - Oct 2, 2021 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8478483" data-player="Mitch Marner" data-position="RW" data-snipe-date="2021-10-02">
-                    <div class="snipe-date">Oct 2, 2021</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/jordan.jpeg" alt="Jordan" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Jordan</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/marinos.jpeg" alt="Marinos" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Marinos</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8478483" data-player="Mitch Marner" data-position="RW" data-snipe-date="2021-10-02">
+                <div class="snipe-date">Oct 2, 2021</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/jordan.jpeg" alt="Jordan" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Jordan</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Mitch Marner</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/marinos.jpeg" alt="Marinos" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Marinos</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-4"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Mitch Marner</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Snipe 2: Dave steals Ovechkin from Dan - Sept 1, 2018 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8471214" data-player="Alex Ovechkin" data-position="LW" data-snipe-date="2018-09-01">
-                    <div class="snipe-date">Sept 1, 2018</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/dan.jpeg" alt="Dan" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Dan</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/dave.jpeg" alt="Dave" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Dave</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8471214" data-player="Alex Ovechkin" data-position="LW" data-snipe-date="2018-09-01">
+                <div class="snipe-date">Sept 1, 2018</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/dan.jpeg" alt="Dan" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Dan</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Alex Ovechkin</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/dave.jpeg" alt="Dave" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Dave</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-5"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Alex Ovechkin</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Snipe 1: Jordan steals Matthews from Charlie - Dec 9, 2017 -->
-            <div class="snipe-row">
-                <div class="snipe-card" data-nhl-id="8479318" data-player="Auston Matthews" data-position="C" data-snipe-date="2017-12-09">
-                    <div class="snipe-date">Dec 9, 2017</div>
-                    <div class="snipe-content">
-                        <div class="gm-section">
-                            <div class="stolen-from-gm">
-                                <img src="gm-assets/charlie.jpeg" alt="Charlie" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stolen From</span>
-                                    <span class="gm-name">Charlie</span>
-                                </div>
-                            </div>
-                            <div class="snipe-arrow">→</div>
-                            <div class="stealing-gm">
-                                <img src="gm-assets/jordan.jpeg" alt="Jordan" class="gm-photo">
-                                <div class="gm-label">
-                                    <span class="label-text">Stealing GM</span>
-                                    <span class="gm-name">Jordan</span>
-                                </div>
+            <div class="snipe-card" data-nhl-id="8479318" data-player="Auston Matthews" data-position="C" data-snipe-date="2017-12-09">
+                <div class="snipe-date">Dec 9, 2017</div>
+                <div class="snipe-content">
+                    <div class="gm-section">
+                        <div class="stolen-from-gm">
+                            <img src="gm-assets/charlie.jpeg" alt="Charlie" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stolen From</span>
+                                <span class="gm-name">Charlie</span>
                             </div>
                         </div>
-                        <div class="player-stolen">
-                            <span class="player-label">Player Stolen:</span>
-                            <span class="player-name">Auston Matthews</span>
+                        <div class="snipe-arrow">→</div>
+                        <div class="stealing-gm">
+                            <img src="gm-assets/jordan.jpeg" alt="Jordan" class="gm-photo">
+                            <div class="gm-label">
+                                <span class="label-text">Stealing GM</span>
+                                <span class="gm-name">Jordan</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="snipe-chart-wrapper">
-                    <canvas id="chart-6"></canvas>
-                    <div class="chart-stats"></div>
+                    <div class="player-stolen">
+                        <span class="player-label">Player Stolen:</span>
+                        <span class="player-name">Auston Matthews</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -282,135 +239,6 @@
                 window.location.href = `snipes-over-time/?${params}`;
             });
         });
-    </script>
-    <script>
-    (async function() {
-        const ENDPOINT_URL = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
-        const CURRENT_SEASON_END_YEAR = 2026;
-
-        const FANTASY_SCORING = {
-            goals: 3, assists: 2, plusMinus: 1, pim: 0.25, powerPlayPoints: 1, shortHandedPoints: 1, gameWinningGoals: 1.5,
-            wins: 3, goalsAgainst: -1.5, saves: 0.2, shutouts: 6
-        };
-
-        function calcSkater(game) {
-            if (!game || game.toi === "00:00") return 0;
-            const ppp = game.powerPlayPoints || 0;
-            const shp = game.shorthandedPoints || 0;
-            const { goals = 0, assists = 0, plusMinus = 0, pim = 0, gameWinningGoals = 0 } = game;
-            return (goals * FANTASY_SCORING.goals) + (assists * FANTASY_SCORING.assists) +
-                   (plusMinus * FANTASY_SCORING.plusMinus) + (pim * FANTASY_SCORING.pim) +
-                   (ppp * FANTASY_SCORING.powerPlayPoints) + (shp * FANTASY_SCORING.shortHandedPoints) +
-                   (gameWinningGoals * FANTASY_SCORING.gameWinningGoals);
-        }
-
-        function calcGoalie(game) {
-            if (!game || game.toi === "00:00") return 0;
-            const { decision, shotsAgainst = 0, goalsAgainst = 0, shutouts = 0 } = game;
-            const saves = shotsAgainst - goalsAgainst;
-            let pts = 0;
-            if (decision === 'W') pts += FANTASY_SCORING.wins;
-            pts += (saves * FANTASY_SCORING.saves) + (goalsAgainst * FANTASY_SCORING.goalsAgainst) + (shutouts * FANTASY_SCORING.shutouts);
-            return pts;
-        }
-
-        async function fetchLog(playerId, season) {
-            try {
-                const res = await fetch(`${ENDPOINT_URL}?requestType=gameLog&playerIds=${playerId}&season=${season}`);
-                if (!res.ok) return [];
-                const data = await res.json();
-                return data.gameLog || [];
-            } catch { return []; }
-        }
-
-        function getSeasons(snipeDate) {
-            const d = new Date(snipeDate + 'T00:00:00');
-            const startYear = d.getFullYear();
-            const seasons = [];
-            for (let y = startYear; y < CURRENT_SEASON_END_YEAR; y++) {
-                seasons.push(`${y}${y + 1}`);
-            }
-            return seasons;
-        }
-
-        const cards = document.querySelectorAll('.snipe-card[data-nhl-id]');
-
-        cards.forEach(async (card, i) => {
-            const nhlId = card.dataset.nhlId;
-            const snipeDate = card.dataset.snipeDate;
-            const position = card.dataset.position;
-            const playerName = card.dataset.player;
-            const isGoalie = position.includes('G');
-            const seasons = getSeasons(snipeDate);
-
-            const wrapper = card.closest('.snipe-row').querySelector('.chart-stats');
-            wrapper.textContent = 'Loading...';
-
-            const allLogs = await Promise.all(seasons.map(s => fetchLog(nhlId, s)));
-            const allGames = allLogs.flat()
-                .sort((a, b) => new Date(a.gameDate) - new Date(b.gameDate))
-                .filter(g => g.gameDate >= snipeDate);
-
-            if (allGames.length === 0) {
-                wrapper.textContent = 'No games yet';
-                return;
-            }
-
-            const labels = [];
-            const cumData = [];
-            let cumulative = 0;
-            allGames.forEach(g => {
-                cumulative += isGoalie ? calcGoalie(g) : calcSkater(g);
-                labels.push(g.gameDate);
-                cumData.push(parseFloat(cumulative.toFixed(2)));
-            });
-
-            const totalFP = cumData[cumData.length - 1];
-            wrapper.innerHTML = `<span>${totalFP.toFixed(1)} FP</span><span>${allGames.length} GP</span>`;
-
-            const ctx = document.getElementById(`chart-${i}`).getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: playerName,
-                        data: cumData,
-                        borderColor: '#4a9eff',
-                        backgroundColor: 'rgba(74, 158, 255, 0.1)',
-                        fill: true,
-                        tension: 0.1,
-                        pointRadius: 0,
-                        borderWidth: 2,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { color: '#e8e8e8', maxTicksLimit: 5, font: { size: 10 } },
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
-                        },
-                        x: {
-                            ticks: { display: false },
-                            grid: { display: false }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                title: (items) => labels[items[0].dataIndex],
-                                label: (item) => `${item.parsed.y.toFixed(1)} FP`
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    })();
     </script>
 </body>
 </html>
