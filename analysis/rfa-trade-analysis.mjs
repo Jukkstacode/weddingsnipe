@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-const lines = readFileSync('c:/Users/chris/web-projects/weddingsnipe/analysis/output/rosters.csv', 'utf8').trim().split('\n');
+const lines = readFileSync(new URL('./output/rosters.csv', import.meta.url), 'utf8').trim().split('\n');
 const rows = lines.slice(1).map(line => {
   const parts = []; let cur = '', inQ = false;
   for (const ch of line) {
