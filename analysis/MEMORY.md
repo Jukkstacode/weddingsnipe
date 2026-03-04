@@ -27,7 +27,8 @@
 - `goalie-value.mjs` — ranks all goalies by **Total FP** for playoff relevance
 - `rfa-trade-analysis.mjs` — maps Bimm's 1yr RFA trade chips vs seller GM packages
 - `ufa-forwards.mjs` — lists all UFA forwards on seller teams above 2.40 FP/G
-- `goalie-targets.mjs` — lists all goalies on seller/trade partner teams
+- `goalie-targets.mjs` — lists all goalies on trade partner/seller teams
+- `goalie-deep-dive.mjs` — compares goalie FP/G by time period (season, last 30 days, since Dec 20)
 - Output CSV: `analysis/output/rosters.csv`
 - Cache: `analysis/output/roster-stats-cache.json` (delete to refresh stats)
 
@@ -35,88 +36,90 @@
 Goals×3, Assists×2, +/-×1, PIM×0.25, PPP×1, SHP×1, GWG×1.5
 Goalie: Wins×3, GA×-1.5, Saves×0.2, Shutouts×6
 
-## Bimm's Current Roster (as of Mar 2 2026)
-**Rakell and Hanifin have been dropped.** Zadorov picked up.
-- C: Scheifele (3.39, 1yr RFA), Marner (2.91, 4yr locked)
-- LW: Crouse (1.89)
-- RW: Buchnevich (1.53, 2yr locked), Eklund (1.43)
-- Util: Zuccarello (2.41)
-- BN: Verhaeghe (1.98), Thompson (3.00, 1yr RFA), Larkin (3.06, 1yr RFA), McCann (2.86), Benn (2.03)
-- D: Manson (2.03), Dahlin (2.54, 2yr locked), Zadorov (1.49), empty D slot
-- IR+: Morrissey (2.21, 3yr locked)
-- G: Woll (3.09, 27 GP, skidding), Knight (2.85, 41 GP, skidding)
+## COMPLETED TRADES (Mar 3 2026)
+
+### Trade 1: Thompson → Charlie (8th) ✅
+**Sent:** Tage Thompson (RFA, 3.00) + Pavel Buchnevich (2yr, 1.53) + Carter Verhaeghe (UFA, 1.98) + 2nd round pick
+**Got:** Brandon Hagel (RFA LW/RW, 3.67 → **SIGNED**) + John Gibson (UFA G, 3.49) + Drake Batherson (UFA F, 2.67)
+
+### Trade 2: Larkin → Dan (9th) ✅
+**Sent:** Dylan Larkin (RFA C, 3.06) + Nikita Zadorov (UFA D, 1.49)
+**Got:** Darren Raddysh (UFA D, 3.47) + Juraj Slafkovsky (UFA F, 2.54)
+
+### Trade 3: Scheifele → Dave (10th) ✅
+**Sent:** Mark Scheifele (RFA C, 3.39) + 4th round pick
+**Got:** Brandon Bussi (UFA G, 3.88) + 1st round pick (draft only, cannot trade)
+
+### Trade 4: Picks → Jordan (12th) ✅
+**Sent:** 1st round pick + 5th round pick
+**Got:** Bo Horvat (UFA C, 3.16) + Gabriel Vilardi (UFA C/RW, 2.58)
+
+### Failed: Marinos (Suzuki) ❌
+Suzuki traded for Stutzle before deal could close.
+
+## Bimm's Current Roster (Post All Trades, Mar 3 2026)
+
+### Forwards (10)
+| Player | Pos | FP/G | Contract | Source |
+|--------|-----|------|----------|--------|
+| Hagel | LW/RW | 3.67 | **SIGNED** (RFA) | Charlie trade |
+| Horvat | C | 3.16 | UFA | Jordan trade |
+| Marner | C/LW/RW | 2.91 | 4yr locked | Original |
+| McCann | C/LW | 2.86 | Kept | Original |
+| Batherson | LW/RW | 2.67 | UFA | Charlie trade |
+| Vilardi | C/RW | 2.58 | UFA | Jordan trade |
+| Slafkovsky | LW/RW | 2.54 | UFA | Dan trade |
+| Zuccarello | RW | 2.41 | Kept | Original |
+| Benn | C/LW/RW | 2.03 | Kept | Original |
+| Eklund | LW/RW | 1.43 | UFA | Original (drop when Morrissey returns) |
+
+### Defense (3 + IR+)
+| Player | Pos | FP/G | Contract | Source |
+|--------|-----|------|----------|--------|
+| Raddysh | D | 3.47 | UFA | Dan trade |
+| Dahlin | D | 2.54 | 2yr locked | Original |
+| Manson | D | 2.03 | Kept | Original |
+| Morrissey | D | 2.21 | 3yr locked (IR+) | Original |
+
+### Goalies (4)
+| Player | Pos | FP/G | Contract | Source |
+|--------|-----|------|----------|--------|
+| Bussi | G | 3.88 | UFA (CAR starter) | Dave trade |
+| Gibson | G | 3.49 | UFA | Charlie trade |
+| Woll | G | 3.09 (skidding, 1.53 last 30d) | Kept | Original |
+| Knight | G | 2.85 (skidding, 1.33 last 30d) | Kept | Original |
+
+### Available Assets
+- **Draft picks:** 3rd, 6th, 7th + Dave's 1st (draft only, can't trade)
+- **Signing slots:** 1 remaining (Hagel used 1). Plan: save for next year's draft.
+- **Drop target:** Eklund (1.43) when Morrissey returns from IR+
 
 ## Trade Rules
-- Multi-year contracts: NOT tradeable (but can be dumped to another GM who accepts)
-- 1yr contracts (RFAs): Tradeable. Acquiring = signing. Bimm can sign **exactly 2 RFAs**
+- Multi-year contracts: NOT tradeable (but can be dumped)
+- 1yr contracts (RFAs): Tradeable. Acquiring = signing. Bimm can sign 2 total (1 used on Hagel, 1 saved for draft)
 - No contract (UFAs): Freely tradeable, disappear at year end
-- Draft picks: Tradeable. All 7 rounds available (1st-7th)
-- RFAs are MORE valuable than picks to rebuilding GMs
-- Bottom GMs don't want UFAs — they want RFAs and picks
-- Only target teams **6th and below** for trades (top 5 are contenders)
+- Draft picks tradeable: 3rd, 6th, 7th available
+- RFAs > picks in value to rebuilding GMs
 
 ## Pick Valuation (from real league trades)
-- **Necas (RFA) traded straight up for Kaprizov (RFA)** — Mike to Hordo. RFA-for-RFA, no picks.
-- **Girard (worthless) + 1st round pick → Chychrun (2.88 D) + 6th round pick** — Mike to Adam.
-- **1st round pick ≈ one ~2.88 FP/G player.** Picks are expensive. 1st probably doesn't get 2 players from one GM.
-- Kaprizov is now on Mike's team (5th). Off the table for Bimm.
-- Seedo is signing Carlsson — off the table.
+- **Necas (RFA) traded straight up for Kaprizov (RFA)** — RFA-for-RFA.
+- **Girard (worthless) + 1st → Chychrun (2.88 D) + 6th** — 1st ≈ one ~2.88 FP/G player.
 
-## CURRENT TRADE PLAN (Revised Mar 2 2026)
+## Goalie Trends (as of Mar 3 2026)
+- **Gibson:** 5.03 FP/G last 30 days, 4.21 since Dec 20 — elite and improving
+- **Bussi:** 5.77 FP/G last 30 days, 3.53 since Dec 20 — CAR starter since Dec 20 injury
+- **Woll:** 1.53 FP/G last 30 days — cratering hard
+- **Knight:** 1.33 FP/G last 30 days — worst of the bunch
 
-### Trade 1: Thompson → Charlie (8th)
-**Send:** Tage Thompson (RFA, 3.00) + Pavel Buchnevich (2yr, 1.53) + William Eklund (UFA, 1.43) + 4th round pick
-**Get:** Brandon Hagel (RFA LW/RW, 3.67 → **SIGN**) + John Gibson (UFA G, 3.49) + Drake Batherson (UFA F, 2.67)
-**Status:** Charlie indicated willingness for Hagel + UFAs for Thompson. May want a pick (4th).
-
-### Trade 2: Scheifele → Marinos (13th)
-**Send:** Mark Scheifele (RFA, 3.39) + 2nd round pick
-**Get:** Nick Suzuki (RFA C, 3.71 → **SIGN**) + Logan Thompson (UFA G, 3.27)
-**Notes:** Marinos has McDavid (4yr) + Eichel (2yr) locked — doesn't need another center. Suzuki is nearly as good as Kaprizov (3.71 vs 3.77). Logan Thompson fixes goalie weakness.
-
-### Trade 3: Larkin → Dan (9th)
-**Send:** Dylan Larkin (RFA, 3.06)
-**Get:** Darren Raddysh (UFA D, 3.47) + Juraj Slafkovsky (UFA F, 2.54)
-**Notes:** Raddysh is the #1 D in the league by FP/G (3.47). Dan gets a signable elite center. Push for Slafkovsky as a throw-in — he's a UFA walking at year end.
-
-### Trade 4: 1st pick → Dave (10th)
-**Send:** 1st round pick
-**Get:** Lucas Raymond (UFA RW, 3.23, 58 GP)
-**Notes:** Best remaining UFA forward. High FP/G + high GP volume. Dave is 10th, selling.
-
-### Trade 5 (OPTIONAL): 3rd pick → Jordan (12th)
-**Send:** 3rd round pick
-**Get:** Matthew Schaefer (UFA D, 2.30)
-**Notes:** Only +0.27 over Manson (2.03). Marginal. May not be worth a 3rd. Could skip this.
-
-### Picks Remaining After Trades
-- 1st: sent to Dave
-- 2nd: sent to Marinos
-- 3rd: available (or sent to Jordan for Schaefer)
-- 4th: sent to Charlie
-- 5th-7th: available
-
-### Signing Slots
-- Slot 1: **Hagel** (3.67, from Charlie)
-- Slot 2: **Suzuki** (3.71, from Marinos)
-
-### Players Dropped
-- Crouse, Benn, Verhaeghe, Zadorov, Eklund, Buchnevich (traded), Woll or Knight (one goalie dropped)
-
-### Projected Final Roster (16-17 players + IR+)
-**Forwards:** Suzuki (3.71), Hagel (3.67), Raymond (3.23), Marner (2.91), McCann (2.86), Batherson (2.67), Slafkovsky (2.54), Zuccarello (2.41)
-**Defense:** Raddysh (3.47), Dahlin (2.54), Manson (2.03), Morrissey (2.21 IR+)
-**Goalies:** Gibson (3.49), Logan Thompson (3.27), Woll (3.09) or Knight (2.85)
-
-## Key Decisions Still Open
-- **Stone (4.51, Trevor):** Was the top target but got hurt. Monitor injury status. If healthy, could revisit Trevor trade.
-- **Werenski (3.33, Hordo):** Better D than Schaefer but costs a 1st. Raddysh already covers D need. Only pursue if Raddysh trade falls through.
-- **Schaefer (2.30, Jordan):** Marginal upgrade over Manson (+0.27). 3rd round pick might be too expensive for the gain.
-- **Shesterkin (3.13 RFA, Jordan):** Creative option — RFA-for-RFA swap with Larkin. Uses a signing slot on a goalie instead of forward. Only if Hagel/Suzuki plans change.
-- **Bussi (3.88 G, Dave):** Elite goalie. If Gibson trade falls through, target Bussi from Dave instead.
+## Long-term Core (signed/locked)
+- Hagel (signed) — 3.67 FP/G
+- Marner (4yr) — 2.91 FP/G
+- Dahlin (2yr) — 2.54 FP/G
+- Morrissey (3yr) — 2.21 FP/G
 
 ## Notes
 - Cache must be deleted before re-running roster-stats.mjs to get fresh data
 - "No ID found for 1 player" warning is Luke Evangelista (Dave's roster) — known issue
-- Mason McTavish and Luke Hughes show ??? team but stats are correct
 - All analysis scripts use `new URL('./output/rosters.csv', import.meta.url)` for cross-platform paths
+- Newhook was on roster at some point but was dropped in the Jordan trade
+- Bussi plays for Carolina, became starter after original starter injured Dec 20 (out for season)

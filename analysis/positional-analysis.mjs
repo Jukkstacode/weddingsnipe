@@ -38,7 +38,7 @@ for (const gm of gms) {
     };
   }
 }
-
+11
 // Print ranked tables by position group
 for (const g of ['F', 'D', 'G']) {
   const label = g === 'F' ? 'FORWARDS' : g === 'D' ? 'DEFENSE' : 'GOALIES';

@@ -7,7 +7,10 @@
       "WebFetch(domain:nhl-stats-cacher-347732622266.us-west1.run.app)",
       "Bash(curl -s -I \"https://api-web.nhle.com/v1/player/8478460/landing\")",
       "Bash(node roster-stats.mjs)",
-      "Bash(node analysis/roster-stats.mjs)"
+      "Bash(node analysis/roster-stats.mjs)",
+      "Bash(node:*)",
+      "Bash(python3:*)",
+      "Bash(sort:*)"
     ]
   }
 }

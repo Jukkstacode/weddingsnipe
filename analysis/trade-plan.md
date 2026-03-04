@@ -1,104 +1,89 @@
-# Bimm's Trade Plan — March 2 2026 (Revised)
+# Bimm's Trade Plan — March 3 2026 (Final)
 
-## Overview
-- Trade all 3 RFAs (Scheifele, Thompson, Larkin)
-- Sign 2 RFAs: Hagel + Suzuki
-- Fix goalies (Gibson + Logan Thompson), fix defense (Raddysh), add forward depth (Raymond, Slafkovsky)
-- Dump Buchnevich (2yr dead weight)
+## All Trades Complete
 
-## Trades
+### Trade 1: Thompson → Charlie (8th, Medium Chuck) ✅
+**Sent:** Tage Thompson (RFA C, 3.00) + Pavel Buchnevich (2yr, 1.53) + Carter Verhaeghe (UFA, 1.98) + 2nd round pick
+**Got:** Brandon Hagel (RFA LW/RW, 3.67 → **SIGNED**) + John Gibson (UFA G, 3.49) + Drake Batherson (UFA F, 2.67)
 
-### Trade 1: Thompson → Charlie (8th, Medium Chuck)
-**Send:** Tage Thompson (RFA C, 3.00) + Pavel Buchnevich (2yr, 1.53) + William Eklund (UFA, 1.43) + 4th round pick
-**Get:** Brandon Hagel (RFA LW/RW, 3.67 → **SIGN**) + John Gibson (UFA G, 3.49) + Drake Batherson (UFA F, 2.67)
+### Trade 2: Larkin → Dan (9th, Mack Miller) ✅
+**Sent:** Dylan Larkin (RFA C, 3.06) + Nikita Zadorov (UFA D, 1.49)
+**Got:** Darren Raddysh (UFA D, 3.47) + Juraj Slafkovsky (UFA F, 2.54)
 
-**Status:** Charlie indicated willingness for Hagel + UFAs for Thompson. May want a 4th pick thrown in.
+### Trade 3: Scheifele → Dave (10th, Tiny Muscles Big Hustle) ✅
+**Sent:** Mark Scheifele (RFA C, 3.39) + 4th round pick
+**Got:** Brandon Bussi (UFA G, 3.88) + 1st round pick (draft only, cannot re-trade)
 
-### Trade 2: Scheifele → Marinos (13th, Murricle on Ice)
-**Send:** Mark Scheifele (RFA C, 3.39) + 2nd round pick
-**Get:** Nick Suzuki (RFA C, 3.71 → **SIGN**) + Logan Thompson (UFA G, 3.27)
+### Trade 4: Picks → Jordan (12th, It's Jibbers!) ✅
+**Sent:** 1st round pick + 5th round pick
+**Got:** Bo Horvat (UFA C, 3.16) + Gabriel Vilardi (UFA C/RW, 2.58)
 
-**Notes:** Marinos has McDavid (4yr) + Eichel (2yr) locked. Doesn't need another C. Suzuki is elite (3.71). Logan Thompson fixes goalie weakness.
+### Failed: Marinos (Suzuki) ❌
+Suzuki was traded for Stutzle before deal could close.
 
-### Trade 3: Larkin → Dan (9th, Mack Miller)
-**Send:** Dylan Larkin (RFA C, 3.06)
-**Get:** Darren Raddysh (UFA D, 3.47) + Juraj Slafkovsky (UFA F, 2.54)
+---
 
-**Notes:** Raddysh is #1 D in the league by FP/G. Dan gets a signable center. Push for Slafkovsky throw-in — UFA walking at year end, costs Dan nothing.
+## What Was Traded Away
+**Players:** Thompson (3.00 RFA), Larkin (3.06 RFA), Scheifele (3.39 RFA), Buchnevich (1.53, 2yr), Verhaeghe (1.98), Zadorov (1.49)
+**Picks:** 1st, 2nd, 4th, 5th
 
-### Trade 4: Pick → Dave (10th, Tiny Muscles Big Hustle)
-**Send:** 1st round pick
-**Get:** Lucas Raymond (UFA RW, 3.23, 58 GP)
+## What Was Acquired
+**Players:** Hagel (3.67 SIGNED), Horvat (3.16), Bussi (3.88 G), Gibson (3.49 G), Raddysh (3.47 D), Batherson (2.67), Vilardi (2.58), Slafkovsky (2.54)
+**Picks:** Dave's 1st (draft only)
 
-**Notes:** Best remaining UFA forward. High rate + high volume. Dave is 10th, selling.
+## Also Dropped
+- Newhook, Crouse, Rakell, Hanifin (dropped earlier)
 
-### Trade 5 (OPTIONAL): Pick → Jordan (12th, It's Jibbers!)
-**Send:** 3rd round pick
-**Get:** Matthew Schaefer (UFA D, 2.30)
+---
 
-**Notes:** Marginal upgrade over Manson (+0.27). May not be worth a 3rd. Could skip.
+## Final Roster (17 + IR+)
 
-## Draft Picks Remaining
-- 1st round: sent to Dave
-- 2nd round: sent to Marinos
-- 3rd round: available (or sent to Jordan)
-- 4th round: sent to Charlie
-- 5th-7th round: available
+### Forwards (10)
+| Player | Pos | FP/G | Contract | Source |
+|--------|-----|------|----------|--------|
+| Brandon Hagel | LW/RW | 3.67 | **SIGNED** (RFA) | Charlie trade |
+| Bo Horvat | C | 3.16 | UFA | Jordan trade |
+| Mitch Marner | C/LW/RW | 2.91 | 4yr locked | Original |
+| Jared McCann | C/LW | 2.86 | Kept | Original |
+| Drake Batherson | LW/RW | 2.67 | UFA | Charlie trade |
+| Gabriel Vilardi | C/RW | 2.58 | UFA | Jordan trade |
+| Juraj Slafkovsky | LW/RW | 2.54 | UFA | Dan trade |
+| Mats Zuccarello | RW | 2.41 | Kept | Original |
+| Jamie Benn | C/LW/RW | 2.03 | Kept | Original |
+| William Eklund | LW/RW | 1.43 | UFA | Original (drop when Morrissey returns) |
 
-## Signing Slots
-- Slot 1: **Hagel** (3.67 FP/G, from Charlie)
-- Slot 2: **Suzuki** (3.71 FP/G, from Marinos)
+### Defense (3 + IR+)
+| Player | Pos | FP/G | Contract | Source |
+|--------|-----|------|----------|--------|
+| Darren Raddysh | D | 3.47 | UFA | Dan trade |
+| Rasmus Dahlin | D | 2.54 | 2yr locked | Original |
+| Josh Manson | D | 2.03 | Kept | Original |
+| Josh Morrissey | D | 2.21 | 3yr locked (IR+) | Original |
 
-## Final Roster (17 players + IR+)
-
-### Forwards (8)
-| Player | Pos | FP/G | Total FP | GP | Source |
-|--------|-----|------|----------|-----|--------|
-| Nick Suzuki | C | 3.71 | 219.0 | 59 | Marinos trade (**SIGNED**) |
-| Brandon Hagel | LW/RW | 3.67 | 194.3 | 53 | Charlie trade (**SIGNED**) |
-| Lucas Raymond | RW | 3.23 | 187.5 | 58 | Dave (1st pick) |
-| Mitch Marner | C/LW/RW | 2.91 | 169.0 | 58 | 4yr locked |
-| Jared McCann | C/LW | 2.86 | 100.3 | 35 | Kept |
-| Drake Batherson | LW/RW | 2.67 | 149.8 | 56 | Charlie trade |
-| Juraj Slafkovsky | LW/RW | 2.54 | 150.0 | 59 | Dan trade (throw-in) |
-| Mats Zuccarello | RW | 2.41 | — | — | Kept |
-
-### Defense (4)
-| Player | Pos | FP/G | Total FP | GP | Source |
-|--------|-----|------|----------|-----|--------|
-| Darren Raddysh | D | 3.47 | 180.3 | 52 | Dan trade |
-| Rasmus Dahlin | D | 2.54 | 142.3 | 56 | 2yr locked |
-| Josh Manson | D | 2.03 | 117.5 | 58 | Kept |
-| Josh Morrissey | D | 2.21 | — | — | 3yr locked (IR+) |
-
-### Goalies (3)
-| Player | Pos | FP/G | Total FP | GP | Source |
-|--------|-----|------|----------|-----|--------|
-| John Gibson | G | 3.49 | 132.5 | 38 | Charlie trade |
-| Logan Thompson | G | 3.27 | 134.1 | 41 | Marinos trade |
-| Woll or Knight | G | 2.85-3.09 | — | — | Kept (drop the other) |
+### Goalies (4)
+| Player | Pos | FP/G | Last 30d | Contract | Source |
+|--------|-----|------|----------|----------|--------|
+| Brandon Bussi | G | 3.88 | 5.77 | UFA (CAR starter) | Dave trade |
+| John Gibson | G | 3.49 | 5.03 | UFA | Charlie trade |
+| Joseph Woll | G | 3.09 | 1.53 | Kept | Original |
+| Spencer Knight | G | 2.85 | 1.33 | Kept | Original |
 
 ### Long-term Core (signed/locked)
-- Suzuki (signed) — 3.71 FP/G
 - Hagel (signed) — 3.67 FP/G
 - Marner (4yr) — 2.91 FP/G
 - Dahlin (2yr) — 2.54 FP/G
 - Morrissey (3yr) — 2.21 FP/G
 
-### Players Traded/Dropped
-- Mark Scheifele → Marinos
-- Tage Thompson → Charlie
-- Dylan Larkin → Dan
-- Pavel Buchnevich → Charlie (dumped 2yr contract)
-- William Eklund → Charlie (dumped)
-- Lawson Crouse — dropped
-- Jamie Benn — dropped
-- Carter Verhaeghe — dropped
-- Nikita Zadorov — dropped
-- Woll or Knight — dropped (one kept)
+---
 
-## Contingencies
-- **If Stone (4.51, Trevor) gets healthy:** Revisit Trevor trade. Larkin → Stone could be massive, but would need to redirect Larkin away from Dan.
-- **If Raddysh trade falls through:** Target Werenski (3.33) from Hordo with 1st pick instead. Redirect 1st from Dave.
-- **If Charlie deal falls through:** Target Bussi (3.88 G) from Dave with Thompson RFA.
-- **Shesterkin (3.13 RFA, Jordan):** Emergency goalie option via RFA-for-RFA swap if goalie plans collapse.
+## Remaining Assets
+- **Draft picks:** 3rd, 6th, 7th + Dave's 1st (draft only)
+- **Signing slots:** 1 remaining (saved for next year's draft)
+
+## Pending Roster Move
+- **Drop Eklund (1.43)** when Morrissey returns from IR+
+
+## Potential Moves (Optional)
+- Consider dropping Woll (1.53 last 30d) or Knight (1.33 last 30d) for a waiver pickup if a good forward appears
+- 3rd round pick could still be used to acquire a depth piece if needed
+- Monitor Benn (2.03) — could be upgraded via waiver wire
