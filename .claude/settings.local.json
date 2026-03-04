@@ -10,7 +10,14 @@
       "Bash(node analysis/roster-stats.mjs)",
       "Bash(node:*)",
       "Bash(python3:*)",
-      "Bash(sort:*)"
+      "Bash(sort:*)",
+      "WebSearch",
+      "Bash(grep:*)",
+      "WebFetch(domain:ai.google.dev)",
+      "WebFetch(domain:github.com)",
+      "Bash(ls:*)",
+      "WebFetch(domain:docs.cloud.google.com)",
+      "WebFetch(domain:costgoat.com)"
     ]
   }
 }

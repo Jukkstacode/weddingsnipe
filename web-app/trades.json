@@ -1,0 +1,72 @@
+[                                                                                                   
+      {                                                                                               
+          "name": "Jordan / Mike - Mar 4",                                                            
+          "date": "2026-03-04",                                                                       
+          "teamA": {                                                                                  
+              "gm": "Jordan",
+              "team": "It's Jibbers!",
+              "gives": {
+                  "forwards": [
+                      { "name": "Nick Schmaltz", "position": "C,RW", "nhlTeam": "UTA",
+  "preSeasonFantasyPts": 152, "rostered": "84%" }
+                  ],
+                  "goalies": [
+                      { "name": "Jeremy Swayman", "position": "G", "nhlTeam": "BOS",
+  "preSeasonFantasyPts": 107, "rostered": "91%" }
+                  ],
+                  "draftPicks": ["2026 Round 7", "2026 Round 9"]
+              }
+          },
+          "teamB": {
+              "gm": "Mike",
+              "team": "Shit The Driveway",
+              "gives": {
+                  "forwards": [
+                      { "name": "Blake Coleman", "position": "C,LW,RW", "nhlTeam": "CGY",
+  "preSeasonFantasyPts": 220, "rostered": "23%" }
+                  ],
+                  "goalies": [
+                      { "name": "Casey DeSmith", "position": "G", "nhlTeam": "DAL",
+  "preSeasonFantasyPts": 259, "rostered": "31%" }
+                  ],
+                  "draftPicks": ["2026 Round 2", "2026 Round 4"]
+              }
+          }
+      },
+      {
+          "name": "Chris / Charlie - Mar 4",
+          "date": "2026-03-04",
+          "teamA": {
+              "gm": "Chris Bimm",
+              "team": "Killin me Scheifle",
+              "gives": {
+                  "forwards": [
+                      { "name": "Carter Verhaeghe", "position": "LW", "nhlTeam": "FLA",
+  "preSeasonFantasyPts": 149, "rostered": "62%" },
+                      { "name": "Pavel Buchnevich", "position": "C,LW,RW", "nhlTeam": "STL", "salary":
+   2.0, "preSeasonFantasyPts": 205, "rostered": "37%" },
+                      { "name": "Tage Thompson", "position": "C,RW", "nhlTeam": "BUF", "salary": 1.0,
+  "preSeasonFantasyPts": 39, "rostered": "99%" }
+                  ],
+                  "draftPicks": ["2026 Round 2"]
+              }
+          },
+          "teamB": {
+              "gm": "Charlie",
+              "team": "Medium Chuck",
+              "gives": {
+                  "forwards": [
+                      { "name": "Brandon Hagel", "position": "LW,RW", "nhlTeam": "TB", "salary": 1.0,
+  "preSeasonFantasyPts": 53, "rostered": "98%" },
+                      { "name": "Drake Batherson", "position": "LW,RW", "nhlTeam": "OTT",
+  "preSeasonFantasyPts": 123, "rostered": "87%" }
+                  ],
+                  "goalies": [
+                      { "name": "John Gibson", "position": "G", "nhlTeam": "DET",
+  "preSeasonFantasyPts": 98, "rostered": "81%" }
+                  ],
+                  "draftPicks": ["2026 Round 6"]
+              }
+          }
+      }
+  ]

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Analyzer</title>
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="analyzer-container">
+        <h1>Trade Analyzer</h1>
+
+        <div class="analyzer-controls">
+            <div class="trade-selector">
+                <label for="trade-select">Select a trade:</label>
+                <select id="trade-select">
+                    <option value="">-- Choose a trade --</option>
+                </select>
+            </div>
+
+            <div class="context-input">
+                <label for="user-context">Additional context (optional):</label>
+                <textarea id="user-context" placeholder="e.g. Jordan needs a goalie badly, Chris is in win-now mode..." disabled></textarea>
+            </div>
+
+            <button id="analyze-btn" disabled>Analyze Trade</button>
+        </div>
+
+        <div class="report-container" id="report-container" style="display: none;">
+            <div class="report-content" id="report-content"></div>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            Analyzing trade...
+        </div>
+    </div>
+
+    <script src="../nav.js"></script>
+    <script src="chat.js" type="module"></script>
+</body>
+</html>

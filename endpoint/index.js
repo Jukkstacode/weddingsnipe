@@ -3,11 +3,13 @@
 import http from 'http';
 import fetch from 'node-fetch';
 import admin from 'firebase-admin';
+import { GoogleGenAI } from "@google/genai";
 
 const cache = {};
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 const CURRENT_SEASON = '20252026';
 const CURRENT_SEASON_COLLECTION = 'player-stats-2025-2026';
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
 // Initialize Firebase Admin (only if not already initialized)
 if (!admin.apps.length) {
@@ -39,9 +41,14 @@ export const getNhlPlayerStats = async (req, res) => {
     return;
   }
 
-  // Handle POST requests for sidebets
+  // Handle POST requests
   if (req.method === 'POST') {
-    await handleSidebetSubmission(req, res);
+    const requestType = req.query.requestType;
+    if (requestType === 'chat') {
+      await handleChatRequest(req, res);
+    } else {
+      await handleSidebetSubmission(req, res);
+    }
     return;
   }
 
@@ -314,6 +321,35 @@ async function handleMatchupSidebetAssignment(req, res) {
     console.error('Error assigning sidebet to matchup:', error);
     res.status(500).send('Error assigning sidebet');
   }
+}
+
+// --- Handle Gemini chat requests ---
+async function handleChatRequest(req, res) {
+  const { message, history, tradeContext, systemInstructions } = req.body;
+
+  const systemPrompt = `You are a fantasy hockey trade analyzer.
+League Scoring - Skaters: G=3, A=2, +/-=1, PIM=0.25, PPP=+1, SHP=+1, GWG=+1.5
+League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
+
+ Keep responses short and concise — no more than 3-4 sentences.
+ Never show point calculations or math breakdowns in your response.
+ Format the response so it looks like analysis, with multiple lines. 
+ Don't put everything in one large paragraph
+ If a trade being analyzed includes "Mike" always include an asterisk in the body text and a footnote about the trade at the end. Make the footnote about one of the players Mike is trading away and how impactful they are
+
+${tradeContext ? 'Trade Context:\n' + JSON.stringify(tradeContext, null, 2) : ''}
+${systemInstructions || ''}`;
+
+  const chat = ai.chats.create({
+    model: "gemini-2.5-flash",
+    config: {
+      systemInstruction: systemPrompt,
+    },
+    history: history || [],
+  });
+
+  const response = await chat.sendMessage({ message });
+  res.status(200).send({ reply: response.text });
 }
 
 // --- Logic for handling sidebet submissions ---

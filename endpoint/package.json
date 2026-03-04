@@ -6,7 +6,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7",
-    "firebase-admin": "^11.0.0"
+    "@google/genai": "^1.43.0",
+    "firebase-admin": "^11.0.0",
+    "node-fetch": "^2.6.7"
   }
 }

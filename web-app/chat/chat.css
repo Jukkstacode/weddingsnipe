@@ -1,0 +1,119 @@
+.analyzer-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+}
+
+.analyzer-controls {
+    background: var(--bg-card, #2c2c2c);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.trade-selector {
+    margin-bottom: 1rem;
+}
+
+.trade-selector label,
+.context-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary, #ddd);
+}
+
+.trade-selector select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--accent-color);
+    background: var(--bg-input, rgba(255, 255, 255, 0.1));
+    color: var(--text-primary, #e8e8e8);
+    font-size: 1rem;
+}
+
+.context-input {
+    margin-bottom: 1rem;
+}
+
+.context-input textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--accent-color);
+    background: var(--bg-input, rgba(255, 255, 255, 0.1));
+    color: var(--text-primary, #e8e8e8);
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 60px;
+    box-sizing: border-box;
+}
+
+.context-input textarea:focus {
+    outline: none;
+    background: var(--bg-input-focus, rgba(255, 255, 255, 0.15));
+    border-color: var(--primary-blue, #36A2EB);
+}
+
+#analyze-btn {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    background: var(--gradient-purple, linear-gradient(135deg, #667eea, #764ba2));
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-base, all 0.3s ease);
+}
+
+#analyze-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+#analyze-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.report-container {
+    background: var(--bg-card, #2c2c2c);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.report-content h2 {
+    color: var(--text-white, #fff);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.report-content h2:first-child {
+    margin-top: 0;
+}
+
+.report-content h3 {
+    color: var(--primary-blue, #36A2EB);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.report-content p {
+    color: var(--text-secondary, #ddd);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.report-content strong {
+    color: var(--text-white, #fff);
+}
+
+.loading {
+    text-align: center;
+    color: var(--text-muted, #999);
+    padding: 2rem;
+    font-style: italic;
+}
