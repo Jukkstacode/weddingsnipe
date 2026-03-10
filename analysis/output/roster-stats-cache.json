@@ -1,260 +1,252 @@
 {
-  "tage thompson": {
-    "name": "Tage Thompson",
-    "pos": "C",
-    "nhlId": "8479420",
-    "totalFP": 180.3,
-    "gp": 60,
-    "fpg": 3
-  },
-  "dylan larkin": {
-    "name": "Dylan Larkin",
-    "pos": "C",
-    "nhlId": "8477946",
-    "totalFP": 183.5,
-    "gp": 60,
-    "fpg": 3.06
-  },
   "rickard rakell": {
     "name": "Rickard Rakell",
     "pos": "C,LW,RW",
     "nhlId": "8476483",
-    "totalFP": 67.5,
-    "gp": 37,
-    "fpg": 1.82
+    "totalFP": 80.5,
+    "gp": 42,
+    "fpg": 1.92
   },
   "jared mccann": {
     "name": "Jared McCann",
     "pos": "C,LW",
     "nhlId": "8477955",
-    "totalFP": 100.3,
-    "gp": 35,
-    "fpg": 2.86
-  },
-  "pavel buchnevich": {
-    "name": "Pavel Buchnevich",
-    "pos": "C,LW,RW",
-    "nhlId": "8477402",
-    "totalFP": 90,
-    "gp": 59,
-    "fpg": 1.53
+    "totalFP": 100.8,
+    "gp": 38,
+    "fpg": 2.65
   },
   "william eklund": {
     "name": "William Eklund",
     "pos": "LW,RW",
     "nhlId": "8482667",
-    "totalFP": 76,
-    "gp": 53,
-    "fpg": 1.43
+    "totalFP": 83,
+    "gp": 57,
+    "fpg": 1.46
   },
   "josh manson": {
     "name": "Josh Manson",
     "pos": "D",
     "nhlId": "8476312",
-    "totalFP": 117.5,
-    "gp": 58,
-    "fpg": 2.03
+    "totalFP": 119,
+    "gp": 62,
+    "fpg": 1.92
   },
   "rasmus dahlin": {
     "name": "Rasmus Dahlin",
     "pos": "D",
     "nhlId": "8480839",
-    "totalFP": 142.3,
-    "gp": 56,
-    "fpg": 2.54
+    "totalFP": 167.5,
+    "gp": 60,
+    "fpg": 2.79
   },
   "noah hanifin": {
     "name": "Noah Hanifin",
     "pos": "D",
     "nhlId": "8478396",
-    "totalFP": 48,
-    "gp": 48,
-    "fpg": 1
+    "totalFP": 52,
+    "gp": 53,
+    "fpg": 0.98
   },
   "mats zuccarello": {
     "name": "Mats Zuccarello",
     "pos": "RW",
     "nhlId": "8475692",
-    "totalFP": 96.5,
-    "gp": 40,
-    "fpg": 2.41
-  },
-  "mark scheifele": {
-    "name": "Mark Scheifele",
-    "pos": "C",
-    "nhlId": "8476460",
-    "totalFP": 196.5,
-    "gp": 58,
-    "fpg": 3.39
-  },
-  "carter verhaeghe": {
-    "name": "Carter Verhaeghe",
-    "pos": "LW",
-    "nhlId": "8477409",
-    "totalFP": 115,
-    "gp": 58,
-    "fpg": 1.98
-  },
-  "lawson crouse": {
-    "name": "Lawson Crouse",
-    "pos": "LW,RW",
-    "nhlId": "8478474",
-    "totalFP": 109.5,
-    "gp": 58,
-    "fpg": 1.89
+    "totalFP": 105,
+    "gp": 44,
+    "fpg": 2.39
   },
   "mitch marner": {
     "name": "Mitch Marner",
     "pos": "C,LW,RW",
     "nhlId": "8478483",
-    "totalFP": 169,
-    "gp": 58,
-    "fpg": 2.91
+    "totalFP": 187.5,
+    "gp": 63,
+    "fpg": 2.98
   },
   "jamie benn": {
     "name": "Jamie Benn",
     "pos": "C,LW,RW",
     "nhlId": "8473994",
-    "totalFP": 75.3,
-    "gp": 37,
-    "fpg": 2.03
+    "totalFP": 86.8,
+    "gp": 41,
+    "fpg": 2.12
   },
   "josh morrissey": {
     "name": "Josh Morrissey",
     "pos": "D",
     "ir": true,
     "nhlId": "8477504",
-    "totalFP": 123.5,
-    "gp": 56,
-    "fpg": 2.21
+    "totalFP": 132,
+    "gp": 57,
+    "fpg": 2.32
   },
   "joseph woll": {
     "name": "Joseph Woll",
     "pos": "G",
     "nhlId": "8479361",
-    "totalFP": 83.5,
-    "gp": 27,
-    "fpg": 3.09
+    "totalFP": 79.6,
+    "gp": 28,
+    "fpg": 2.84
   },
   "spencer knight": {
     "name": "Spencer Knight",
     "pos": "G",
     "nhlId": "8481519",
-    "totalFP": 116.7,
+    "totalFP": 118,
+    "gp": 42,
+    "fpg": 2.81
+  },
+  "brandon bussi": {
+    "name": "Brandon Bussi",
+    "pos": "G",
+    "nhlId": "8483548",
+    "totalFP": 105.8,
+    "gp": 30,
+    "fpg": 3.53
+  },
+  "bo horvat": {
+    "name": "Bo Horvat",
+    "pos": "C",
+    "nhlId": "8477500",
+    "totalFP": 157,
+    "gp": 50,
+    "fpg": 3.14
+  },
+  "gabriel vilardi": {
+    "name": "Gabriel Vilardi",
+    "pos": "C,RW",
+    "nhlId": "8480014",
+    "totalFP": 155.5,
+    "gp": 62,
+    "fpg": 2.51
+  },
+  "juraj slafkovsky": {
+    "name": "Juraj Slafkovsky",
+    "pos": "LW,RW",
+    "nhlId": "8483515",
+    "totalFP": 167,
+    "gp": 62,
+    "fpg": 2.69
+  },
+  "darren raddysh": {
+    "name": "Darren Raddysh",
+    "pos": "D",
+    "nhlId": "8478178",
+    "totalFP": 193,
+    "gp": 56,
+    "fpg": 3.45
+  },
+  "brandon hagel": {
+    "name": "Brandon Hagel",
+    "pos": "LW,RW",
+    "nhlId": "8479542",
+    "totalFP": 206,
+    "gp": 57,
+    "fpg": 3.61
+  },
+  "drake batherson": {
+    "name": "Drake Batherson",
+    "pos": "LW,RW",
+    "nhlId": "8480208",
+    "totalFP": 160.8,
+    "gp": 59,
+    "fpg": 2.72
+  },
+  "john gibson": {
+    "name": "John Gibson",
+    "pos": "G",
+    "nhlId": "8476434",
+    "totalFP": 141.2,
     "gp": 41,
-    "fpg": 2.85
+    "fpg": 3.44
   },
   "dylan cozens": {
     "name": "Dylan Cozens",
     "pos": "C",
     "nhlId": "8481528",
-    "totalFP": 140.3,
-    "gp": 59,
-    "fpg": 2.38
+    "totalFP": 153.8,
+    "gp": 62,
+    "fpg": 2.48
   },
   "brayden point": {
     "name": "Brayden Point",
     "pos": "C",
     "nhlId": "8478010",
-    "totalFP": 102.5,
-    "gp": 40,
-    "fpg": 2.56
+    "totalFP": 115,
+    "gp": 44,
+    "fpg": 2.61
   },
   "brady tkachuk": {
     "name": "Brady Tkachuk",
     "pos": "C,LW",
     "nhlId": "8480801",
-    "totalFP": 119.5,
-    "gp": 39,
-    "fpg": 3.06
-  },
-  "quinton byfield": {
-    "name": "Quinton Byfield",
-    "pos": "C,LW",
-    "nhlId": "8482124",
-    "totalFP": 96,
-    "gp": 58,
-    "fpg": 1.66
+    "totalFP": 129,
+    "gp": 42,
+    "fpg": 3.07
   },
   "morgan geekie": {
     "name": "Morgan Geekie",
     "pos": "C,LW,RW",
     "nhlId": "8479987",
-    "totalFP": 172.5,
-    "gp": 58,
-    "fpg": 2.97
+    "totalFP": 175.5,
+    "gp": 62,
+    "fpg": 2.83
   },
   "nikita kucherov": {
     "name": "Nikita Kucherov",
     "pos": "RW",
     "nhlId": "8476453",
-    "totalFP": 299,
-    "gp": 54,
+    "totalFP": 321.5,
+    "gp": 58,
     "fpg": 5.54
-  },
-  "filip hronek": {
-    "name": "Filip Hronek",
-    "pos": "D",
-    "nhlId": "8479425",
-    "totalFP": 84.5,
-    "gp": 59,
-    "fpg": 1.43
   },
   "kandre miller": {
     "name": "K'Andre Miller",
     "pos": "D",
     "nhlId": "8480817",
-    "totalFP": 69.5,
-    "gp": 51,
-    "fpg": 1.36
+    "totalFP": 85,
+    "gp": 55,
+    "fpg": 1.55
   },
   "lane hutson": {
     "name": "Lane Hutson",
     "pos": "D",
     "nhlId": "8483457",
-    "totalFP": 177.5,
-    "gp": 59,
-    "fpg": 3.01
-  },
-  "sean durzi": {
-    "name": "Sean Durzi",
-    "pos": "D",
-    "nhlId": "8480434",
-    "totalFP": 51,
-    "gp": 38,
-    "fpg": 1.34
+    "totalFP": 194.5,
+    "gp": 62,
+    "fpg": 3.14
   },
   "jason robertson": {
     "name": "Jason Robertson",
     "pos": "LW,RW",
     "nhlId": "8480027",
-    "totalFP": 232.5,
-    "gp": 59,
-    "fpg": 3.94
+    "totalFP": 249.5,
+    "gp": 63,
+    "fpg": 3.96
   },
   "matthew knies": {
     "name": "Matthew Knies",
     "pos": "LW",
     "nhlId": "8482720",
-    "totalFP": 111.3,
-    "gp": 57,
-    "fpg": 1.95
+    "totalFP": 118.3,
+    "gp": 61,
+    "fpg": 1.94
   },
   "dylan guenther": {
     "name": "Dylan Guenther",
     "pos": "LW,RW",
     "nhlId": "8482699",
-    "totalFP": 163,
-    "gp": 57,
-    "fpg": 2.86
+    "totalFP": 179.5,
+    "gp": 62,
+    "fpg": 2.9
   },
   "cole perfetti": {
     "name": "Cole Perfetti",
     "pos": "C,LW,RW",
     "nhlId": "8482149",
-    "totalFP": 54,
-    "gp": 44,
-    "fpg": 1.23
+    "totalFP": 58,
+    "gp": 48,
+    "fpg": 1.21
   },
   "troy terry": {
     "name": "Troy Terry",
@@ -269,378 +261,379 @@
     "name": "Jake Oettinger",
     "pos": "G",
     "nhlId": "8479979",
-    "totalFP": 110.2,
-    "gp": 38,
-    "fpg": 2.9
+    "totalFP": 113.3,
+    "gp": 40,
+    "fpg": 2.83
   },
   "ilya sorokin": {
     "name": "Ilya Sorokin",
     "pos": "G",
     "nhlId": "8478009",
-    "totalFP": 160.7,
-    "gp": 37,
-    "fpg": 4.34
+    "totalFP": 166.7,
+    "gp": 39,
+    "fpg": 4.27
   },
   "lukas dostal": {
     "name": "Lukas Dostal",
     "pos": "G",
     "nhlId": "8480843",
-    "totalFP": 92.3,
-    "gp": 40,
-    "fpg": 2.31
+    "totalFP": 95.5,
+    "gp": 43,
+    "fpg": 2.22
   },
-  "elias lindholm": {
-    "name": "Elias Lindholm",
-    "pos": "C",
-    "nhlId": "8477496",
-    "totalFP": 115.5,
-    "gp": 46,
-    "fpg": 2.51
+  "gabriel landeskog": {
+    "name": "Gabriel Landeskog",
+    "pos": "LW,RW",
+    "nhlId": "8476455",
+    "totalFP": 107.3,
+    "gp": 47,
+    "fpg": 2.28
   },
-  "bo horvat": {
-    "name": "Bo Horvat",
-    "pos": "C",
-    "nhlId": "8477500",
-    "totalFP": 145.5,
-    "gp": 46,
-    "fpg": 3.16
-  },
-  "filip forsberg": {
-    "name": "Filip Forsberg",
-    "pos": "LW",
-    "nhlId": "8476887",
-    "totalFP": 140.5,
-    "gp": 59,
-    "fpg": 2.38
-  },
-  "bobby mcmann": {
-    "name": "Bobby McMann",
-    "pos": "LW",
-    "nhlId": "8482259",
-    "totalFP": 99.5,
-    "gp": 59,
-    "fpg": 1.69
-  },
-  "steven stamkos": {
-    "name": "Steven Stamkos",
-    "pos": "C,LW,RW",
-    "nhlId": "8474564",
-    "totalFP": 143.5,
-    "gp": 59,
-    "fpg": 2.43
-  },
-  "gabriel vilardi": {
-    "name": "Gabriel Vilardi",
-    "pos": "C,RW",
-    "nhlId": "8480014",
-    "totalFP": 149.5,
-    "gp": 58,
-    "fpg": 2.58
-  },
-  "matthew schaefer": {
-    "name": "Matthew Schaefer",
+  "brock faber": {
+    "name": "Brock Faber",
     "pos": "D",
-    "nhlId": "8485366",
-    "totalFP": 138,
-    "gp": 60,
-    "fpg": 2.3
-  },
-  "quinn hughes": {
-    "name": "Quinn Hughes",
-    "pos": "D",
-    "nhlId": "8480800",
-    "totalFP": 153.5,
-    "gp": 54,
-    "fpg": 2.84
+    "nhlId": "8482122",
+    "totalFP": 141.3,
+    "gp": 64,
+    "fpg": 2.21
   },
   "sam malinski": {
     "name": "Sam Malinski",
     "pos": "D",
     "nhlId": "8484258",
-    "totalFP": 95,
-    "gp": 58,
+    "totalFP": 96,
+    "gp": 62,
+    "fpg": 1.55
+  },
+  "elias lindholm": {
+    "name": "Elias Lindholm",
+    "pos": "C",
+    "nhlId": "8477496",
+    "totalFP": 117.5,
+    "gp": 50,
+    "fpg": 2.35
+  },
+  "filip forsberg": {
+    "name": "Filip Forsberg",
+    "pos": "LW",
+    "nhlId": "8476887",
+    "totalFP": 157,
+    "gp": 63,
+    "fpg": 2.49
+  },
+  "bobby mcmann": {
+    "name": "Bobby McMann",
+    "pos": "LW",
+    "nhlId": "8482259",
+    "totalFP": 98.5,
+    "gp": 60,
     "fpg": 1.64
   },
-  "mike matheson": {
-    "name": "Mike Matheson",
+  "matthew schaefer": {
+    "name": "Matthew Schaefer",
     "pos": "D",
-    "nhlId": "8476875",
-    "totalFP": 92,
-    "gp": 56,
-    "fpg": 1.64
+    "nhlId": "8485366",
+    "totalFP": 153.5,
+    "gp": 64,
+    "fpg": 2.4
+  },
+  "quinn hughes": {
+    "name": "Quinn Hughes",
+    "pos": "D",
+    "nhlId": "8480800",
+    "totalFP": 166,
+    "gp": 58,
+    "fpg": 2.86
   },
   "artemi panarin": {
     "name": "Artemi Panarin",
     "pos": "LW",
     "nhlId": "8478550",
-    "totalFP": 149.5,
-    "gp": 55,
-    "fpg": 2.72
-  },
-  "adam fantilli": {
-    "name": "Adam Fantilli",
-    "pos": "C",
-    "nhlId": "8484166",
-    "totalFP": 99.3,
-    "gp": 58,
-    "fpg": 1.71
-  },
-  "nick schmaltz": {
-    "name": "Nick Schmaltz",
-    "pos": "C,RW",
-    "nhlId": "8477951",
-    "totalFP": 180.5,
+    "totalFP": 168.5,
     "gp": 59,
-    "fpg": 3.06
-  },
-  "cutter gauthier": {
-    "name": "Cutter Gauthier",
-    "pos": "LW,RW",
-    "nhlId": "8483445",
-    "totalFP": 152.5,
-    "gp": 57,
-    "fpg": 2.68
+    "fpg": 2.86
   },
   "adam fox": {
     "name": "Adam Fox",
     "pos": "D",
     "ir": true,
     "nhlId": "8479323",
-    "totalFP": 78.5,
-    "gp": 32,
-    "fpg": 2.45
+    "totalFP": 83,
+    "gp": 36,
+    "fpg": 2.31
   },
   "igor shesterkin": {
     "name": "Igor Shesterkin",
     "pos": "G",
     "nhlId": "8478048",
-    "totalFP": 112.7,
-    "gp": 36,
-    "fpg": 3.13
+    "totalFP": 122.6,
+    "gp": 39,
+    "fpg": 3.14
   },
   "joel hofer": {
     "name": "Joel Hofer",
     "pos": "G",
     "nhlId": "8480981",
-    "totalFP": 82.8,
-    "gp": 31,
-    "fpg": 2.67
+    "totalFP": 108.9,
+    "gp": 34,
+    "fpg": 3.2
   },
-  "jeremy swayman": {
-    "name": "Jeremy Swayman",
+  "alexander nikishin": {
+    "name": "Alexander Nikishin",
+    "pos": "D",
+    "nhlId": "8482100",
+    "totalFP": 78.3,
+    "gp": 62,
+    "fpg": 1.26
+  },
+  "jacob trouba": {
+    "name": "Jacob Trouba",
+    "pos": "D",
+    "nhlId": "8476885",
+    "totalFP": 81.8,
+    "gp": 62,
+    "fpg": 1.32
+  },
+  "vincent trocheck": {
+    "name": "Vincent Trocheck",
+    "pos": "C",
+    "nhlId": "8476389",
+    "totalFP": 111,
+    "gp": 48,
+    "fpg": 2.31
+  },
+  "filip hronek": {
+    "name": "Filip Hronek",
+    "pos": "D",
+    "nhlId": "8479425",
+    "totalFP": 95.5,
+    "gp": 63,
+    "fpg": 1.52
+  },
+  "aleksander barkov": {
+    "name": "Aleksander Barkov",
+    "pos": "C",
+    "ir": true,
+    "nhlId": "8477493",
+    "totalFP": 0,
+    "gp": 0,
+    "fpg": 0
+  },
+  "alex newhook": {
+    "name": "Alex Newhook",
+    "pos": "C,LW",
+    "nhlId": "8481618",
+    "totalFP": 54,
+    "gp": 22,
+    "fpg": 2.45
+  },
+  "lawson crouse": {
+    "name": "Lawson Crouse",
+    "pos": "LW,RW",
+    "nhlId": "8478474",
+    "totalFP": 112,
+    "gp": 63,
+    "fpg": 1.78
+  },
+  "casey desmith": {
+    "name": "Casey DeSmith",
     "pos": "G",
-    "nhlId": "8480280",
-    "totalFP": 110.1,
-    "gp": 39,
-    "fpg": 2.82
+    "nhlId": "8479193",
+    "totalFP": 78.6,
+    "gp": 24,
+    "fpg": 3.28
+  },
+  "blake coleman": {
+    "name": "Blake Coleman",
+    "pos": "C,LW,RW",
+    "nhlId": "8476399",
+    "totalFP": 90.3,
+    "gp": 51,
+    "fpg": 1.77
   },
   "auston matthews": {
     "name": "Auston Matthews",
     "pos": "C",
     "nhlId": "8479318",
-    "totalFP": 147,
-    "gp": 54,
-    "fpg": 2.72
+    "totalFP": 146,
+    "gp": 58,
+    "fpg": 2.52
   },
   "nathan mackinnon": {
     "name": "Nathan MacKinnon",
     "pos": "C",
     "nhlId": "8477492",
-    "totalFP": 318,
-    "gp": 57,
-    "fpg": 5.58
-  },
-  "juraj slafkovsky": {
-    "name": "Juraj Slafkovsky",
-    "pos": "LW,RW",
-    "nhlId": "8483515",
-    "totalFP": 150,
-    "gp": 59,
-    "fpg": 2.54
+    "totalFP": 343.5,
+    "gp": 61,
+    "fpg": 5.63
   },
   "jake guentzel": {
     "name": "Jake Guentzel",
     "pos": "LW,RW",
     "nhlId": "8477404",
-    "totalFP": 209.3,
-    "gp": 58,
-    "fpg": 3.61
+    "totalFP": 219.3,
+    "gp": 62,
+    "fpg": 3.54
   },
   "viktor arvidsson": {
     "name": "Viktor Arvidsson",
     "pos": "LW,RW",
     "nhlId": "8478042",
-    "totalFP": 104.5,
-    "gp": 47,
-    "fpg": 2.22
+    "totalFP": 123,
+    "gp": 51,
+    "fpg": 2.41
   },
   "jackson blake": {
     "name": "Jackson Blake",
     "pos": "RW",
     "nhlId": "8482809",
-    "totalFP": 111,
-    "gp": 59,
-    "fpg": 1.88
+    "totalFP": 121,
+    "gp": 63,
+    "fpg": 1.92
   },
   "oliver ekmanlarsson": {
     "name": "Oliver Ekman-Larsson",
     "pos": "D",
     "nhlId": "8475171",
-    "totalFP": 85.5,
-    "gp": 60,
-    "fpg": 1.43
-  },
-  "darren raddysh": {
-    "name": "Darren Raddysh",
-    "pos": "D",
-    "nhlId": "8478178",
-    "totalFP": 180.3,
-    "gp": 52,
-    "fpg": 3.47
+    "totalFP": 84.5,
+    "gp": 62,
+    "fpg": 1.36
   },
   "thomas chabot": {
     "name": "Thomas Chabot",
     "pos": "D",
     "nhlId": "8478469",
-    "totalFP": 66.5,
-    "gp": 44,
-    "fpg": 1.51
+    "totalFP": 75.5,
+    "gp": 47,
+    "fpg": 1.61
   },
   "mattias ekholm": {
     "name": "Mattias Ekholm",
     "pos": "D",
     "nhlId": "8475218",
-    "totalFP": 100,
-    "gp": 61,
-    "fpg": 1.64
+    "totalFP": 110,
+    "gp": 64,
+    "fpg": 1.72
   },
   "peyton krebs": {
     "name": "Peyton Krebs",
     "pos": "C",
     "nhlId": "8481522",
-    "totalFP": 94.3,
-    "gp": 60,
-    "fpg": 1.57
+    "totalFP": 95.5,
+    "gp": 64,
+    "fpg": 1.49
   },
   "kyle connor": {
     "name": "Kyle Connor",
     "pos": "LW",
     "nhlId": "8478398",
-    "totalFP": 182,
-    "gp": 58,
-    "fpg": 3.14
-  },
-  "nazem kadri": {
-    "name": "Nazem Kadri",
-    "pos": "C",
-    "nhlId": "8475172",
-    "totalFP": 90,
-    "gp": 58,
-    "fpg": 1.55
+    "totalFP": 195.5,
+    "gp": 62,
+    "fpg": 3.15
   },
   "jt miller": {
     "name": "J.T. Miller",
     "pos": "C,LW,RW",
     "nhlId": "8476468",
-    "totalFP": 83.5,
-    "gp": 50,
-    "fpg": 1.67
-  },
-  "anthony stolarz": {
-    "name": "Anthony Stolarz",
-    "pos": "G",
-    "nhlId": "8476932",
-    "totalFP": 23.4,
-    "gp": 18,
-    "fpg": 1.3
+    "totalFP": 85.5,
+    "gp": 51,
+    "fpg": 1.68
   },
   "jet greaves": {
     "name": "Jet Greaves",
     "pos": "G",
     "nhlId": "8482982",
-    "totalFP": 114.6,
-    "gp": 38,
-    "fpg": 3.02
+    "totalFP": 121.9,
+    "gp": 41,
+    "fpg": 2.97
   },
   "yaroslav askarov": {
     "name": "Yaroslav Askarov",
     "pos": "G",
     "nhlId": "8482137",
-    "totalFP": 61.7,
-    "gp": 37,
-    "fpg": 1.67
+    "totalFP": 66.8,
+    "gp": 39,
+    "fpg": 1.71
+  },
+  "dylan larkin": {
+    "name": "Dylan Larkin",
+    "pos": "C",
+    "nhlId": "8477946",
+    "totalFP": 185.5,
+    "gp": 63,
+    "fpg": 2.94
+  },
+  "nikita zadorov": {
+    "name": "Nikita Zadorov",
+    "pos": "D",
+    "nhlId": "8477507",
+    "totalFP": 85.8,
+    "gp": 62,
+    "fpg": 1.38
+  },
+  "juuse saros": {
+    "name": "Juuse Saros",
+    "pos": "G",
+    "nhlId": "8477424",
+    "totalFP": 86.4,
+    "gp": 48,
+    "fpg": 1.8
   },
   "macklin celebrini": {
     "name": "Macklin Celebrini",
     "pos": "C",
     "nhlId": "8484801",
-    "totalFP": 239,
-    "gp": 57,
-    "fpg": 4.19
+    "totalFP": 256.5,
+    "gp": 61,
+    "fpg": 4.2
   },
   "john tavares": {
     "name": "John Tavares",
     "pos": "C",
     "nhlId": "8475166",
-    "totalFP": 118.5,
-    "gp": 60,
-    "fpg": 1.98
-  },
-  "brandon hagel": {
-    "name": "Brandon Hagel",
-    "pos": "LW,RW",
-    "nhlId": "8479542",
-    "totalFP": 194.3,
-    "gp": 53,
-    "fpg": 3.67
+    "totalFP": 123.5,
+    "gp": 64,
+    "fpg": 1.93
   },
   "tyler bertuzzi": {
     "name": "Tyler Bertuzzi",
     "pos": "LW,RW",
     "nhlId": "8477479",
-    "totalFP": 125,
-    "gp": 56,
-    "fpg": 2.23
+    "totalFP": 133.5,
+    "gp": 61,
+    "fpg": 2.19
   },
   "anthony mantha": {
     "name": "Anthony Mantha",
     "pos": "LW,RW",
     "nhlId": "8477511",
-    "totalFP": 138.3,
-    "gp": 58,
-    "fpg": 2.38
-  },
-  "drake batherson": {
-    "name": "Drake Batherson",
-    "pos": "LW,RW",
-    "nhlId": "8480208",
-    "totalFP": 149.8,
-    "gp": 56,
-    "fpg": 2.67
+    "totalFP": 148.8,
+    "gp": 63,
+    "fpg": 2.36
   },
   "erik karlsson": {
     "name": "Erik Karlsson",
     "pos": "D",
     "nhlId": "8474578",
-    "totalFP": 102,
-    "gp": 53,
-    "fpg": 1.92
+    "totalFP": 122.5,
+    "gp": 58,
+    "fpg": 2.11
   },
   "moritz seider": {
     "name": "Moritz Seider",
     "pos": "D",
     "nhlId": "8481542",
-    "totalFP": 132.3,
-    "gp": 60,
-    "fpg": 2.2
+    "totalFP": 148.3,
+    "gp": 64,
+    "fpg": 2.32
   },
   "evan bouchard": {
     "name": "Evan Bouchard",
     "pos": "D",
     "nhlId": "8480803",
-    "totalFP": 204.5,
-    "gp": 61,
-    "fpg": 3.35
+    "totalFP": 218.5,
+    "gp": 64,
+    "fpg": 3.41
   },
   "john carlson": {
     "name": "John Carlson",
@@ -654,25 +647,25 @@
     "name": "David Pastrnak",
     "pos": "RW",
     "nhlId": "8477956",
-    "totalFP": 209,
-    "gp": 54,
-    "fpg": 3.87
+    "totalFP": 214,
+    "gp": 58,
+    "fpg": 3.69
   },
   "matvei michkov": {
     "name": "Matvei Michkov",
     "pos": "LW,RW",
     "nhlId": "8484387",
-    "totalFP": 91.3,
-    "gp": 58,
-    "fpg": 1.57
+    "totalFP": 94.3,
+    "gp": 62,
+    "fpg": 1.52
   },
   "mason mctavish": {
     "name": "Mason McTavish",
     "pos": "C",
     "nhlId": "8482745",
-    "totalFP": 84,
-    "gp": 53,
-    "fpg": 1.58
+    "totalFP": 86,
+    "gp": 58,
+    "fpg": 1.48
   },
   "jonathan huberdeau": {
     "name": "Jonathan Huberdeau",
@@ -687,452 +680,451 @@
     "name": "Frederik Andersen",
     "pos": "G",
     "nhlId": "8475883",
-    "totalFP": 16,
-    "gp": 23,
-    "fpg": 0.7
-  },
-  "john gibson": {
-    "name": "John Gibson",
-    "pos": "G",
-    "nhlId": "8476434",
-    "totalFP": 132.5,
-    "gp": 38,
-    "fpg": 3.49
+    "totalFP": 16.7,
+    "gp": 25,
+    "fpg": 0.67
   },
   "tristan jarry": {
     "name": "Tristan Jarry",
     "pos": "G",
     "nhlId": "8477465",
-    "totalFP": 66,
-    "gp": 26,
-    "fpg": 2.54
+    "totalFP": 63.7,
+    "gp": 27,
+    "fpg": 2.36
   },
   "adin hill": {
     "name": "Adin Hill",
     "pos": "G",
     "nhlId": "8478499",
-    "totalFP": 6.3,
-    "gp": 13,
-    "fpg": 0.48
+    "totalFP": 3.8,
+    "gp": 16,
+    "fpg": 0.24
+  },
+  "carter verhaeghe": {
+    "name": "Carter Verhaeghe",
+    "pos": "LW",
+    "nhlId": "8477409",
+    "totalFP": 113.5,
+    "gp": 62,
+    "fpg": 1.83
+  },
+  "pavel buchnevich": {
+    "name": "Pavel Buchnevich",
+    "pos": "C,LW,RW",
+    "nhlId": "8477402",
+    "totalFP": 101,
+    "gp": 63,
+    "fpg": 1.6
+  },
+  "tage thompson": {
+    "name": "Tage Thompson",
+    "pos": "C",
+    "nhlId": "8479420",
+    "totalFP": 202.8,
+    "gp": 64,
+    "fpg": 3.17
   },
   "seth jarvis": {
     "name": "Seth Jarvis",
     "pos": "C,LW,RW",
     "nhlId": "8482093",
-    "totalFP": 154.5,
-    "gp": 51,
-    "fpg": 3.03
+    "totalFP": 171.5,
+    "gp": 55,
+    "fpg": 3.12
   },
   "trevor zegras": {
     "name": "Trevor Zegras",
     "pos": "C,LW,RW",
     "nhlId": "8481533",
-    "totalFP": 146,
-    "gp": 59,
-    "fpg": 2.47
+    "totalFP": 151,
+    "gp": 63,
+    "fpg": 2.4
   },
   "marat khusnutdinov": {
     "name": "Marat Khusnutdinov",
     "pos": "C,LW",
     "nhlId": "8482177",
-    "totalFP": 78.5,
-    "gp": 54,
-    "fpg": 1.45
+    "totalFP": 83,
+    "gp": 58,
+    "fpg": 1.43
   },
   "clayton keller": {
     "name": "Clayton Keller",
     "pos": "LW,RW",
     "nhlId": "8479343",
-    "totalFP": 183,
-    "gp": 59,
-    "fpg": 3.1
+    "totalFP": 198,
+    "gp": 64,
+    "fpg": 3.09
   },
   "jesper bratt": {
     "name": "Jesper Bratt",
     "pos": "LW,RW",
     "nhlId": "8479407",
-    "totalFP": 102,
-    "gp": 60,
-    "fpg": 1.7
+    "totalFP": 118,
+    "gp": 64,
+    "fpg": 1.84
   },
   "vasily podkolzin": {
     "name": "Vasily Podkolzin",
     "pos": "LW,RW",
     "nhlId": "8481617",
-    "totalFP": 101.5,
-    "gp": 61,
-    "fpg": 1.66
+    "totalFP": 109.3,
+    "gp": 64,
+    "fpg": 1.71
   },
   "miro heiskanen": {
     "name": "Miro Heiskanen",
     "pos": "D",
     "nhlId": "8480036",
-    "totalFP": 138.5,
-    "gp": 57,
-    "fpg": 2.43
+    "totalFP": 160.5,
+    "gp": 61,
+    "fpg": 2.63
   },
   "jj moser": {
     "name": "J.J. Moser",
     "pos": "D",
     "nhlId": "8482655",
-    "totalFP": 99.3,
-    "gp": 56,
+    "totalFP": 106.3,
+    "gp": 60,
     "fpg": 1.77
   },
   "john marino": {
     "name": "John Marino",
     "pos": "D",
     "nhlId": "8478507",
-    "totalFP": 103.5,
-    "gp": 59,
-    "fpg": 1.75
+    "totalFP": 109,
+    "gp": 64,
+    "fpg": 1.7
   },
   "devon toews": {
     "name": "Devon Toews",
     "pos": "D",
     "nhlId": "8478038",
-    "totalFP": 62,
-    "gp": 45,
+    "totalFP": 67.5,
+    "gp": 49,
     "fpg": 1.38
   },
   "ryan oreilly": {
     "name": "Ryan O'Reilly",
     "pos": "C",
     "nhlId": "8475158",
-    "totalFP": 173.5,
-    "gp": 59,
-    "fpg": 2.94
+    "totalFP": 179.5,
+    "gp": 62,
+    "fpg": 2.9
   },
   "sam reinhart": {
     "name": "Sam Reinhart",
     "pos": "C,RW",
     "nhlId": "8477933",
-    "totalFP": 160,
-    "gp": 59,
-    "fpg": 2.71
+    "totalFP": 165,
+    "gp": 63,
+    "fpg": 2.62
   },
   "matthew tkachuk": {
     "name": "Matthew Tkachuk",
     "pos": "LW,RW",
     "nhlId": "8479314",
-    "totalFP": 33.8,
-    "gp": 12,
-    "fpg": 2.81
+    "totalFP": 53.3,
+    "gp": 16,
+    "fpg": 3.33
   },
   "beckett sennecke": {
     "name": "Beckett Sennecke",
     "pos": "RW",
     "nhlId": "8484762",
-    "totalFP": 133,
-    "gp": 58,
-    "fpg": 2.29
+    "totalFP": 137.5,
+    "gp": 63,
+    "fpg": 2.18
   },
   "pavel zacha": {
     "name": "Pavel Zacha",
     "pos": "C,LW",
     "ir": true,
     "nhlId": "8478401",
-    "totalFP": 113.5,
-    "gp": 56,
-    "fpg": 2.03
+    "totalFP": 135.5,
+    "gp": 60,
+    "fpg": 2.26
   },
   "mackenzie blackwood": {
     "name": "Mackenzie Blackwood",
     "pos": "G",
     "nhlId": "8478406",
-    "totalFP": 104.8,
-    "gp": 25,
-    "fpg": 4.19
+    "totalFP": 104,
+    "gp": 27,
+    "fpg": 3.85
   },
   "philipp grubauer": {
     "name": "Philipp Grubauer",
     "pos": "G",
     "nhlId": "8475831",
-    "totalFP": 67,
-    "gp": 23,
-    "fpg": 2.91
+    "totalFP": 67.3,
+    "gp": 24,
+    "fpg": 2.8
   },
   "stuart skinner": {
     "name": "Stuart Skinner",
     "pos": "G",
     "nhlId": "8479973",
-    "totalFP": 81.7,
-    "gp": 37,
-    "fpg": 2.21
-  },
-  "nick suzuki": {
-    "name": "Nick Suzuki",
-    "pos": "C",
-    "nhlId": "8480018",
-    "totalFP": 219,
-    "gp": 59,
-    "fpg": 3.71
+    "totalFP": 82,
+    "gp": 39,
+    "fpg": 2.1
   },
   "sean couturier": {
     "name": "Sean Couturier",
     "pos": "C",
     "nhlId": "8476461",
-    "totalFP": 64.5,
-    "gp": 58,
-    "fpg": 1.11
+    "totalFP": 65.5,
+    "gp": 62,
+    "fpg": 1.06
   },
   "victor olofsson": {
     "name": "Victor Olofsson",
     "pos": "LW,RW",
     "nhlId": "8478109",
-    "totalFP": 78,
-    "gp": 58,
-    "fpg": 1.34
+    "totalFP": 79,
+    "gp": 61,
+    "fpg": 1.3
   },
   "jaden schwartz": {
     "name": "Jaden Schwartz",
     "pos": "C,LW",
     "nhlId": "8475768",
-    "totalFP": 67,
-    "gp": 39,
-    "fpg": 1.72
+    "totalFP": 68,
+    "gp": 42,
+    "fpg": 1.62
   },
   "ivan demidov": {
     "name": "Ivan Demidov",
     "pos": "RW",
     "nhlId": "8484984",
-    "totalFP": 135,
-    "gp": 59,
-    "fpg": 2.29
+    "totalFP": 137,
+    "gp": 62,
+    "fpg": 2.21
   },
   "kirill marchenko": {
     "name": "Kirill Marchenko",
     "pos": "RW",
     "nhlId": "8480893",
-    "totalFP": 147.5,
-    "gp": 52,
-    "fpg": 2.84
+    "totalFP": 173,
+    "gp": 57,
+    "fpg": 3.04
   },
   "vince dunn": {
     "name": "Vince Dunn",
     "pos": "D",
     "nhlId": "8478407",
-    "totalFP": 94,
-    "gp": 58,
-    "fpg": 1.62
+    "totalFP": 100,
+    "gp": 61,
+    "fpg": 1.64
   },
   "olen zellweger": {
     "name": "Olen Zellweger",
     "pos": "D",
     "nhlId": "8482803",
-    "totalFP": 62.5,
-    "gp": 57,
-    "fpg": 1.1
+    "totalFP": 62,
+    "gp": 62,
+    "fpg": 1
   },
   "logan stanley": {
     "name": "Logan Stanley",
     "pos": "D",
     "nhlId": "8479378",
-    "totalFP": 72.3,
-    "gp": 57,
-    "fpg": 1.27
+    "totalFP": 76.3,
+    "gp": 59,
+    "fpg": 1.29
   },
   "brent burns": {
     "name": "Brent Burns",
     "pos": "D",
     "nhlId": "8470613",
-    "totalFP": 107,
-    "gp": 58,
-    "fpg": 1.84
+    "totalFP": 109,
+    "gp": 62,
+    "fpg": 1.76
   },
   "connor mcdavid": {
     "name": "Connor McDavid",
     "pos": "C",
     "nhlId": "8478402",
-    "totalFP": 304,
-    "gp": 61,
-    "fpg": 4.98
+    "totalFP": 317.5,
+    "gp": 64,
+    "fpg": 4.96
   },
   "jack eichel": {
     "name": "Jack Eichel",
     "pos": "C",
     "nhlId": "8478403",
-    "totalFP": 206,
-    "gp": 51,
-    "fpg": 4.04
-  },
-  "gabriel landeskog": {
-    "name": "Gabriel Landeskog",
-    "pos": "LW,RW",
-    "nhlId": "8476455",
-    "totalFP": 89.3,
-    "gp": 44,
-    "fpg": 2.03
+    "totalFP": 211,
+    "gp": 56,
+    "fpg": 3.77
   },
   "alexis lafreniere": {
     "name": "Alexis Lafreniere",
     "pos": "LW,RW",
     "nhlId": "8482109",
-    "totalFP": 78,
-    "gp": 59,
-    "fpg": 1.32
+    "totalFP": 98,
+    "gp": 63,
+    "fpg": 1.56
   },
   "tyler toffoli": {
     "name": "Tyler Toffoli",
     "pos": "LW,RW",
     "nhlId": "8475726",
-    "totalFP": 101.5,
-    "gp": 57,
-    "fpg": 1.78
-  },
-  "aleksander barkov": {
-    "name": "Aleksander Barkov",
-    "pos": "C",
-    "ir": true,
-    "nhlId": "8477493",
-    "totalFP": 0,
-    "gp": 0,
-    "fpg": 0
-  },
-  "logan thompson": {
-    "name": "Logan Thompson",
-    "pos": "G",
-    "nhlId": "8480313",
-    "totalFP": 134.1,
-    "gp": 41,
-    "fpg": 3.27
+    "totalFP": 105.5,
+    "gp": 61,
+    "fpg": 1.73
   },
   "dustin wolf": {
     "name": "Dustin Wolf",
     "pos": "G",
     "nhlId": "8481692",
-    "totalFP": 98.1,
-    "gp": 43,
-    "fpg": 2.28
+    "totalFP": 96.7,
+    "gp": 45,
+    "fpg": 2.15
+  },
+  "darcy kuemper": {
+    "name": "Darcy Kuemper",
+    "pos": "G",
+    "nhlId": "8475311",
+    "totalFP": 80.3,
+    "gp": 39,
+    "fpg": 2.06
+  },
+  "adam fantilli": {
+    "name": "Adam Fantilli",
+    "pos": "C",
+    "nhlId": "8484166",
+    "totalFP": 112.8,
+    "gp": 63,
+    "fpg": 1.79
+  },
+  "quinton byfield": {
+    "name": "Quinton Byfield",
+    "pos": "C,LW",
+    "nhlId": "8482124",
+    "totalFP": 94,
+    "gp": 60,
+    "fpg": 1.57
+  },
+  "tim stutzle": {
+    "name": "Tim Stutzle",
+    "pos": "C,LW",
+    "nhlId": "8482116",
+    "totalFP": 208.3,
+    "gp": 62,
+    "fpg": 3.36
   },
   "ridly greig": {
     "name": "Ridly Greig",
     "pos": "C,LW,RW",
     "nhlId": "8482092",
-    "totalFP": 84.8,
-    "gp": 54,
-    "fpg": 1.57
+    "totalFP": 90,
+    "gp": 57,
+    "fpg": 1.58
   },
   "will smith": {
     "name": "Will Smith",
     "pos": "C,RW",
     "nhlId": "8484227",
-    "totalFP": 117,
-    "gp": 44,
-    "fpg": 2.66
+    "totalFP": 129,
+    "gp": 48,
+    "fpg": 2.69
   },
   "cole caufield": {
     "name": "Cole Caufield",
     "pos": "LW,RW",
     "nhlId": "8481540",
-    "totalFP": 214.5,
-    "gp": 59,
-    "fpg": 3.64
+    "totalFP": 223.5,
+    "gp": 62,
+    "fpg": 3.6
   },
   "claude giroux": {
     "name": "Claude Giroux",
     "pos": "LW,RW",
     "nhlId": "8473512",
-    "totalFP": 123.5,
-    "gp": 59,
-    "fpg": 2.09
+    "totalFP": 124,
+    "gp": 62,
+    "fpg": 2
   },
   "jordan eberle": {
     "name": "Jordan Eberle",
     "pos": "RW",
     "nhlId": "8474586",
-    "totalFP": 135,
-    "gp": 57,
-    "fpg": 2.37
-  },
-  "josh doan": {
-    "name": "Josh Doan",
-    "pos": "LW,RW",
-    "nhlId": "8482659",
-    "totalFP": 113.3,
+    "totalFP": 141.5,
     "gp": 60,
-    "fpg": 1.89
+    "fpg": 2.36
   },
   "dmitry orlov": {
     "name": "Dmitry Orlov",
     "pos": "D",
     "nhlId": "8475200",
-    "totalFP": 54,
-    "gp": 57,
-    "fpg": 0.95
-  },
-  "mattias samuelsson": {
-    "name": "Mattias Samuelsson",
-    "pos": "D",
-    "nhlId": "8480807",
-    "totalFP": 119,
-    "gp": 58,
-    "fpg": 2.05
+    "totalFP": 59.5,
+    "gp": 61,
+    "fpg": 0.98
   },
   "justin faulk": {
     "name": "Justin Faulk",
     "pos": "D",
     "nhlId": "8475753",
-    "totalFP": 94,
-    "gp": 59,
-    "fpg": 1.59
+    "totalFP": 94.5,
+    "gp": 62,
+    "fpg": 1.52
   },
   "aaron ekblad": {
     "name": "Aaron Ekblad",
     "pos": "D",
     "nhlId": "8477932",
-    "totalFP": 56.8,
-    "gp": 57,
-    "fpg": 1
+    "totalFP": 68.3,
+    "gp": 61,
+    "fpg": 1.12
   },
   "evgeni malkin": {
     "name": "Evgeni Malkin",
     "pos": "C,LW,RW",
     "nhlId": "8471215",
-    "totalFP": 145,
-    "gp": 43,
-    "fpg": 3.37
+    "totalFP": 151.3,
+    "gp": 46,
+    "fpg": 3.29
   },
   "marcus johansson": {
     "name": "Marcus Johansson",
     "pos": "LW",
     "nhlId": "8475149",
-    "totalFP": 123,
-    "gp": 55,
-    "fpg": 2.24
+    "totalFP": 125,
+    "gp": 57,
+    "fpg": 2.19
   },
   "wyatt johnston": {
     "name": "Wyatt Johnston",
     "pos": "C,RW",
     "nhlId": "8482740",
-    "totalFP": 195.5,
-    "gp": 59,
-    "fpg": 3.31
+    "totalFP": 208,
+    "gp": 63,
+    "fpg": 3.3
   },
   "leo carlsson": {
     "name": "Leo Carlsson",
     "pos": "C",
     "nhlId": "8484153",
-    "totalFP": 146.8,
-    "gp": 46,
-    "fpg": 3.19
+    "totalFP": 157.3,
+    "gp": 51,
+    "fpg": 3.08
   },
   "anthony cirelli": {
     "name": "Anthony Cirelli",
     "pos": "C",
     "ir": true,
     "nhlId": "8478519",
-    "totalFP": 131.3,
-    "gp": 50,
-    "fpg": 2.63
+    "totalFP": 137.8,
+    "gp": 54,
+    "fpg": 2.55
   },
   "sam montembeault": {
     "name": "Sam Montembeault",
     "pos": "G",
     "nhlId": "8478470",
-    "totalFP": 21.2,
-    "gp": 24,
-    "fpg": 0.88
+    "totalFP": 19.3,
+    "gp": 25,
+    "fpg": 0.77
   },
   "jake allen": {
     "name": "Jake Allen",
@@ -1146,121 +1138,65 @@
     "name": "Connor Ingram",
     "pos": "G",
     "nhlId": "8478971",
-    "totalFP": 34.5,
-    "gp": 16,
-    "fpg": 2.16
-  },
-  "connor bedard": {
-    "name": "Connor Bedard",
-    "pos": "C,RW",
-    "nhlId": "8484144",
-    "totalFP": 160,
-    "gp": 46,
-    "fpg": 3.48
-  },
-  "sebastian aho": {
-    "name": "Sebastian Aho",
-    "pos": "C",
-    "nhlId": "8478427",
-    "totalFP": 188,
-    "gp": 59,
-    "fpg": 3.19
-  },
-  "andrei svechnikov": {
-    "name": "Andrei Svechnikov",
-    "pos": "LW,RW",
-    "nhlId": "8480830",
-    "totalFP": 164.5,
-    "gp": 59,
-    "fpg": 2.79
+    "totalFP": 39.7,
+    "gp": 18,
+    "fpg": 2.21
   },
   "alex tuch": {
     "name": "Alex Tuch",
     "pos": "LW,RW",
     "nhlId": "8477949",
-    "totalFP": 166.8,
-    "gp": 59,
-    "fpg": 2.83
+    "totalFP": 187.3,
+    "gp": 63,
+    "fpg": 2.97
   },
-  "martin necas": {
-    "name": "Martin Necas",
-    "pos": "RW",
-    "nhlId": "8480039",
-    "totalFP": 218,
-    "gp": 55,
-    "fpg": 3.96
+  "nazem kadri": {
+    "name": "Nazem Kadri",
+    "pos": "C",
+    "nhlId": "8475172",
+    "totalFP": 90.5,
+    "gp": 62,
+    "fpg": 1.46
+  },
+  "connor bedard": {
+    "name": "Connor Bedard",
+    "pos": "C,RW",
+    "nhlId": "8484144",
+    "totalFP": 172,
+    "gp": 51,
+    "fpg": 3.37
+  },
+  "sebastian aho": {
+    "name": "Sebastian Aho",
+    "pos": "C",
+    "nhlId": "8478427",
+    "totalFP": 206,
+    "gp": 63,
+    "fpg": 3.27
+  },
+  "andrei svechnikov": {
+    "name": "Andrei Svechnikov",
+    "pos": "LW,RW",
+    "nhlId": "8480830",
+    "totalFP": 178,
+    "gp": 63,
+    "fpg": 2.83
   },
   "mika zibanejad": {
     "name": "Mika Zibanejad",
     "pos": "C,RW",
     "nhlId": "8476459",
-    "totalFP": 139,
-    "gp": 58,
-    "fpg": 2.4
-  },
-  "cale makar": {
-    "name": "Cale Makar",
-    "pos": "D",
-    "nhlId": "8480069",
-    "totalFP": 197.5,
-    "gp": 58,
-    "fpg": 3.41
-  },
-  "roman josi": {
-    "name": "Roman Josi",
-    "pos": "D",
-    "nhlId": "8474600",
-    "totalFP": 110.5,
-    "gp": 47,
-    "fpg": 2.35
-  },
-  "samuel girard": {
-    "name": "Samuel Girard",
-    "pos": "D",
-    "nhlId": "8479398",
-    "totalFP": 44.3,
-    "gp": 42,
-    "fpg": 1.05
-  },
-  "alexander nikishin": {
-    "name": "Alexander Nikishin",
-    "pos": "D",
-    "nhlId": "8482100",
-    "totalFP": 74.8,
-    "gp": 58,
-    "fpg": 1.29
-  },
-  "vincent trocheck": {
-    "name": "Vincent Trocheck",
-    "pos": "C",
-    "nhlId": "8476389",
-    "totalFP": 96.5,
-    "gp": 45,
-    "fpg": 2.14
-  },
-  "jacob trouba": {
-    "name": "Jacob Trouba",
-    "pos": "D",
-    "nhlId": "8476885",
-    "totalFP": 71.3,
-    "gp": 57,
-    "fpg": 1.25
+    "totalFP": 158,
+    "gp": 62,
+    "fpg": 2.55
   },
   "valeri nichushkin": {
     "name": "Valeri Nichushkin",
     "pos": "LW,RW",
     "nhlId": "8477501",
-    "totalFP": 97.5,
-    "gp": 49,
-    "fpg": 1.99
-  },
-  "blake coleman": {
-    "name": "Blake Coleman",
-    "pos": "C,LW,RW",
-    "nhlId": "8476399",
-    "totalFP": 80.3,
-    "gp": 46,
-    "fpg": 1.74
+    "totalFP": 102,
+    "gp": 53,
+    "fpg": 1.92
   },
   "mikko rantanen": {
     "name": "Mikko Rantanen",
@@ -1271,165 +1207,213 @@
     "gp": 54,
     "fpg": 3.95
   },
+  "cale makar": {
+    "name": "Cale Makar",
+    "pos": "D",
+    "nhlId": "8480069",
+    "totalFP": 219.5,
+    "gp": 62,
+    "fpg": 3.54
+  },
+  "roman josi": {
+    "name": "Roman Josi",
+    "pos": "D",
+    "nhlId": "8474600",
+    "totalFP": 110.5,
+    "gp": 51,
+    "fpg": 2.17
+  },
   "andrei vasilevskiy": {
     "name": "Andrei Vasilevskiy",
     "pos": "G",
     "nhlId": "8476883",
-    "totalFP": 153.1,
-    "gp": 39,
-    "fpg": 3.93
+    "totalFP": 156.6,
+    "gp": 42,
+    "fpg": 3.73
   },
-  "darcy kuemper": {
-    "name": "Darcy Kuemper",
+  "logan thompson": {
+    "name": "Logan Thompson",
     "pos": "G",
-    "nhlId": "8475311",
-    "totalFP": 77.6,
-    "gp": 37,
-    "fpg": 2.1
+    "nhlId": "8480313",
+    "totalFP": 139.1,
+    "gp": 44,
+    "fpg": 3.16
   },
-  "casey desmith": {
-    "name": "Casey DeSmith",
-    "pos": "G",
-    "nhlId": "8479193",
-    "totalFP": 71.4,
-    "gp": 22,
-    "fpg": 3.25
-  },
-  "ryan mcleod": {
-    "name": "Ryan McLeod",
-    "pos": "C",
-    "nhlId": "8480802",
-    "totalFP": 129.5,
-    "gp": 60,
-    "fpg": 2.16
-  },
-  "ryan nugenthopkins": {
-    "name": "Ryan Nugent-Hopkins",
-    "pos": "C,LW",
-    "nhlId": "8476454",
-    "totalFP": 134.8,
-    "gp": 52,
-    "fpg": 2.59
-  },
-  "nikolaj ehlers": {
-    "name": "Nikolaj Ehlers",
-    "pos": "LW,RW",
-    "nhlId": "8477940",
-    "totalFP": 129,
-    "gp": 59,
-    "fpg": 2.19
-  },
-  "alex ovechkin": {
-    "name": "Alex Ovechkin",
-    "pos": "LW,RW",
-    "nhlId": "8471214",
-    "totalFP": 149.5,
+  "mattias samuelsson": {
+    "name": "Mattias Samuelsson",
+    "pos": "D",
+    "nhlId": "8480807",
+    "totalFP": 125,
     "gp": 62,
-    "fpg": 2.41
+    "fpg": 2.02
   },
-  "patrick kane": {
-    "name": "Patrick Kane",
-    "pos": "RW",
-    "nhlId": "8474141",
-    "totalFP": 93,
-    "gp": 45,
-    "fpg": 2.07
+  "steven stamkos": {
+    "name": "Steven Stamkos",
+    "pos": "C,LW,RW",
+    "nhlId": "8474564",
+    "totalFP": 151.5,
+    "gp": 63,
+    "fpg": 2.4
   },
-  "bryan rust": {
-    "name": "Bryan Rust",
-    "pos": "RW",
-    "nhlId": "8475810",
-    "totalFP": 128.5,
-    "gp": 51,
-    "fpg": 2.52
-  },
-  "dougie hamilton": {
-    "name": "Dougie Hamilton",
+  "mike matheson": {
+    "name": "Mike Matheson",
     "pos": "D",
-    "nhlId": "8476462",
-    "totalFP": 72,
-    "gp": 55,
-    "fpg": 1.31
-  },
-  "noah dobson": {
-    "name": "Noah Dobson",
-    "pos": "D",
-    "nhlId": "8480865",
-    "totalFP": 120,
+    "nhlId": "8476875",
+    "totalFP": 95,
     "gp": 59,
-    "fpg": 2.03
+    "fpg": 1.61
   },
-  "mackenzie weegar": {
-    "name": "MacKenzie Weegar",
-    "pos": "D",
-    "nhlId": "8477346",
-    "totalFP": 34.8,
-    "gp": 58,
-    "fpg": 0.6
+  "cutter gauthier": {
+    "name": "Cutter Gauthier",
+    "pos": "LW,RW",
+    "nhlId": "8483445",
+    "totalFP": 179.5,
+    "gp": 62,
+    "fpg": 2.9
+  },
+  "nick schmaltz": {
+    "name": "Nick Schmaltz",
+    "pos": "C,RW",
+    "nhlId": "8477951",
+    "totalFP": 192.5,
+    "gp": 64,
+    "fpg": 3.01
+  },
+  "jeremy swayman": {
+    "name": "Jeremy Swayman",
+    "pos": "G",
+    "nhlId": "8480280",
+    "totalFP": 124.3,
+    "gp": 41,
+    "fpg": 3.03
+  },
+  "kirill kaprizov": {
+    "name": "Kirill Kaprizov",
+    "pos": "LW",
+    "nhlId": "8478864",
+    "totalFP": 237,
+    "gp": 64,
+    "fpg": 3.7
   },
   "jakob chychrun": {
     "name": "Jakob Chychrun",
     "pos": "D",
     "nhlId": "8479345",
-    "totalFP": 172.8,
-    "gp": 60,
-    "fpg": 2.88
+    "totalFP": 175.3,
+    "gp": 63,
+    "fpg": 2.78
+  },
+  "ryan mcleod": {
+    "name": "Ryan McLeod",
+    "pos": "C",
+    "nhlId": "8480802",
+    "totalFP": 143.5,
+    "gp": 64,
+    "fpg": 2.24
+  },
+  "ryan nugenthopkins": {
+    "name": "Ryan Nugent-Hopkins",
+    "pos": "C,LW",
+    "nhlId": "8476454",
+    "totalFP": 137.8,
+    "gp": 55,
+    "fpg": 2.5
+  },
+  "nikolaj ehlers": {
+    "name": "Nikolaj Ehlers",
+    "pos": "LW,RW",
+    "nhlId": "8477940",
+    "totalFP": 152.5,
+    "gp": 63,
+    "fpg": 2.42
+  },
+  "patrick kane": {
+    "name": "Patrick Kane",
+    "pos": "RW",
+    "nhlId": "8474141",
+    "totalFP": 99.5,
+    "gp": 49,
+    "fpg": 2.03
+  },
+  "bryan rust": {
+    "name": "Bryan Rust",
+    "pos": "RW",
+    "nhlId": "8475810",
+    "totalFP": 145.5,
+    "gp": 56,
+    "fpg": 2.6
+  },
+  "dougie hamilton": {
+    "name": "Dougie Hamilton",
+    "pos": "D",
+    "nhlId": "8476462",
+    "totalFP": 80.5,
+    "gp": 59,
+    "fpg": 1.36
+  },
+  "mackenzie weegar": {
+    "name": "MacKenzie Weegar",
+    "pos": "D",
+    "nhlId": "8477346",
+    "totalFP": 34.3,
+    "gp": 62,
+    "fpg": 0.55
   },
   "jake sanderson": {
     "name": "Jake Sanderson",
     "pos": "D",
     "nhlId": "8482105",
-    "totalFP": 139,
-    "gp": 59,
-    "fpg": 2.36
+    "totalFP": 140,
+    "gp": 62,
+    "fpg": 2.26
   },
   "robert thomas": {
     "name": "Robert Thomas",
     "pos": "C",
     "nhlId": "8480023",
-    "totalFP": 88,
-    "gp": 42,
-    "fpg": 2.1
+    "totalFP": 116.5,
+    "gp": 46,
+    "fpg": 2.53
   },
   "jj peterka": {
     "name": "JJ Peterka",
     "pos": "LW,RW",
     "nhlId": "8482175",
-    "totalFP": 118,
-    "gp": 59,
-    "fpg": 2
+    "totalFP": 123.5,
+    "gp": 64,
+    "fpg": 1.93
   },
   "roope hintz": {
     "name": "Roope Hintz",
     "pos": "C",
     "nhlId": "8478449",
-    "totalFP": 143,
-    "gp": 52,
-    "fpg": 2.75
+    "totalFP": 144,
+    "gp": 53,
+    "fpg": 2.72
   },
   "akira schmid": {
     "name": "Akira Schmid",
     "pos": "G",
     "nhlId": "8481033",
-    "totalFP": 75.2,
-    "gp": 30,
-    "fpg": 2.51
+    "totalFP": 73.7,
+    "gp": 32,
+    "fpg": 2.3
   },
   "linus ullmark": {
     "name": "Linus Ullmark",
     "pos": "G",
     "nhlId": "8476999",
-    "totalFP": 60.3,
-    "gp": 32,
-    "fpg": 1.88
+    "totalFP": 64.9,
+    "gp": 35,
+    "fpg": 1.85
   },
   "karel vejmelka": {
     "name": "Karel Vejmelka",
     "pos": "G",
     "nhlId": "8478872",
-    "totalFP": 126.9,
-    "gp": 46,
-    "fpg": 2.76
+    "totalFP": 132.7,
+    "gp": 49,
+    "fpg": 2.71
   },
   "thatcher demko": {
     "name": "Thatcher Demko",
@@ -1440,229 +1424,245 @@
     "gp": 20,
     "fpg": 2.05
   },
+  "sam bennett": {
+    "name": "Sam Bennett",
+    "pos": "C",
+    "nhlId": "8477935",
+    "totalFP": 144,
+    "gp": 63,
+    "fpg": 2.29
+  },
+  "jordan kyrou": {
+    "name": "Jordan Kyrou",
+    "pos": "RW",
+    "nhlId": "8479385",
+    "totalFP": 93,
+    "gp": 53,
+    "fpg": 1.75
+  },
+  "samuel girard": {
+    "name": "Samuel Girard",
+    "pos": "D",
+    "nhlId": "8479398",
+    "totalFP": 42.3,
+    "gp": 47,
+    "fpg": 0.9
+  },
   "dylan strome": {
     "name": "Dylan Strome",
     "pos": "C",
     "nhlId": "8478440",
-    "totalFP": 147,
-    "gp": 60,
-    "fpg": 2.45
+    "totalFP": 149,
+    "gp": 63,
+    "fpg": 2.37
   },
   "brock nelson": {
     "name": "Brock Nelson",
     "pos": "C",
     "nhlId": "8475754",
-    "totalFP": 165,
-    "gp": 58,
-    "fpg": 2.84
+    "totalFP": 173,
+    "gp": 62,
+    "fpg": 2.79
   },
   "travis konecny": {
     "name": "Travis Konecny",
     "pos": "LW,RW",
     "nhlId": "8478439",
-    "totalFP": 173.3,
-    "gp": 58,
-    "fpg": 2.99
+    "totalFP": 173.8,
+    "gp": 59,
+    "fpg": 2.94
   },
   "zach hyman": {
     "name": "Zach Hyman",
     "pos": "LW,RW",
     "nhlId": "8475786",
-    "totalFP": 133.5,
-    "gp": 42,
+    "totalFP": 143,
+    "gp": 45,
     "fpg": 3.18
   },
   "tom wilson": {
     "name": "Tom Wilson",
     "pos": "RW",
     "nhlId": "8476880",
-    "totalFP": 174.5,
-    "gp": 52,
-    "fpg": 3.36
-  },
-  "charlie mcavoy": {
-    "name": "Charlie McAvoy",
-    "pos": "D",
-    "nhlId": "8479325",
-    "totalFP": 118,
-    "gp": 47,
-    "fpg": 2.51
-  },
-  "brandon montour": {
-    "name": "Brandon Montour",
-    "pos": "D",
-    "nhlId": "8477986",
-    "totalFP": 68.3,
-    "gp": 41,
-    "fpg": 1.66
+    "totalFP": 173,
+    "gp": 55,
+    "fpg": 3.15
   },
   "rasmus andersson": {
     "name": "Rasmus Andersson",
     "pos": "D",
     "nhlId": "8478397",
-    "totalFP": 107.3,
-    "gp": 58,
-    "fpg": 1.85
+    "totalFP": 105.8,
+    "gp": 63,
+    "fpg": 1.68
   },
   "shayne gostisbehere": {
     "name": "Shayne Gostisbehere",
     "pos": "D",
     "nhlId": "8476906",
-    "totalFP": 122,
-    "gp": 42,
-    "fpg": 2.9
-  },
-  "tim stutzle": {
-    "name": "Tim Stutzle",
-    "pos": "C,LW",
-    "nhlId": "8482116",
-    "totalFP": 197.3,
-    "gp": 59,
-    "fpg": 3.34
+    "totalFP": 127,
+    "gp": 45,
+    "fpg": 2.82
   },
   "adrian kempe": {
     "name": "Adrian Kempe",
     "pos": "RW",
     "nhlId": "8477960",
-    "totalFP": 159,
-    "gp": 59,
-    "fpg": 2.69
+    "totalFP": 179.5,
+    "gp": 63,
+    "fpg": 2.85
   },
   "elias pettersson": {
     "name": "Elias Pettersson",
     "pos": "C,LW",
     "nhlId": "8480012",
-    "totalFP": 80.5,
-    "gp": 51,
+    "totalFP": 87,
+    "gp": 55,
     "fpg": 1.58
   },
   "alex debrincat": {
     "name": "Alex DeBrincat",
     "pos": "LW,RW",
     "nhlId": "8479337",
-    "totalFP": 175,
-    "gp": 60,
-    "fpg": 2.92
-  },
-  "jordan kyrou": {
-    "name": "Jordan Kyrou",
-    "pos": "RW",
-    "nhlId": "8479385",
-    "totalFP": 87.5,
-    "gp": 49,
-    "fpg": 1.79
-  },
-  "sam bennett": {
-    "name": "Sam Bennett",
-    "pos": "C",
-    "nhlId": "8477935",
-    "totalFP": 134,
-    "gp": 59,
-    "fpg": 2.27
+    "totalFP": 190,
+    "gp": 64,
+    "fpg": 2.97
   },
   "filip gustavsson": {
     "name": "Filip Gustavsson",
     "pos": "G",
     "nhlId": "8479406",
-    "totalFP": 129.3,
-    "gp": 37,
-    "fpg": 3.49
+    "totalFP": 142.6,
+    "gp": 40,
+    "fpg": 3.56
   },
   "scott wedgewood": {
     "name": "Scott Wedgewood",
     "pos": "G",
     "nhlId": "8475809",
-    "totalFP": 116.9,
-    "gp": 32,
-    "fpg": 3.65
+    "totalFP": 135.2,
+    "gp": 35,
+    "fpg": 3.86
+  },
+  "nico hischier": {
+    "name": "Nico Hischier",
+    "pos": "C",
+    "nhlId": "8480002",
+    "totalFP": 132.3,
+    "gp": 64,
+    "fpg": 2.07
+  },
+  "victor hedman": {
+    "name": "Victor Hedman",
+    "pos": "D",
+    "nhlId": "8475167",
+    "totalFP": 40.5,
+    "gp": 28,
+    "fpg": 1.45
+  },
+  "noah dobson": {
+    "name": "Noah Dobson",
+    "pos": "D",
+    "nhlId": "8480865",
+    "totalFP": 125,
+    "gp": 62,
+    "fpg": 2.02
+  },
+  "alex ovechkin": {
+    "name": "Alex Ovechkin",
+    "pos": "LW,RW",
+    "nhlId": "8471214",
+    "totalFP": 148,
+    "gp": 65,
+    "fpg": 2.28
+  },
+  "nick suzuki": {
+    "name": "Nick Suzuki",
+    "pos": "C",
+    "nhlId": "8480018",
+    "totalFP": 236.5,
+    "gp": 62,
+    "fpg": 3.81
   },
   "jack hughes": {
     "name": "Jack Hughes",
     "pos": "C,LW",
     "nhlId": "8481559",
-    "totalFP": 100.5,
-    "gp": 39,
-    "fpg": 2.58
+    "totalFP": 122,
+    "gp": 43,
+    "fpg": 2.84
   },
   "josh norris": {
     "name": "Josh Norris",
     "pos": "C",
     "nhlId": "8480064",
-    "totalFP": 60.5,
-    "gp": 22,
-    "fpg": 2.75
+    "totalFP": 70,
+    "gp": 26,
+    "fpg": 2.69
   },
   "leon draisaitl": {
     "name": "Leon Draisaitl",
     "pos": "C,LW",
     "nhlId": "8477934",
-    "totalFP": 260,
-    "gp": 58,
-    "fpg": 4.48
+    "totalFP": 281.5,
+    "gp": 61,
+    "fpg": 4.61
   },
   "artturi lehkonen": {
     "name": "Artturi Lehkonen",
     "pos": "LW,RW",
     "nhlId": "8477476",
     "totalFP": 139,
-    "gp": 58,
-    "fpg": 2.4
+    "gp": 59,
+    "fpg": 2.36
   },
   "charlie coyle": {
     "name": "Charlie Coyle",
     "pos": "C,RW",
     "nhlId": "8475745",
-    "totalFP": 115.5,
-    "gp": 58,
-    "fpg": 1.99
+    "totalFP": 136.5,
+    "gp": 63,
+    "fpg": 2.17
   },
   "lucas raymond": {
     "name": "Lucas Raymond",
     "pos": "RW",
     "nhlId": "8482078",
-    "totalFP": 187.5,
-    "gp": 58,
-    "fpg": 3.23
+    "totalFP": 196.5,
+    "gp": 62,
+    "fpg": 3.17
   },
   "mikhail sergachev": {
     "name": "Mikhail Sergachev",
     "pos": "D",
     "nhlId": "8479410",
-    "totalFP": 123.5,
-    "gp": 59,
+    "totalFP": 127.5,
+    "gp": 61,
     "fpg": 2.09
   },
   "nate schmidt": {
     "name": "Nate Schmidt",
     "pos": "D",
     "nhlId": "8477220",
-    "totalFP": 72.5,
-    "gp": 59,
-    "fpg": 1.23
+    "totalFP": 74,
+    "gp": 64,
+    "fpg": 1.16
   },
   "brandt clarke": {
     "name": "Brandt Clarke",
     "pos": "D",
     "nhlId": "8482730",
-    "totalFP": 91.5,
-    "gp": 59,
-    "fpg": 1.55
-  },
-  "victor hedman": {
-    "name": "Victor Hedman",
-    "pos": "D",
-    "nhlId": "8475167",
-    "totalFP": 41.5,
-    "gp": 24,
-    "fpg": 1.73
+    "totalFP": 108.5,
+    "gp": 63,
+    "fpg": 1.72
   },
   "mikael backlund": {
     "name": "Mikael Backlund",
     "pos": "C",
     "nhlId": "8474150",
-    "totalFP": 111,
-    "gp": 58,
-    "fpg": 1.91
+    "totalFP": 109.5,
+    "gp": 63,
+    "fpg": 1.74
   },
   "luke evangelista": {
     "name": "Luke Evangelista",
@@ -1676,41 +1676,49 @@
     "name": "Matt Boldy",
     "pos": "LW,RW",
     "nhlId": "8481557",
-    "totalFP": 225,
-    "gp": 56,
-    "fpg": 4.02
+    "totalFP": 236,
+    "gp": 60,
+    "fpg": 3.93
   },
   "timo meier": {
     "name": "Timo Meier",
     "pos": "LW,RW",
     "nhlId": "8478414",
-    "totalFP": 74,
-    "gp": 55,
+    "totalFP": 79.5,
+    "gp": 59,
     "fpg": 1.35
   },
   "connor hellebuyck": {
     "name": "Connor Hellebuyck",
     "pos": "G",
     "nhlId": "8476945",
-    "totalFP": 67.9,
-    "gp": 37,
-    "fpg": 1.84
+    "totalFP": 85.4,
+    "gp": 41,
+    "fpg": 2.08
   },
-  "juuse saros": {
-    "name": "Juuse Saros",
-    "pos": "G",
-    "nhlId": "8477424",
-    "totalFP": 83.3,
-    "gp": 45,
-    "fpg": 1.85
+  "mark scheifele": {
+    "name": "Mark Scheifele",
+    "pos": "C",
+    "nhlId": "8476460",
+    "totalFP": 224.5,
+    "gp": 62,
+    "fpg": 3.62
   },
-  "brandon bussi": {
-    "name": "Brandon Bussi",
+  "anthony stolarz": {
+    "name": "Anthony Stolarz",
     "pos": "G",
-    "nhlId": "8483548",
-    "totalFP": 108.7,
-    "gp": 28,
-    "fpg": 3.88
+    "nhlId": "8476932",
+    "totalFP": 28.9,
+    "gp": 21,
+    "fpg": 1.38
+  },
+  "brandon montour": {
+    "name": "Brandon Montour",
+    "pos": "D",
+    "nhlId": "8477986",
+    "totalFP": 71.3,
+    "gp": 44,
+    "fpg": 1.62
   },
   "sidney crosby": {
     "name": "Sidney Crosby",
@@ -1725,105 +1733,105 @@
     "name": "Matt Duchene",
     "pos": "C,RW",
     "nhlId": "8475168",
-    "totalFP": 63.5,
-    "gp": 34,
-    "fpg": 1.87
+    "totalFP": 84.5,
+    "gp": 38,
+    "fpg": 2.22
   },
   "mason marchment": {
     "name": "Mason Marchment",
     "pos": "LW",
     "nhlId": "8478975",
-    "totalFP": 98,
-    "gp": 45,
-    "fpg": 2.18
+    "totalFP": 106,
+    "gp": 50,
+    "fpg": 2.12
   },
   "dmitri voronkov": {
     "name": "Dmitri Voronkov",
     "pos": "LW",
     "nhlId": "8481716",
     "totalFP": 105.3,
-    "gp": 58,
-    "fpg": 1.81
+    "gp": 61,
+    "fpg": 1.73
   },
   "mathew barzal": {
     "name": "Mathew Barzal",
     "pos": "C,RW",
     "nhlId": "8478445",
-    "totalFP": 168.3,
-    "gp": 59,
-    "fpg": 2.85
+    "totalFP": 173.8,
+    "gp": 63,
+    "fpg": 2.76
   },
   "aliaksei protas": {
     "name": "Aliaksei Protas",
     "pos": "LW,RW",
     "nhlId": "8481656",
-    "totalFP": 136.5,
-    "gp": 59,
-    "fpg": 2.31
+    "totalFP": 142,
+    "gp": 61,
+    "fpg": 2.33
   },
   "zach werenski": {
     "name": "Zach Werenski",
     "pos": "D",
     "nhlId": "8478460",
-    "totalFP": 180,
-    "gp": 54,
-    "fpg": 3.33
+    "totalFP": 178,
+    "gp": 56,
+    "fpg": 3.18
   },
   "morgan rielly": {
     "name": "Morgan Rielly",
     "pos": "D",
     "nhlId": "8476853",
-    "totalFP": 67.5,
-    "gp": 57,
-    "fpg": 1.18
+    "totalFP": 69,
+    "gp": 61,
+    "fpg": 1.13
   },
   "bowen byram": {
     "name": "Bowen Byram",
     "pos": "D",
     "nhlId": "8481524",
-    "totalFP": 102.5,
-    "gp": 60,
-    "fpg": 1.71
+    "totalFP": 115.5,
+    "gp": 64,
+    "fpg": 1.8
   },
   "luke hughes": {
     "name": "Luke Hughes",
     "pos": "D",
     "nhlId": "8480192",
-    "totalFP": -1.8,
-    "gp": 13,
-    "fpg": -0.13
+    "totalFP": 3.3,
+    "gp": 16,
+    "fpg": 0.2
   },
   "kent johnson": {
     "name": "Kent Johnson",
     "pos": "C,LW,RW",
     "nhlId": "8482660",
-    "totalFP": 39,
-    "gp": 56,
-    "fpg": 0.7
+    "totalFP": 41,
+    "gp": 60,
+    "fpg": 0.68
   },
   "joel eriksson ek": {
     "name": "Joel Eriksson Ek",
     "pos": "C",
     "nhlId": "8478493",
-    "totalFP": 138.5,
-    "gp": 54,
-    "fpg": 2.56
+    "totalFP": 142.5,
+    "gp": 58,
+    "fpg": 2.46
   },
   "logan cooley": {
     "name": "Logan Cooley",
     "pos": "C",
     "nhlId": "8483431",
-    "totalFP": 87,
-    "gp": 31,
-    "fpg": 2.81
+    "totalFP": 98,
+    "gp": 36,
+    "fpg": 2.72
   },
-  "kirill kaprizov": {
-    "name": "Kirill Kaprizov",
-    "pos": "LW",
-    "nhlId": "8478864",
-    "totalFP": 226,
-    "gp": 60,
-    "fpg": 3.77
+  "martin necas": {
+    "name": "Martin Necas",
+    "pos": "RW",
+    "nhlId": "8480039",
+    "totalFP": 249,
+    "gp": 59,
+    "fpg": 4.22
   },
   "tyler seguin": {
     "name": "Tyler Seguin",
@@ -1838,17 +1846,17 @@
     "name": "Jordan Binnington",
     "pos": "G",
     "nhlId": "8476412",
-    "totalFP": 8.2,
-    "gp": 33,
-    "fpg": 0.25
+    "totalFP": 12.8,
+    "gp": 34,
+    "fpg": 0.38
   },
   "dan vladar": {
     "name": "Dan Vladar",
     "pos": "G",
     "nhlId": "8478435",
-    "totalFP": 90.9,
-    "gp": 35,
-    "fpg": 2.6
+    "totalFP": 94.8,
+    "gp": 39,
+    "fpg": 2.43
   },
   "pyotr kochetkov": {
     "name": "Pyotr Kochetkov",
@@ -1863,145 +1871,145 @@
     "name": "William Nylander",
     "pos": "C,RW",
     "nhlId": "8477939",
-    "totalFP": 148,
-    "gp": 43,
-    "fpg": 3.44
-  },
-  "nico hischier": {
-    "name": "Nico Hischier",
-    "pos": "C",
-    "nhlId": "8480002",
-    "totalFP": 122.8,
-    "gp": 60,
-    "fpg": 2.05
+    "totalFP": 155,
+    "gp": 47,
+    "fpg": 3.3
   },
   "jake neighbours": {
     "name": "Jake Neighbours",
     "pos": "LW,RW",
     "nhlId": "8482089",
-    "totalFP": 68.5,
-    "gp": 46,
-    "fpg": 1.49
+    "totalFP": 71.8,
+    "gp": 50,
+    "fpg": 1.44
   },
   "pierreluc dubois": {
     "name": "Pierre-Luc Dubois",
     "pos": "C,LW",
     "nhlId": "8479400",
-    "totalFP": 15.5,
-    "gp": 10,
-    "fpg": 1.55
+    "totalFP": 16.5,
+    "gp": 13,
+    "fpg": 1.27
   },
   "pavel dorofeyev": {
     "name": "Pavel Dorofeyev",
     "pos": "LW,RW",
     "nhlId": "8481604",
-    "totalFP": 151,
-    "gp": 59,
-    "fpg": 2.56
+    "totalFP": 162,
+    "gp": 64,
+    "fpg": 2.53
   },
   "mark stone": {
     "name": "Mark Stone",
     "pos": "RW",
     "nhlId": "8475913",
     "totalFP": 189.3,
-    "gp": 42,
-    "fpg": 4.51
+    "gp": 43,
+    "fpg": 4.4
   },
   "thomas harley": {
     "name": "Thomas Harley",
     "pos": "D",
     "nhlId": "8481581",
-    "totalFP": 72.5,
-    "gp": 47,
-    "fpg": 1.54
-  },
-  "brock faber": {
-    "name": "Brock Faber",
-    "pos": "D",
-    "nhlId": "8482122",
-    "totalFP": 125,
-    "gp": 60,
-    "fpg": 2.08
+    "totalFP": 77.5,
+    "gp": 51,
+    "fpg": 1.52
   },
   "shea theodore": {
     "name": "Shea Theodore",
     "pos": "D",
     "nhlId": "8477447",
-    "totalFP": 85,
-    "gp": 47,
-    "fpg": 1.81
+    "totalFP": 89,
+    "gp": 52,
+    "fpg": 1.71
   },
   "drew doughty": {
     "name": "Drew Doughty",
     "pos": "D",
     "nhlId": "8474563",
-    "totalFP": 41.5,
-    "gp": 50,
-    "fpg": 0.83
+    "totalFP": 42.5,
+    "gp": 53,
+    "fpg": 0.8
   },
   "anton lundell": {
     "name": "Anton Lundell",
     "pos": "C",
     "nhlId": "8482113",
-    "totalFP": 124,
-    "gp": 56,
-    "fpg": 2.21
+    "totalFP": 125.5,
+    "gp": 60,
+    "fpg": 2.09
   },
   "tomas hertl": {
     "name": "Tomas Hertl",
     "pos": "C,LW",
     "nhlId": "8476881",
-    "totalFP": 155.3,
-    "gp": 59,
-    "fpg": 2.63
+    "totalFP": 157.8,
+    "gp": 64,
+    "fpg": 2.46
   },
   "ivan barbashev": {
     "name": "Ivan Barbashev",
     "pos": "LW",
     "nhlId": "8477964",
-    "totalFP": 119.5,
-    "gp": 59,
-    "fpg": 2.03
+    "totalFP": 126.5,
+    "gp": 64,
+    "fpg": 1.98
   },
   "jackson lacombe": {
     "name": "Jackson LaCombe",
     "pos": "D",
     "nhlId": "8481605",
-    "totalFP": 98.5,
-    "gp": 58,
-    "fpg": 1.7
+    "totalFP": 111,
+    "gp": 63,
+    "fpg": 1.76
   },
   "brad marchand": {
     "name": "Brad Marchand",
     "pos": "LW,RW",
     "ir": true,
     "nhlId": "8473419",
-    "totalFP": 152,
-    "gp": 48,
-    "fpg": 3.17
+    "totalFP": 153,
+    "gp": 52,
+    "fpg": 2.94
   },
   "jesper wallstedt": {
     "name": "Jesper Wallstedt",
     "pos": "G",
     "nhlId": "8482661",
-    "totalFP": 101.5,
-    "gp": 25,
-    "fpg": 4.06
+    "totalFP": 105.3,
+    "gp": 26,
+    "fpg": 4.05
   },
   "jacob markstrom": {
     "name": "Jacob Markstrom",
     "pos": "G",
     "nhlId": "8474593",
-    "totalFP": 53.7,
-    "gp": 32,
-    "fpg": 1.68
+    "totalFP": 65.3,
+    "gp": 36,
+    "fpg": 1.81
   },
   "sergei bobrovsky": {
     "name": "Sergei Bobrovsky",
     "pos": "G",
     "nhlId": "8475683",
-    "totalFP": 70.4,
-    "gp": 41,
-    "fpg": 1.72
+    "totalFP": 75.3,
+    "gp": 44,
+    "fpg": 1.71
+  },
+  "charlie mcavoy": {
+    "name": "Charlie McAvoy",
+    "pos": "D",
+    "nhlId": "8479325",
+    "totalFP": 129,
+    "gp": 51,
+    "fpg": 2.53
+  },
+  "sean durzi": {
+    "name": "Sean Durzi",
+    "pos": "D",
+    "nhlId": "8480434",
+    "totalFP": 59.5,
+    "gp": 43,
+    "fpg": 1.38
   }
 }
