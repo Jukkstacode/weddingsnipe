@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let gmMap = new Map();
     let currentGMFilter = 'all';
     let currentSpicyFilter = false;
-    const CURRENT_WEEK_FALLBACK = 18;
+    const CURRENT_WEEK_FALLBACK = 20;
     
     // Initialize Firebase (using the existing configuration)
     const firebaseConfig = {
