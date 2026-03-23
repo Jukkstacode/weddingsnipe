@@ -463,6 +463,38 @@ body {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
+.bap-context-input label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.bap-context-input textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--border-radius-sm, 6px);
+    border: 1px solid var(--border-color-strong);
+    background: rgba(255,255,255,0.06);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 56px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    margin-bottom: 14px;
+}
+
+.bap-context-input textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: rgba(255,255,255,0.09);
+}
+
 .bap-btn {
     width: 100%;
     padding: 12px 20px;

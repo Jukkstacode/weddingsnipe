@@ -298,7 +298,7 @@ function makeMatchup(match, gmImageMap, roundLabel) {
   wrap.appendChild(divider);
   wrap.appendChild(slot2);
 
-  if (match.score1 !== undefined && match.score2 !== undefined) {
+  if (match.gm1 && match.gm2) {
     wrap.classList.add('matchup-clickable');
     wrap.addEventListener('click', () => selectMatchup(wrap, match, roundLabel));
   }
@@ -410,6 +410,7 @@ function makeChampionCol(gmImageMap) {
 
 let selectedMatchup = null;
 let bracketSnark = false;
+let bracketIsPreview = false;
 
 function selectMatchup(el, match, roundLabel) {
   document.querySelectorAll('.matchup-clickable').forEach(m => m.classList.remove('selected'));
@@ -421,9 +422,12 @@ function selectMatchup(el, match, roundLabel) {
     return;
   }
 
+  bracketIsPreview = match.score1 === undefined;
   el.classList.add('selected');
   selectedMatchup = { ...match, round: roundLabel };
   document.getElementById('bracketAnalyzeTitle').textContent = `${match.gm1} vs ${match.gm2}`;
+  document.getElementById('bracketAnalyzeBtn').textContent = bracketIsPreview ? 'Bimmbots v1 Preview' : 'Bimmbots v1 Analysis';
+  document.getElementById('bracketUserContext').value = '';
   document.getElementById('bracketReportContainer').style.display = 'none';
   panel.classList.add('visible');
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -509,14 +513,19 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('bracketLoading').style.display = 'flex';
     document.getElementById('bracketReportContainer').style.display = 'none';
 
+    const userContext = document.getElementById('bracketUserContext').value.trim();
+    const baseMessage = bracketIsPreview ? 'Preview this upcoming playoff matchup.' : 'Analyze this playoff matchup result.';
+    const message = userContext ? `${baseMessage} Additional context: ${userContext}` : baseMessage;
+
     try {
       const res = await fetch(`${API_URL}?requestType=chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: 'Analyze this playoff matchup result.',
+          message,
           matchupContext: selectedMatchup,
           snarkLevel: bracketSnark ? 'max' : 'low',
+          isPreview: bracketIsPreview,
         }),
       });
       const data = await res.json();

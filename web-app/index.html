@@ -38,7 +38,11 @@
                     <button class="bap-snark-btn" data-snark="on">Snark</button>
                 </div>
             </div>
-            <button class="bap-btn" id="bracketAnalyzeBtn">Bimmbots Analysis</button>
+            <div class="bap-context-input">
+                <label for="bracketUserContext">Additional context (optional)</label>
+                <textarea id="bracketUserContext" placeholder="e.g. Bimm's goalies have been on fire, Andy is riding Kucherov..."></textarea>
+            </div>
+            <button class="bap-btn" id="bracketAnalyzeBtn">Bimmbots v1 Analysis</button>
             <div class="tc-loading" id="bracketLoading" style="display:none;">
                 <div class="tc-spinner"></div>
                 Analyzing matchup...
