@@ -1,13 +1,16 @@
 // bracket.js — Bathouse Playoffs 2026 bracket renderer
 
+const API_URL = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
+
 // ── Bracket data (manually updated as rounds are played) ──────────────────
 // winner: null = TBD, 1 = top team wins, 2 = bottom team wins
+// score1/score2: final fantasy points for the week (undefined if not yet played)
 const BRACKET = {
   quarterfinals: [
-    { seed1: 1, gm1: 'Andy',  team1: 'Birth2Girth',              seed2: 8, gm2: 'Dan',   team2: 'Mack Miller',         winner: null },
-    { seed1: 2, gm1: 'Bimm', team1: 'Killin me Scheifle',        seed2: 7, gm2: 'Hordo', team2: 'Travis Fan Club',     winner: null },
-    { seed1: 3, gm1: 'Colin', team1: 'The Real West Coast Chat', seed2: 6, gm2: 'Adam',  team2: 'SpudKick',            winner: null },
-    { seed1: 4, gm1: 'Ryan',  team1: 'Monkey Butt',              seed2: 5, gm2: 'Mike',  team2: 'Shit The Driveway',   winner: null },
+    { seed1: 1, gm1: 'Andy',  team1: 'Birth2Girth',              seed2: 8, gm2: 'Dan',   team2: 'Mack Miller',         winner: 1, score1: 150.05, score2: 94.00 },
+    { seed1: 2, gm1: 'Bimm',  team1: 'Killin me Scheifle',       seed2: 7, gm2: 'Hordo', team2: 'Travis Fan Club',     winner: 1, score1: 173.40, score2: 103.65 },
+    { seed1: 3, gm1: 'Colin', team1: 'The Real West Coast Chat', seed2: 6, gm2: 'Adam',  team2: 'SpudKick',            winner: 2, score1: 109.10, score2: 119.30 },
+    { seed1: 4, gm1: 'Ryan',  team1: 'Monkey Butt',              seed2: 5, gm2: 'Mike',  team2: 'Shit The Driveway',   winner: 2, score1: 144.45, score2: 151.90 },
   ],
   // Set winner to the gm name string once QF resolves
   semifinals: [
@@ -62,7 +65,7 @@ function deriveAdvancing() {
 
 // ── DOM helpers ───────────────────────────────────────────────────────────
 
-function makeSlot(gm, team, seed, state, gmImageMap) {
+function makeSlot(gm, team, seed, state, gmImageMap, score) {
   // state: 'normal' | 'winner' | 'eliminated' | 'tbd'
   const slot = document.createElement('div');
   slot.className = 'team-slot ' + state;
@@ -113,15 +116,22 @@ function makeSlot(gm, team, seed, state, gmImageMap) {
   slot.appendChild(badge);
   slot.appendChild(img);
   slot.appendChild(text);
+
+  if (score !== undefined) {
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'slot-score' + (state === 'winner' ? ' slot-score-winner' : '');
+    scoreEl.textContent = score.toFixed(2);
+    slot.appendChild(scoreEl);
+  }
+
   return slot;
 }
 
-function makeMatchup(match, gmImageMap) {
+function makeMatchup(match, gmImageMap, roundLabel) {
   const wrap = document.createElement('div');
   wrap.className = 'matchup';
 
   function slotState(which) {
-    // which = 1 or 2
     if (!match.winner) return match['gm' + which] ? 'normal' : 'tbd';
     if (match.winner === which) return 'winner';
     return 'eliminated';
@@ -130,15 +140,21 @@ function makeMatchup(match, gmImageMap) {
   const state1 = slotState(1);
   const state2 = slotState(2);
 
-  const slot1 = makeSlot(match.gm1, match.team1, match.seed1, state1, gmImageMap);
+  const slot1 = makeSlot(match.gm1, match.team1, match.seed1, state1, gmImageMap, match.score1);
   const divider = document.createElement('div');
   divider.className = 'matchup-divider';
   divider.innerHTML = '<span class="matchup-divider-line"></span><span class="matchup-divider-vs">VS</span><span class="matchup-divider-line"></span>';
-  const slot2 = makeSlot(match.gm2, match.team2, match.seed2, state2, gmImageMap);
+  const slot2 = makeSlot(match.gm2, match.team2, match.seed2, state2, gmImageMap, match.score2);
 
   wrap.appendChild(slot1);
   wrap.appendChild(divider);
   wrap.appendChild(slot2);
+
+  if (match.score1 !== undefined && match.score2 !== undefined) {
+    wrap.classList.add('matchup-clickable');
+    wrap.addEventListener('click', () => selectMatchup(wrap, match, roundLabel));
+  }
+
   return wrap;
 }
 
@@ -155,7 +171,7 @@ function makeRound(label, matches, gmImageMap) {
   matchesWrap.className = 'round-matches';
 
   matches.forEach(m => {
-    matchesWrap.appendChild(makeMatchup(m, gmImageMap));
+    matchesWrap.appendChild(makeMatchup(m, gmImageMap, label));
   });
 
   col.appendChild(matchesWrap);
@@ -242,6 +258,41 @@ function makeChampionCol(gmImageMap) {
   return col;
 }
 
+// ── Analysis panel ────────────────────────────────────────────────────────
+
+let selectedMatchup = null;
+let bracketSnark = false;
+
+function selectMatchup(el, match, roundLabel) {
+  document.querySelectorAll('.matchup-clickable').forEach(m => m.classList.remove('selected'));
+
+  const panel = document.getElementById('bracketAnalyzePanel');
+  if (selectedMatchup === match) {
+    selectedMatchup = null;
+    panel.classList.remove('visible');
+    return;
+  }
+
+  el.classList.add('selected');
+  selectedMatchup = { ...match, round: roundLabel };
+  document.getElementById('bracketAnalyzeTitle').textContent = `${match.gm1} vs ${match.gm2}`;
+  document.getElementById('bracketReportContainer').style.display = 'none';
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function formatReport(text) {
+  return text
+    .replace(/## (.+)/g,      '<h2>$1</h2>')
+    .replace(/### (.+)/g,     '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,    '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g,   '<br>')
+    .replace(/^/,     '<p>')
+    .replace(/$/,     '</p>');
+}
+
 // ── Main render ───────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -292,4 +343,43 @@ document.addEventListener('DOMContentLoaded', async function () {
   bracket.appendChild(makeChampionCol(gmImageMap));
 
   container.appendChild(bracket);
+
+  // ── Analysis panel wiring ──
+  document.querySelectorAll('.bap-snark-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.bap-snark-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      bracketSnark = btn.dataset.snark === 'on';
+    });
+  });
+
+  document.getElementById('bracketAnalyzeBtn').addEventListener('click', async () => {
+    if (!selectedMatchup) return;
+
+    const btn = document.getElementById('bracketAnalyzeBtn');
+    btn.disabled = true;
+    document.getElementById('bracketLoading').style.display = 'flex';
+    document.getElementById('bracketReportContainer').style.display = 'none';
+
+    try {
+      const res = await fetch(`${API_URL}?requestType=chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Analyze this playoff matchup result.',
+          matchupContext: selectedMatchup,
+          snarkLevel: bracketSnark ? 'max' : 'low',
+        }),
+      });
+      const data = await res.json();
+      document.getElementById('bracketReportContent').innerHTML = formatReport(data.reply);
+      document.getElementById('bracketReportContainer').style.display = 'block';
+    } catch {
+      document.getElementById('bracketReportContent').innerHTML = '<p>Error: Could not generate analysis. Please try again.</p>';
+      document.getElementById('bracketReportContainer').style.display = 'block';
+    }
+
+    document.getElementById('bracketLoading').style.display = 'none';
+    btn.disabled = false;
+  });
 });

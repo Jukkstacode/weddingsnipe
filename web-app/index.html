@@ -29,6 +29,24 @@
         <div class="bracket-scroll">
             <div id="bracket-container"></div>
         </div>
+
+        <div class="bap-panel" id="bracketAnalyzePanel">
+            <div class="bap-header">
+                <span class="bap-title" id="bracketAnalyzeTitle"></span>
+                <div class="bap-snark-toggle">
+                    <button class="bap-snark-btn active" data-snark="off">No Snark</button>
+                    <button class="bap-snark-btn" data-snark="on">Snark</button>
+                </div>
+            </div>
+            <button class="bap-btn" id="bracketAnalyzeBtn">Bimmbots Analysis</button>
+            <div class="tc-loading" id="bracketLoading" style="display:none;">
+                <div class="tc-spinner"></div>
+                Analyzing matchup...
+            </div>
+            <div class="tc-report" id="bracketReportContainer" style="display:none;">
+                <div class="tc-report-content" id="bracketReportContent"></div>
+            </div>
+        </div>
     </div>
 
     <script src="nav.js"></script>

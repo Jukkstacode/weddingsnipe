@@ -325,8 +325,36 @@ async function handleMatchupSidebetAssignment(req, res) {
 
 // --- Handle Gemini chat requests ---
 async function handleChatRequest(req, res) {
-  const { message, history, tradeContext, snarkLevel } = req.body;
+  const { message, history, tradeContext, matchupContext, snarkLevel } = req.body;
 
+  // ── Playoff matchup analysis ──────────────────────────────────────────────
+  if (matchupContext) {
+    const toneRules = snarkLevel === 'max'
+      ? `Be brutally funny — 2 to 3 sentences max. Roast the losing GM without mercy. Be creative and mean, not just generic.`
+      : `Be informative and sharp — 2 to 3 sentences. Highlight the score, the margin, and what it means for each GM's playoff run.`;
+
+    const systemPrompt = `You are a fantasy hockey playoff analyst for the Bathouse Hockey League.
+League Scoring - Skaters: G=3, A=2, +/-=1, PIM=0.25, PPP=+1, SHP=+1, GWG=+1.5
+League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
+
+${toneRules}
+Regular season final standings: 1st-Andy, 2nd-Bimm, 3rd-Colin, 4th-Ryan, 5th-Mike, 6th-Adam, 7th-Hordo, 8th-Dan.
+Analyze the playoff matchup result below. Use "FP" for fantasy points. Never show math. The score1/score2 fields are the final weekly FP totals. winner: 1 means gm1 won, winner: 2 means gm2 won.
+
+Matchup:
+${JSON.stringify(matchupContext, null, 2)}`;
+
+    const chat = ai.chats.create({
+      model: 'gemini-2.5-flash',
+      config: { systemInstruction: systemPrompt },
+      history: [],
+    });
+    const response = await chat.sendMessage({ message });
+    res.status(200).send({ reply: response.text });
+    return;
+  }
+
+  // ── Trade analysis ────────────────────────────────────────────────────────
   const toneRules = snarkLevel === 'max'
     ? `Be brutally short — 1 to 2 sentences maximum. Identify the GM who lost the trade and roast them mercilessly. Be mean, judgemental, and dismissive. If you think it was fair, pick one GM at random and insult them anyway. No mercy, no balance, no positivity. If the trade has Adam in it, make reference to a relevant Simpsons quote.`
     : snarkLevel === 'medium'
