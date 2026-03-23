@@ -325,22 +325,25 @@ async function handleMatchupSidebetAssignment(req, res) {
 
 // --- Handle Gemini chat requests ---
 async function handleChatRequest(req, res) {
-  const { message, history, tradeContext, systemInstructions } = req.body;
+  const { message, history, tradeContext, snarkLevel } = req.body;
+
+  const toneRules = snarkLevel === 'max'
+    ? `Be brutally short — 1 to 2 sentences maximum. Identify the GM who lost the trade and roast them mercilessly. Be mean, judgemental, and dismissive. If you think it was fair, pick one GM at random and insult them anyway. No mercy, no balance, no positivity.`
+    : snarkLevel === 'medium'
+    ? `Keep responses to 3-4 sentences. Add a few playful jabs or light digs at the GM who got the worse end of the deal. Be witty and a little mean but still informative.`
+    : `Keep responses short and concise — no more than 2-3 sentences. Format the response as analysis with multiple lines. Don't put everything in one large paragraph.`;
 
   const systemPrompt = `You are a fantasy hockey trade analyzer.
 League Scoring - Skaters: G=3, A=2, +/-=1, PIM=0.25, PPP=+1, SHP=+1, GWG=+1.5
 League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
 
- Keep responses short and concise — no more than 2-3 sentences.
- Never show point calculations or math breakdowns in your response.
- Format the response so it looks like analysis, with multiple lines. 
- Don't put everything in one large paragraph
- If a trade being analyzed includes "Mike" always include an asterisk next to one of hte players Mike traded and include a footnote fact about that player at the end of the body text. The asterisk should appear next to the player Mike traded.
- When analyzing trades, consider where a GM was in the standings. If a GM was low in the standings, consider that they wanted picks more, which means if they got high picks that's good for them, however GMs in the playoffs wanted players that get points. GMs higher in the standings often did better if the players they're trading away would get them more points. 
+${toneRules}
+Never show point calculations or math breakdowns in your response.
+If a trade being analyzed includes "Mike" always include an asterisk next to one of the players Mike traded and include a footnote fact about that player at the end of the body text. The asterisk should appear next to the player Mike traded.
+When analyzing trades, consider where a GM was in the standings. If a GM was low in the standings, consider that they wanted picks more, which means if they got high picks that's good for them, however GMs in the playoffs wanted players that get points. GMs higher in the standings often did better if the players they're trading away would get them more points.
+IMPORTANT: Base your entire analysis on the totalFP and fpPerGame values provided in the trade context JSON. These are the ground truth for each player's fantasy production this season. Do not use your own knowledge or assumptions about player value — the numbers provided are authoritative. If a player has a higher fpPerGame in the trade context, treat them as the better fantasy performer regardless of their real-world reputation.
 
-
-${tradeContext ? 'Trade Context:\n' + JSON.stringify(tradeContext, null, 2) : ''}
-${systemInstructions || ''}`;
+${tradeContext ? 'Trade Context:\n' + JSON.stringify(tradeContext, null, 2) : ''}`;
 
   const chat = ai.chats.create({
     model: "gemini-2.5-flash",
