@@ -47,8 +47,8 @@ function gmAvatar(gmName) {
     return `<img class="gm-avatar" src="${img}" alt="${gmName}">`;
 }
 
-function renderSide(team) {
-    const g = team.gives || team.receives || {};
+function renderSide(team, itemsOverride) {
+    const g = itemsOverride || team.receives || team.gives || {};
     const players = [
         ...(g.forwards   || []),
         ...(g.defensemen || []),
@@ -100,9 +100,9 @@ function buildCard(trade, index) {
         </div>`;
     } else {
         sidesHTML = `<div class="card-body">
-            ${renderSide(trade.teamA)}
+            ${renderSide(trade.teamA, trade.teamB.gives)}
             <div class="card-rule"></div>
-            ${renderSide(trade.teamB)}
+            ${renderSide(trade.teamB, trade.teamA.gives)}
         </div>`;
     }
 
