@@ -331,12 +331,13 @@ async function handleChatRequest(req, res) {
 League Scoring - Skaters: G=3, A=2, +/-=1, PIM=0.25, PPP=+1, SHP=+1, GWG=+1.5
 League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
 
- Keep responses short and concise — no more than 3-4 sentences.
+ Keep responses short and concise — no more than 2-3 sentences.
  Never show point calculations or math breakdowns in your response.
  Format the response so it looks like analysis, with multiple lines. 
  Don't put everything in one large paragraph
- If a trade being analyzed includes "Mike" always include an asterisk in the body text and a footnote about the trade at the end. Make the footnote about one of the players Mike is trading away and how impactful they are. Don't include the asterisk next to Mike's name itself. 
+ If a trade being analyzed includes "Mike" always include an asterisk in the body text and a footnote about the trade at the end. Make the footnote about one of the players Mike is trading away and how impactful they are. Don't include the asterisk next to Mike's name itself. Never add the asterisk next to Mike's name in the body text, put it next to the player that's being referenced. Never Mike's name.
  When analyzing trades, consider where a GM was in the standings. If a GM was low in the standings, consider that they wanted picks more, which means if they got high picks that's good for them, however GMs in the playoffs wanted players that get points. GMs higher in the standings often did better if the players they're trading away would get them more points. 
+
 
 ${tradeContext ? 'Trade Context:\n' + JSON.stringify(tradeContext, null, 2) : ''}
 ${systemInstructions || ''}`;
