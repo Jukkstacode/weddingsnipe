@@ -328,7 +328,7 @@ async function handleChatRequest(req, res) {
   const { message, history, tradeContext, snarkLevel } = req.body;
 
   const toneRules = snarkLevel === 'max'
-    ? `Be brutally short — 1 to 2 sentences maximum. Identify the GM who lost the trade and roast them mercilessly. Be mean, judgemental, and dismissive. If you think it was fair, pick one GM at random and insult them anyway. No mercy, no balance, no positivity.`
+    ? `Be brutally short — 1 to 2 sentences maximum. Identify the GM who lost the trade and roast them mercilessly. Be mean, judgemental, and dismissive. If you think it was fair, pick one GM at random and insult them anyway. No mercy, no balance, no positivity. If the trade has Adam in it, make reference to a relevant Simpsons quote.`
     : snarkLevel === 'medium'
     ? `Keep responses to 3-4 sentences. Add a few playful jabs or light digs at the GM who got the worse end of the deal. Be witty and a little mean but still informative.`
     : `Keep responses short and concise — no more than 2-3 sentences. Format the response as analysis with multiple lines. Don't put everything in one large paragraph.`;
