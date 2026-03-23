@@ -14,13 +14,8 @@
     <title>Bathouse Hockey League</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="shared.css">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="bracket.css">
     <link rel="stylesheet" href="news-scroll.css">
-    <link rel="stylesheet" href="truth.css">
-
-    <!-- Firebase Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div id="nav-placeholder"></div>
@@ -28,29 +23,16 @@
         <div class="news-scroll-content" id="news-scroll-content"></div>
     </div>
 
-    <div class="gm-teams-wrapper">
-        <h1 class="gm-teams-title">League Standings</h1>
-        
-        <!-- Quick Links Buttons -->
-        <div class="quick-links">
-            <a href="https://hockey.fantasysports.yahoo.com/hockey/8655/matchup" class="quick-link-btn" target="_blank" rel="noopener noreferrer">
-                Your Matchup
-            </a>
-            <a href="/contracts.html" class="quick-link-btn">
-                Contracts
-            </a>
-            <a href="over-time/" class="quick-link-btn">
-                Charts
-            </a>
-        </div>
+    <div class="bracket-page">
+        <h1 class="bracket-title">Bathouse Playoffs 2026</h1>
 
-        <div class="gm-teams-grid" id="gm-teams-grid">
-            <!-- GM cards will be dynamically generated here -->
+        <div class="bracket-scroll">
+            <div id="bracket-container"></div>
         </div>
     </div>
 
     <script src="nav.js"></script>
-    <script src="home.js"></script>
     <script src="news-scroll.js"></script>
+    <script src="bracket.js"></script>
 </body>
 </html>
