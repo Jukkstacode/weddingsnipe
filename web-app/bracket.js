@@ -196,12 +196,12 @@ function deriveAdvancing() {
 
   const w = qf.map(getWinner); // [qf0winner, qf1winner, qf2winner, qf3winner]
 
-  // Semi 0: winner of QF0 vs winner of QF1
+  // Semi 0: winner of QF0 (Andy) vs winner of QF2 (Adam)
   if (w[0]) { BRACKET.semifinals[0].gm1 = w[0].gm; BRACKET.semifinals[0].team1 = w[0].team; BRACKET.semifinals[0].seed1 = w[0].seed; }
-  if (w[1]) { BRACKET.semifinals[0].gm2 = w[1].gm; BRACKET.semifinals[0].team2 = w[1].team; BRACKET.semifinals[0].seed2 = w[1].seed; }
+  if (w[2]) { BRACKET.semifinals[0].gm2 = w[2].gm; BRACKET.semifinals[0].team2 = w[2].team; BRACKET.semifinals[0].seed2 = w[2].seed; }
 
-  // Semi 1: winner of QF2 vs winner of QF3
-  if (w[2]) { BRACKET.semifinals[1].gm1 = w[2].gm; BRACKET.semifinals[1].team1 = w[2].team; BRACKET.semifinals[1].seed1 = w[2].seed; }
+  // Semi 1: winner of QF1 (Bimm) vs winner of QF3 (Mike)
+  if (w[1]) { BRACKET.semifinals[1].gm1 = w[1].gm; BRACKET.semifinals[1].team1 = w[1].team; BRACKET.semifinals[1].seed1 = w[1].seed; }
   if (w[3]) { BRACKET.semifinals[1].gm2 = w[3].gm; BRACKET.semifinals[1].team2 = w[3].team; BRACKET.semifinals[1].seed2 = w[3].seed; }
 
   // Final
