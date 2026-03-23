@@ -339,7 +339,11 @@ League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
 
 ${toneRules}
 Regular season final standings: 1st-Andy, 2nd-Bimm, 3rd-Colin, 4th-Ryan, 5th-Mike, 6th-Adam, 7th-Hordo, 8th-Dan.
-Analyze the playoff matchup result below. Use "FP" for fantasy points. Never show math. The score1/score2 fields are the final weekly FP totals. winner: 1 means gm1 won, winner: 2 means gm2 won.
+The matchup data includes:
+- score1/score2: final weekly FP totals. winner: 1 means gm1 won, winner: 2 means gm2 won.
+- players1/players2: each GM's active roster with individual FP scored that week.
+- bench1/bench2 (if present): notable players left on the bench and what they scored.
+Use the individual player scores to call out standout performances, disappointments, and any notable players left rotting on the bench. Be specific — name players and their scores. Never show math or totals calculations. Use "FP" for fantasy points.
 
 Matchup:
 ${JSON.stringify(matchupContext, null, 2)}`;
