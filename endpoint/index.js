@@ -329,30 +329,11 @@ async function handleChatRequest(req, res) {
 
   // ── Playoff matchup analysis ──────────────────────────────────────────────
   if (matchupContext) {
-    const isPreview = !!req.body.isPreview;
-    let systemPrompt;
+    const toneRules = snarkLevel === 'max'
+      ? `Be brutally funny — 2 to 3 sentences max. Roast the losing GM without mercy. Be creative and mean, not just generic.`
+      : `Be informative and sharp — 2 to 3 sentences. Highlight the score, the margin, and what it means for each GM's playoff run.`;
 
-    if (isPreview) {
-      const toneRules = snarkLevel === 'max'
-        ? `Be sarcastically confident. Pick a winner and trash-talk the loser-to-be mercilessly. 2-3 sentences max.`
-        : `Give a sharp, entertaining preview. Pick who you think will win and briefly explain why. 2-3 sentences.`;
-
-      systemPrompt = `You are a fantasy hockey playoff analyst for the Bathouse Hockey League previewing an UPCOMING matchup — no scores have been played yet.
-League Scoring - Skaters: G=3, A=2, +/-=1, PIM=0.25, PPP=+1, SHP=+1, GWG=+1.5
-League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
-
-${toneRules}
-Regular season final standings: 1st-Andy, 2nd-Bimm, 3rd-Colin, 4th-Ryan, 5th-Mike, 6th-Adam, 7th-Hordo, 8th-Dan.
-Use seedings, regular season performance, and any additional context in the message to make your prediction. Be specific and entertaining. Use "FP" for fantasy points. Never show math.
-
-Matchup:
-${JSON.stringify(matchupContext, null, 2)}`;
-    } else {
-      const toneRules = snarkLevel === 'max'
-        ? `Be brutally funny — 2 to 3 sentences max. Roast the losing GM without mercy. Be creative and mean, not just generic.`
-        : `Be informative and sharp — 2 to 3 sentences. Highlight the score, the margin, and what it means for each GM's playoff run.`;
-
-      systemPrompt = `You are a fantasy hockey playoff analyst for the Bathouse Hockey League.
+    const systemPrompt = `You are a fantasy hockey playoff analyst for the Bathouse Hockey League.
 League Scoring - Skaters: G=3, A=2, +/-=1, PIM=0.25, PPP=+1, SHP=+1, GWG=+1.5
 League Scoring - Goalies: W=3, GA=-1.5, SV=0.2, SO=6
 
@@ -363,7 +344,6 @@ Use individual player scores to call out standout performances and disappointmen
 
 Matchup:
 ${JSON.stringify(matchupContext, null, 2)}`;
-    }
 
     const chat = ai.chats.create({
       model: 'gemini-2.5-flash',
