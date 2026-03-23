@@ -426,7 +426,7 @@ function selectMatchup(el, match, roundLabel) {
   el.classList.add('selected');
   selectedMatchup = { ...match, round: roundLabel };
   document.getElementById('bracketAnalyzeTitle').textContent = `${match.gm1} vs ${match.gm2}`;
-  document.getElementById('bracketAnalyzeBtn').textContent = bracketIsPreview ? 'Bimmbots v1 Preview' : 'Bimmbots v1 Analysis';
+  document.getElementById('bracketAnalyzeBtn').textContent = bracketIsPreview ? 'Bimmbot v1.0 Preview' : 'Bimmbot v1.0 Analysis';
   document.getElementById('bracketUserContext').value = '';
   document.getElementById('bracketReportContainer').style.display = 'none';
   panel.classList.add('visible');
