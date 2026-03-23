@@ -15,17 +15,15 @@
     <div class="analyzer-container">
         <h1>Trade Analyzer</h1>
 
-        <div class="analyzer-controls">
-            <div class="trade-selector">
-                <label for="trade-select">Select a trade:</label>
-                <select id="trade-select">
-                    <option value="">-- Choose a trade --</option>
-                </select>
-            </div>
+        <div class="trade-selector">
+            <label>Select a trade:</label>
+            <div id="trade-list" class="trade-list"></div>
+        </div>
 
+        <div class="analyzer-controls">
             <div class="context-input">
                 <label for="user-context">Additional context (optional):</label>
-                <textarea id="user-context" placeholder="e.g. Jordan needs a goalie badly, Chris is in win-now mode..." disabled></textarea>
+                <textarea id="user-context" placeholder="e.g. Jordan needs a goalie badly, Bimm is in win-now mode..." disabled></textarea>
             </div>
 
             <button id="analyze-btn" disabled>Analyze Trade</button>

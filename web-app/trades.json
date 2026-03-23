@@ -1,72 +1,560 @@
-[                                                                                                   
-      {                                                                                               
-          "name": "Jordan / Mike - Mar 4",                                                            
-          "date": "2026-03-04",                                                                       
-          "teamA": {                                                                                  
-              "gm": "Jordan",
-              "team": "It's Jibbers!",
-              "gives": {
-                  "forwards": [
-                      { "name": "Nick Schmaltz", "position": "C,RW", "nhlTeam": "UTA",
-  "preSeasonFantasyPts": 152, "rostered": "84%" }
-                  ],
-                  "goalies": [
-                      { "name": "Jeremy Swayman", "position": "G", "nhlTeam": "BOS",
-  "preSeasonFantasyPts": 107, "rostered": "91%" }
-                  ],
-                  "draftPicks": ["2026 Round 7", "2026 Round 9"]
-              }
-          },
-          "teamB": {
-              "gm": "Mike",
-              "team": "Shit The Driveway",
-              "gives": {
-                  "forwards": [
-                      { "name": "Blake Coleman", "position": "C,LW,RW", "nhlTeam": "CGY",
-  "preSeasonFantasyPts": 220, "rostered": "23%" }
-                  ],
-                  "goalies": [
-                      { "name": "Casey DeSmith", "position": "G", "nhlTeam": "DAL",
-  "preSeasonFantasyPts": 259, "rostered": "31%" }
-                  ],
-                  "draftPicks": ["2026 Round 2", "2026 Round 4"]
-              }
-          }
-      },
-      {
-          "name": "Chris / Charlie - Mar 4",
-          "date": "2026-03-04",
-          "teamA": {
-              "gm": "Chris Bimm",
-              "team": "Killin me Scheifle",
-              "gives": {
-                  "forwards": [
-                      { "name": "Carter Verhaeghe", "position": "LW", "nhlTeam": "FLA",
-  "preSeasonFantasyPts": 149, "rostered": "62%" },
-                      { "name": "Pavel Buchnevich", "position": "C,LW,RW", "nhlTeam": "STL", "salary":
-   2.0, "preSeasonFantasyPts": 205, "rostered": "37%" },
-                      { "name": "Tage Thompson", "position": "C,RW", "nhlTeam": "BUF", "salary": 1.0,
-  "preSeasonFantasyPts": 39, "rostered": "99%" }
-                  ],
-                  "draftPicks": ["2026 Round 2"]
-              }
-          },
-          "teamB": {
-              "gm": "Charlie",
-              "team": "Medium Chuck",
-              "gives": {
-                  "forwards": [
-                      { "name": "Brandon Hagel", "position": "LW,RW", "nhlTeam": "TB", "salary": 1.0,
-  "preSeasonFantasyPts": 53, "rostered": "98%" },
-                      { "name": "Drake Batherson", "position": "LW,RW", "nhlTeam": "OTT",
-  "preSeasonFantasyPts": 123, "rostered": "87%" }
-                  ],
-                  "goalies": [
-                      { "name": "John Gibson", "position": "G", "nhlTeam": "DET",
-  "preSeasonFantasyPts": 98, "rostered": "81%" }
-                  ],
-                  "draftPicks": ["2026 Round 6"]
-              }
-          }
+[
+  {
+    "name": "Adam vs Mike",
+    "date": "2026-03-04",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Adam", "team": "SpudKick",
+      "gives": {
+        "defensemen": [
+          { "name": "Jakob Chychrun", "position": "D", "nhlTeam": "WSH", "totalFP": 172.8, "fpPerGame": 2.88, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 6"]
       }
-  ]
+    },
+    "teamB": {
+      "gm": "Mike", "team": "Shit The Driveway",
+      "gives": {
+        "defensemen": [
+          { "name": "Samuel Girard", "position": "D", "nhlTeam": "PIT", "totalFP": 44.3, "fpPerGame": 1.05, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 1"]
+      }
+    }
+  },
+  {
+    "name": "Hordo vs Mike",
+    "date": "2026-03-04",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Hordo", "team": "Travis Fan Club",
+      "gives": {
+        "forwards": [
+          { "name": "Kirill Kaprizov", "position": "LW", "nhlTeam": "MIN", "totalFP": 226.0, "fpPerGame": 3.77, "contract": "1yr" }
+        ]
+      }
+    },
+    "teamB": {
+      "gm": "Mike", "team": "Shit The Driveway",
+      "gives": {
+        "forwards": [
+          { "name": "Martin Necas", "position": "RW", "nhlTeam": "COL", "totalFP": 218.0, "fpPerGame": 3.96, "contract": "1yr" }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Marinos vs Colin",
+    "date": "2026-03-05",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Marinos", "team": "Murricle on Ice",
+      "gives": {
+        "forwards": [
+          { "name": "Nick Suzuki", "position": "C", "nhlTeam": "MTL", "totalFP": 219.0, "fpPerGame": 3.71, "contract": "1yr" }
+        ]
+      }
+    },
+    "teamB": {
+      "gm": "Colin", "team": "The Real West Coast Chat",
+      "gives": {
+        "forwards": [
+          { "name": "Tim Stutzle", "position": "C,LW", "nhlTeam": "OTT", "totalFP": 197.3, "fpPerGame": 3.34, "contract": "1yr" }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Bimm vs Charlie",
+    "date": "2026-03-06",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Bimm", "team": "Killin me Scheifle",
+      "gives": {
+        "forwards": [
+          { "name": "Carter Verhaeghe", "position": "LW", "nhlTeam": "FLA", "totalFP": 115.0, "fpPerGame": 1.98, "contract": null },
+          { "name": "Pavel Buchnevich", "position": "C,LW,RW", "nhlTeam": "STL", "totalFP": 90.0, "fpPerGame": 1.53, "contract": "2yr" },
+          { "name": "Tage Thompson", "position": "C,RW", "nhlTeam": "BUF", "totalFP": 180.3, "fpPerGame": 3.00, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 2"]
+      }
+    },
+    "teamB": {
+      "gm": "Charlie", "team": "Medium Chuck",
+      "gives": {
+        "forwards": [
+          { "name": "Brandon Hagel", "position": "LW,RW", "nhlTeam": "TBL", "totalFP": 194.3, "fpPerGame": 3.67, "contract": "1yr" },
+          { "name": "Drake Batherson", "position": "LW,RW", "nhlTeam": "OTT", "totalFP": 149.8, "fpPerGame": 2.67, "contract": null }
+        ],
+        "goalies": [
+          { "name": "John Gibson", "position": "G", "nhlTeam": "DET", "totalFP": 132.5, "fpPerGame": 3.49, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 6"]
+      }
+    }
+  },
+  {
+    "name": "Bimm vs Dan",
+    "date": "2026-03-06",
+    "rfa_flagged": true,
+    "rfa_note": "Bimm sent Larkin (1yr RFA) but received no 1yr player back",
+    "teamA": {
+      "gm": "Bimm", "team": "Killin me Scheifle",
+      "gives": {
+        "forwards": [
+          { "name": "Dylan Larkin", "position": "C", "nhlTeam": "DET", "totalFP": 183.5, "fpPerGame": 3.06, "contract": "1yr" }
+        ],
+        "defensemen": [
+          { "name": "Nikita Zadorov", "position": "D", "nhlTeam": "BOS", "totalFP": null, "fpPerGame": 1.49, "contract": null }
+        ]
+      }
+    },
+    "teamB": {
+      "gm": "Dan", "team": "Mack Miller",
+      "gives": {
+        "forwards": [
+          { "name": "Juraj Slafkovsky", "position": "LW,RW", "nhlTeam": "MTL", "totalFP": 150.0, "fpPerGame": 2.54, "contract": null }
+        ],
+        "defensemen": [
+          { "name": "Darren Raddysh", "position": "D", "nhlTeam": "TBL", "totalFP": 180.3, "fpPerGame": 3.47, "contract": null }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Bimm vs Jordan",
+    "date": "2026-03-06",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Bimm", "team": "Killin me Scheifle",
+      "gives": {
+        "forwards": [
+          { "name": "Alex Newhook", "position": "C,LW", "nhlTeam": "MTL", "totalFP": null, "fpPerGame": 2.55, "contract": null },
+          { "name": "Lawson Crouse", "position": "LW,RW", "nhlTeam": "UTA", "totalFP": 109.5, "fpPerGame": 1.89, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 1", "2026 Round 5"]
+      }
+    },
+    "teamB": {
+      "gm": "Jordan", "team": "It's Jibbers!",
+      "gives": {
+        "forwards": [
+          { "name": "Bo Horvat", "position": "C", "nhlTeam": "NYI", "totalFP": 145.5, "fpPerGame": 3.16, "contract": null },
+          { "name": "Gabriel Vilardi", "position": "C,RW", "nhlTeam": "WPG", "totalFP": 149.5, "fpPerGame": 2.58, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 6", "2026 Round 8"]
+      }
+    }
+  },
+  {
+    "name": "Bimm vs Dave",
+    "date": "2026-03-06",
+    "rfa_flagged": true,
+    "rfa_note": "Bimm sent Scheifele (1yr RFA) but received no 1yr player back",
+    "teamA": {
+      "gm": "Bimm", "team": "Killin me Scheifle",
+      "gives": {
+        "forwards": [
+          { "name": "Mark Scheifele", "position": "C", "nhlTeam": "WPG", "totalFP": 196.5, "fpPerGame": 3.39, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 4"]
+      }
+    },
+    "teamB": {
+      "gm": "Dave", "team": "Tiny Muscles Big Hustle",
+      "gives": {
+        "goalies": [
+          { "name": "Brandon Bussi", "position": "G", "nhlTeam": "CAR", "totalFP": 108.7, "fpPerGame": 3.88, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 1"]
+      }
+    }
+  },
+  {
+    "name": "Dan vs Dave",
+    "date": "2026-03-06",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Dan", "team": "Mack Miller",
+      "gives": {
+        "goalies": [
+          { "name": "Anthony Stolarz", "position": "G", "nhlTeam": "TOR", "totalFP": 23.4, "fpPerGame": 1.30, "contract": "1yr" }
+        ]
+      }
+    },
+    "teamB": {
+      "gm": "Dave", "team": "Tiny Muscles Big Hustle",
+      "gives": {
+        "goalies": [
+          { "name": "Juuse Saros", "position": "G", "nhlTeam": "NSH", "totalFP": 83.3, "fpPerGame": 1.85, "contract": "1yr" }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Trevor vs Andy",
+    "date": "2026-03-06",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Trevor", "team": "Willy Stylez",
+      "gives": {
+        "defensemen": [
+          { "name": "Brock Faber", "position": "D", "nhlTeam": "MIN", "totalFP": 125.0, "fpPerGame": 2.08, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 5"]
+      }
+    },
+    "teamB": {
+      "gm": "Andy", "team": "Birth2Girth",
+      "gives": {
+        "defensemen": [
+          { "name": "Sean Durzi", "position": "D", "nhlTeam": "UTA", "totalFP": 51.0, "fpPerGame": 1.34, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 1"]
+      }
+    }
+  },
+  {
+    "name": "Jordan vs Andy",
+    "date": "2026-03-06",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Jordan", "team": "It's Jibbers!",
+      "gives": {
+        "defensemen": [
+          { "name": "Sam Malinski", "position": "D", "nhlTeam": "COL", "totalFP": 95.0, "fpPerGame": 1.64, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 4"]
+      }
+    },
+    "teamB": {
+      "gm": "Andy", "team": "Birth2Girth",
+      "gives": {
+        "defensemen": [
+          { "name": "Filip Hronek", "position": "D", "nhlTeam": "VAN", "totalFP": 84.5, "fpPerGame": 1.43, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 3"]
+      }
+    }
+  },
+  {
+    "name": "Marinos vs Jordan",
+    "date": "2026-03-07",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Marinos", "team": "Murricle on Ice",
+      "gives": {
+        "forwards": [
+          { "name": "Aleksander Barkov", "position": "C", "nhlTeam": "FLA", "totalFP": 0.0, "fpPerGame": 0.0, "contract": "1yr", "status": "IR-LT" }
+        ],
+        "draftPicks": ["2026 Round 4"]
+      }
+    },
+    "teamB": {
+      "gm": "Jordan", "team": "It's Jibbers!",
+      "gives": {
+        "forwards": [
+          { "name": "Adam Fantilli", "position": "C", "nhlTeam": "CBJ", "totalFP": 99.3, "fpPerGame": 1.71, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 1"]
+      }
+    }
+  },
+  {
+    "name": "Marinos vs Andy",
+    "date": "2026-03-07",
+    "rfa_flagged": true,
+    "rfa_note": "Marinos sent Landeskog (1yr RFA) but received no 1yr player back",
+    "teamA": {
+      "gm": "Marinos", "team": "Murricle on Ice",
+      "gives": {
+        "forwards": [
+          { "name": "Gabriel Landeskog", "position": "LW,RW", "nhlTeam": "COL", "totalFP": 89.3, "fpPerGame": 2.03, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 6"]
+      }
+    },
+    "teamB": {
+      "gm": "Andy", "team": "Birth2Girth",
+      "gives": {
+        "forwards": [
+          { "name": "Quinton Byfield", "position": "C,LW", "nhlTeam": "LAK", "totalFP": 96.0, "fpPerGame": 1.66, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 4 (from Seedo)"]
+      }
+    }
+  },
+  {
+    "name": "Jordan / Mike / Seedo (3-way)",
+    "date": "2026-03-09",
+    "type": "3-way",
+    "rfa_flagged": true,
+    "rfa_note": "Mike sent Tuch (1yr RFA) to Seedo with no 1yr player returned to Mike",
+    "teamA": {
+      "gm": "Jordan", "team": "It's Jibbers!",
+      "receives": {
+        "defensemen": [
+          { "name": "Alexander Nikishin", "position": "D", "nhlTeam": "CAR", "totalFP": 74.8, "fpPerGame": 1.29, "contract": null },
+          { "name": "Jacob Trouba", "position": "D", "nhlTeam": "ANA", "totalFP": 71.3, "fpPerGame": 1.25, "contract": null }
+        ],
+        "forwards": [
+          { "name": "Vincent Trocheck", "position": "C", "nhlTeam": "NYR", "totalFP": 96.5, "fpPerGame": 2.14, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 1", "2026 Round 3"]
+      }
+    },
+    "teamB": {
+      "gm": "Mike", "team": "Shit The Driveway",
+      "receives": {
+        "forwards": [
+          { "name": "Steven Stamkos", "position": "C,LW,RW", "nhlTeam": "NSH", "totalFP": 143.5, "fpPerGame": 2.43, "contract": null },
+          { "name": "Cutter Gauthier", "position": "C,LW,RW", "nhlTeam": "ANA", "totalFP": 152.5, "fpPerGame": 2.68, "contract": null }
+        ],
+        "defensemen": [
+          { "name": "Mike Matheson", "position": "D", "nhlTeam": "MTL", "totalFP": 92.0, "fpPerGame": 1.64, "contract": null },
+          { "name": "Mattias Samuelsson", "position": "D", "nhlTeam": "BUF", "totalFP": 119.0, "fpPerGame": 2.05, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 10", "2026 Round 11"]
+      }
+    },
+    "teamC": {
+      "gm": "Seedo", "team": "Saltiest Spring",
+      "receives": {
+        "forwards": [
+          { "name": "Alex Tuch", "position": "LW,RW", "nhlTeam": "BUF", "totalFP": 166.8, "fpPerGame": 2.83, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 5", "2026 Round 6", "2026 Round 10", "2026 Round 11"]
+      }
+    }
+  },
+  {
+    "name": "Marinos vs Mike",
+    "date": "2026-03-09",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Marinos", "team": "Murricle on Ice",
+      "gives": {
+        "goalies": [
+          { "name": "Logan Thompson", "position": "G", "nhlTeam": "WSH", "totalFP": 134.1, "fpPerGame": 3.27, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 8"]
+      }
+    },
+    "teamB": {
+      "gm": "Mike", "team": "Shit The Driveway",
+      "gives": {
+        "goalies": [
+          { "name": "Darcy Kuemper", "position": "G", "nhlTeam": "LAK", "totalFP": 77.6, "fpPerGame": 2.10, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 3"]
+      }
+    }
+  },
+  {
+    "name": "Seedo vs Dan",
+    "date": "2026-03-11",
+    "rfa_flagged": true,
+    "rfa_note": "Dan sent Kadri (1yr RFA) but received only a pick back",
+    "teamA": {
+      "gm": "Dan", "team": "Mack Miller",
+      "gives": {
+        "forwards": [
+          { "name": "Nazem Kadri", "position": "C,LW", "nhlTeam": "COL", "totalFP": 90.0, "fpPerGame": 1.55, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 8"]
+      }
+    },
+    "teamB": {
+      "gm": "Seedo", "team": "Saltiest Spring",
+      "gives": {
+        "draftPicks": ["2026 Round 2 (from Birth2Girth)"]
+      }
+    }
+  },
+  {
+    "name": "Adam vs Colin",
+    "date": "2026-03-12",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Adam", "team": "SpudKick",
+      "gives": {
+        "forwards": [
+          { "name": "Alex Ovechkin", "position": "LW,RW", "nhlTeam": "WSH", "totalFP": 149.5, "fpPerGame": 2.41, "contract": null }
+        ],
+        "defensemen": [
+          { "name": "Noah Dobson", "position": "D", "nhlTeam": "MTL", "totalFP": 120.0, "fpPerGame": 2.03, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 9"]
+      }
+    },
+    "teamB": {
+      "gm": "Colin", "team": "The Real West Coast Chat",
+      "gives": {
+        "forwards": [
+          { "name": "Sam Bennett", "position": "C", "nhlTeam": "FLA", "totalFP": 134.0, "fpPerGame": 2.27, "contract": null },
+          { "name": "Jordan Kyrou", "position": "RW", "nhlTeam": "STL", "totalFP": 87.5, "fpPerGame": 1.79, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 1"]
+      }
+    }
+  },
+  {
+    "name": "Dave vs Colin",
+    "date": "2026-03-12",
+    "rfa_flagged": true,
+    "rfa_note": "Dave sent Hedman (1yr RFA) but received no 1yr player back",
+    "teamA": {
+      "gm": "Dave", "team": "Tiny Muscles Big Hustle",
+      "gives": {
+        "defensemen": [
+          { "name": "Victor Hedman", "position": "D", "nhlTeam": "TBL", "totalFP": 41.5, "fpPerGame": 1.73, "contract": "1yr", "status": "injured" }
+        ],
+        "draftPicks": ["2026 Round 5"]
+      }
+    },
+    "teamB": {
+      "gm": "Colin", "team": "The Real West Coast Chat",
+      "gives": {
+        "defensemen": [
+          { "name": "Brandon Montour", "position": "D", "nhlTeam": "SEA", "totalFP": 68.3, "fpPerGame": 1.66, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 3"]
+      }
+    }
+  },
+  {
+    "name": "Trevor vs Colin",
+    "date": "2026-03-12",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Trevor", "team": "Willy Stylez",
+      "gives": {
+        "forwards": [
+          { "name": "Nico Hischier", "position": "C", "nhlTeam": "NJD", "totalFP": 122.8, "fpPerGame": 2.05, "contract": "1yr" }
+        ]
+      }
+    },
+    "teamB": {
+      "gm": "Colin", "team": "The Real West Coast Chat",
+      "gives": {
+        "defensemen": [
+          { "name": "Charlie McAvoy", "position": "D", "nhlTeam": "BOS", "totalFP": 118.0, "fpPerGame": 2.51, "contract": "1yr" }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Charlie vs Colin",
+    "date": "2026-03-13",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Charlie", "team": "Medium Chuck",
+      "gives": {
+        "defensemen": [
+          { "name": "John Carlson", "position": "D", "nhlTeam": "ANA", "totalFP": 128.5, "fpPerGame": 2.34, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 7"]
+      }
+    },
+    "teamB": {
+      "gm": "Colin", "team": "The Real West Coast Chat",
+      "gives": {
+        "draftPicks": ["2026 Round 5"]
+      }
+    }
+  },
+  {
+    "name": "Bimm vs Jordan",
+    "date": "2026-03-13",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Bimm", "team": "Killin me Scheifle",
+      "gives": {
+        "forwards": [
+          { "name": "William Eklund", "position": "LW,RW", "nhlTeam": "SJS", "totalFP": 76.0, "fpPerGame": 1.43, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 3"]
+      }
+    },
+    "teamB": {
+      "gm": "Jordan", "team": "It's Jibbers!",
+      "gives": {
+        "forwards": [
+          { "name": "Filip Forsberg", "position": "LW", "nhlTeam": "NSH", "totalFP": 140.5, "fpPerGame": 2.38, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 4 (from Marinos)"]
+      }
+    }
+  },
+  {
+    "name": "Ryan vs Dan",
+    "date": "2026-03-13",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Ryan", "team": "Monkey Butt",
+      "gives": {
+        "forwards": [
+          { "name": "Sam Reinhart", "position": "C,RW", "nhlTeam": "FLA", "totalFP": 160.0, "fpPerGame": 2.71, "contract": "1yr" }
+        ],
+        "goalies": [
+          { "name": "Mackenzie Blackwood", "position": "G", "nhlTeam": "COL", "totalFP": 104.8, "fpPerGame": 4.19, "contract": "1yr" }
+        ]
+      }
+    },
+    "teamB": {
+      "gm": "Dan", "team": "Mack Miller",
+      "gives": {
+        "forwards": [
+          { "name": "Dylan Larkin", "position": "C", "nhlTeam": "DET", "totalFP": 183.5, "fpPerGame": 3.06, "contract": "1yr" }
+        ],
+        "goalies": [
+          { "name": "Juuse Saros", "position": "G", "nhlTeam": "NSH", "totalFP": 83.3, "fpPerGame": 1.85, "contract": "1yr" }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Marinos vs Dan",
+    "date": "2026-03-14",
+    "rfa_flagged": true,
+    "rfa_note": "Dan sent J.T. Miller (1yr RFA) but received only picks back",
+    "teamA": {
+      "gm": "Dan", "team": "Mack Miller",
+      "gives": {
+        "forwards": [
+          { "name": "J.T. Miller", "position": "C,LW,RW", "nhlTeam": "NYR", "totalFP": 83.5, "fpPerGame": 1.67, "contract": "1yr" }
+        ],
+        "draftPicks": ["2026 Round 6", "2026 Round 9"]
+      }
+    },
+    "teamB": {
+      "gm": "Marinos", "team": "Murricle on Ice",
+      "gives": {
+        "draftPicks": ["2026 Round 4 (from Seedo)", "2026 Round 7"]
+      }
+    }
+  },
+  {
+    "name": "Ryan vs Jordan",
+    "date": "2026-03-14",
+    "rfa_flagged": false,
+    "teamA": {
+      "gm": "Ryan", "team": "Monkey Butt",
+      "gives": {
+        "goalies": [
+          { "name": "Philipp Grubauer", "position": "G", "nhlTeam": "SEA", "totalFP": 67.0, "fpPerGame": 2.91, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 4"]
+      }
+    },
+    "teamB": {
+      "gm": "Jordan", "team": "It's Jibbers!",
+      "gives": {
+        "goalies": [
+          { "name": "Joel Hofer", "position": "G", "nhlTeam": "STL", "totalFP": 82.8, "fpPerGame": 2.67, "contract": null }
+        ],
+        "draftPicks": ["2026 Round 5 (from Bimm)"]
+      }
+    }
+  }
+]
