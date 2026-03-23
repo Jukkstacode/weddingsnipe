@@ -341,9 +341,8 @@ ${toneRules}
 Regular season final standings: 1st-Andy, 2nd-Bimm, 3rd-Colin, 4th-Ryan, 5th-Mike, 6th-Adam, 7th-Hordo, 8th-Dan.
 The matchup data includes:
 - score1/score2: final weekly FP totals. winner: 1 means gm1 won, winner: 2 means gm2 won.
-- players1/players2: each GM's active roster with individual FP scored that week.
-- bench1/bench2 (if present): notable players left on the bench and what they scored.
-Use the individual player scores to call out standout performances, disappointments, and any notable players left rotting on the bench. Be specific — name players and their scores. Never show math or totals calculations. Use "FP" for fantasy points.
+- players1/players2: every player on each GM's roster and what they contributed that week. All listed players count toward the score — there is no bench, every player with points earned them.
+Use the individual player scores to call out standout performances and disappointments. Be specific — name players and their scores. Never show math or totals calculations. Use "FP" for fantasy points.
 
 Matchup:
 ${JSON.stringify(matchupContext, null, 2)}`;
