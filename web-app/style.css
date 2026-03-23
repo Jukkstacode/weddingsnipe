@@ -91,6 +91,24 @@ body::before {
     color: #fff;
 }
 
+.top-nav a.nav-btn {
+    background: var(--gradient-purple, linear-gradient(135deg, #667eea, #764ba2));
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 0 14px;
+    height: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0 8px;
+    border-bottom: none;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.top-nav a.nav-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
 .top-nav a.active {
     color: var(--accent-blue);
     border-bottom-color: var(--accent-blue);

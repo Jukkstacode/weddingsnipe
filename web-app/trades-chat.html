@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
+    <title>Trade Analyzer</title>
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="trades-chat.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="tc-page">
+        <header class="tc-header">
+            <h1>Trade Analyzer</h1>
+            <p class="tc-subtitle">Select a trade to get a Gemini analysis</p>
+        </header>
+
+        <div class="tc-scroll-section">
+            <button class="scroll-nav scroll-prev" id="scrollPrev">&#8249;</button>
+            <div class="tc-track" id="tradeTrack"></div>
+            <button class="scroll-nav scroll-next" id="scrollNext">&#8250;</button>
+        </div>
+
+        <div class="tc-analyze" id="analyzePanel">
+            <div class="context-input">
+                <label for="userContext">Additional context (optional)</label>
+                <textarea id="userContext" placeholder="e.g. Jordan needed a goalie, Bimm is in win-now mode..."></textarea>
+            </div>
+            <button id="analyzeBtn">Bimmbots Analysis</button>
+        </div>
+
+        <div class="tc-report" id="reportContainer" style="display:none;">
+            <div class="tc-report-content" id="reportContent"></div>
+        </div>
+
+        <div class="tc-loading" id="loading" style="display:none;">
+            <div class="tc-spinner"></div>
+            Analyzing trade...
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script src="trades-chat.js" type="module"></script>
+</body>
+</html>

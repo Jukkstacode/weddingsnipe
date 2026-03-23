@@ -1,0 +1,398 @@
+/* ── Page layout ── */
+.tc-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 60px;
+}
+
+.tc-header {
+    margin-bottom: 28px;
+}
+
+.tc-header h1 {
+    color: var(--text-white);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+}
+
+.tc-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* ── Scroll section ── */
+.tc-scroll-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.scroll-nav {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color-strong);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.scroll-nav:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--primary-blue);
+    color: #fff;
+}
+
+/* ── Track ── */
+.tc-track {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 2px 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+}
+
+.tc-track::-webkit-scrollbar { height: 3px; }
+.tc-track::-webkit-scrollbar-track { background: transparent; }
+.tc-track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+/* ── Trade card ── */
+.trade-card {
+    flex-shrink: 0;
+    width: 320px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 0;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+}
+
+.trade-card:hover {
+    border-color: var(--border-color-strong);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    transform: translateY(-2px);
+}
+
+.trade-card.selected {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 1px var(--primary-blue), 0 6px 24px rgba(54,162,235,0.2);
+    transform: translateY(-2px);
+}
+
+.trade-card.rfa-flagged {
+    border-color: rgba(255,180,0,0.3);
+}
+
+.trade-card.rfa-flagged.selected {
+    border-color: #ffb400;
+    box-shadow: 0 0 0 1px #ffb400, 0 6px 24px rgba(255,180,0,0.15);
+}
+
+/* ── Card header ── */
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px 8px;
+    background: rgba(255,255,255,0.025);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-date {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.card-badges {
+    display: flex;
+    gap: 4px;
+}
+
+.tc-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.badge-3way {
+    background: rgba(102,126,234,0.2);
+    color: #a0aeff;
+}
+
+.badge-rfa {
+    background: rgba(255,180,0,0.15);
+    color: #ffb400;
+}
+
+/* ── Card body ── */
+.card-body {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    flex: 1;
+}
+
+.card-body.three-way {
+    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+}
+
+.card-rule {
+    background: var(--border-color);
+    align-self: stretch;
+}
+
+.card-side {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 12px 10px;
+    gap: 8px;
+    min-width: 0;
+}
+
+/* ── GM row ── */
+.card-gm-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gm-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-color-strong);
+    flex-shrink: 0;
+}
+
+.gm-avatar-fallback {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color-strong);
+    background: var(--bg-card-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.card-gm-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+/* ── Player items ── */
+.card-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ci-player {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.pos-dot {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 3px;
+}
+
+.pos-dot.pos-c       { background: #5bc0de; }
+.pos-dot.pos-w       { background: #b57eea; }
+.pos-dot.pos-d       { background: #2ed573; }
+.pos-dot.pos-g       { background: #ffd700; }
+.pos-dot.pos-unknown { background: #666; }
+
+.ci-name {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.ci-tag {
+    flex-shrink: 0;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+.ci-tag.rfa   { background: rgba(255,180,0,0.18); color: #ffb400; }
+.ci-tag.multi { background: rgba(150,100,255,0.18); color: #c090ff; }
+
+.ci-pick {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding-left: 13px;
+}
+
+.ci-pick.muted { opacity: 0.3; }
+
+/* ── Analyze panel ── */
+.tc-analyze {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: none;
+    animation: fadeIn 0.25s ease;
+}
+
+.tc-analyze.visible { display: block; }
+
+.context-input label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.context-input textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color-strong);
+    background: rgba(255,255,255,0.06);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 56px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    margin-bottom: 14px;
+}
+
+.context-input textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: rgba(255,255,255,0.09);
+}
+
+#analyzeBtn {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    background: var(--gradient-purple);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+#analyzeBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(102,126,234,0.45);
+}
+
+#analyzeBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ── Report ── */
+.tc-report {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+    animation: fadeIn 0.3s ease;
+}
+
+.tc-report-content h2 {
+    color: var(--text-white);
+    font-size: 17px;
+    margin: 1.25rem 0 0.4rem;
+}
+
+.tc-report-content h2:first-child { margin-top: 0; }
+
+.tc-report-content h3 {
+    color: var(--primary-blue);
+    font-size: 14px;
+    margin: 1rem 0 0.3rem;
+}
+
+.tc-report-content p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 14px;
+    margin-bottom: 0.7rem;
+}
+
+.tc-report-content strong { color: var(--text-white); }
+
+.tc-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--text-muted);
+    padding: 2rem;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.tc-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-top-color: var(--primary-blue, #36A2EB);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+    .tc-page { padding: 24px 16px 40px; }
+    .tc-header h1 { font-size: 22px; }
+    .trade-card { width: 260px; }
+}
