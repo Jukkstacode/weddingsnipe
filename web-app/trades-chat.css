@@ -25,19 +25,22 @@
 
 /* ── Scroll section ── */
 .tc-scroll-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    position: relative;
     margin-bottom: 28px;
 }
 
 .scroll-nav {
-    flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-60%);
+    z-index: 10;
     width: 36px;
     height: 36px;
     border-radius: 50%;
     border: 1px solid var(--border-color-strong);
-    background: var(--bg-card);
+    background: rgba(20,20,28,0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     color: var(--text-primary);
     font-size: 1.4rem;
     line-height: 1;
@@ -48,8 +51,11 @@
     transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
+.scroll-prev { left: 8px; }
+.scroll-next { right: 8px; }
+
 .scroll-nav:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(40,40,60,0.95);
     border-color: var(--primary-blue);
     color: #fff;
 }
@@ -59,10 +65,9 @@
     display: flex;
     gap: 10px;
     overflow-x: auto;
-    padding: 4px 2px 12px;
+    padding: 4px 40px 12px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    flex: 1;
 }
 
 .tc-track::-webkit-scrollbar { height: 3px; }
@@ -72,7 +77,7 @@
 /* ── Trade card ── */
 .trade-card {
     flex-shrink: 0;
-    width: 320px;
+    width: 380px;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
@@ -278,6 +283,54 @@
 
 .tc-analyze.visible { display: block; }
 
+.snark-selector {
+    margin-bottom: 16px;
+}
+
+.snark-selector > label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.snark-toggle {
+    display: inline-flex;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color-strong);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.snark-btn {
+    padding: 5px 16px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.snark-btn:hover {
+    color: var(--text-primary);
+}
+
+.snark-btn.active {
+    background: var(--gradient-purple, linear-gradient(135deg, #667eea, #764ba2));
+    color: #fff;
+}
+
+.snark-btn[data-level="max"].active {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
 .context-input label {
     display: block;
     font-size: 11px;
@@ -394,5 +447,5 @@
 @media (max-width: 600px) {
     .tc-page { padding: 24px 16px 40px; }
     .tc-header h1 { font-size: 22px; }
-    .trade-card { width: 260px; }
+    .trade-card { width: 300px; }
 }

@@ -3,6 +3,17 @@ const API_URL = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
 let selectedTrade = null;
 let gmImageMap = {};
 
+let snarkLevel = 'low';
+
+document.querySelectorAll('.snark-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.snark-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        snarkLevel = btn.dataset.level;
+    });
+});
+
+
 const track       = document.getElementById('tradeTrack');
 const analyzePanel = document.getElementById('analyzePanel');
 const analyzeBtn  = document.getElementById('analyzeBtn');
@@ -13,8 +24,8 @@ const loading     = document.getElementById('loading');
 const scrollPrev  = document.getElementById('scrollPrev');
 const scrollNext  = document.getElementById('scrollNext');
 
-scrollPrev.addEventListener('click', () => track.scrollBy({ left: -340, behavior: 'smooth' }));
-scrollNext.addEventListener('click', () => track.scrollBy({ left:  340, behavior: 'smooth' }));
+scrollPrev.addEventListener('click', () => track.scrollBy({ left: -400, behavior: 'smooth' }));
+scrollNext.addEventListener('click', () => track.scrollBy({ left:  400, behavior: 'smooth' }));
 
 function formatDate(dateStr) {
     const d = new Date(dateStr + 'T12:00:00');
@@ -171,7 +182,7 @@ analyzeBtn.addEventListener('click', async () => {
         const res  = await fetch(`${API_URL}?requestType=chat`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message, tradeContext: selectedTrade }),
+            body: JSON.stringify({ message, tradeContext: selectedTrade, snarkLevel }),
         });
         const data = await res.json();
         reportContent.innerHTML = formatReport(data.reply);
