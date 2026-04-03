@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
+    <title>Bathouse Champion 2025-26</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .champ-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 48px);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .champ-title {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            color: #ccc;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        .champ-season {
+            font-size: 1.4rem;
+            letter-spacing: 5px;
+            color: #888;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+
+        /* Fireworks */
+        .pyro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .pyro > .before, .pyro > .after {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff,
+                        0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
+            animation: 1s bang ease-out infinite backwards,
+                       1s gravity ease-in infinite backwards,
+                       5s position linear infinite backwards;
+        }
+
+        .pyro > .after {
+            animation-delay: 1.25s, 1.25s, 1.25s;
+            animation-duration: 1.25s, 1.25s, 6.25s;
+        }
+
+        @keyframes bang {
+            to {
+                box-shadow:
+                    -72px -182px hsl(14, 100%, 50%),
+                    208px -91px hsl(239, 100%, 50%),
+                    -146px -24px hsl(197, 100%, 50%),
+                    42px -213px hsl(332, 100%, 50%),
+                    185px -105px hsl(45, 100%, 50%),
+                    -230px -317px hsl(120, 100%, 50%),
+                    59px -78px hsl(276, 100%, 50%),
+                    -187px -400px hsl(58, 100%, 50%),
+                    143px -159px hsl(190, 100%, 50%),
+                    -28px -262px hsl(310, 100%, 50%),
+                    211px -337px hsl(85, 100%, 50%),
+                    -95px -147px hsl(162, 100%, 50%),
+                    178px -410px hsl(225, 100%, 50%),
+                    -210px -58px hsl(7, 100%, 50%),
+                    33px -305px hsl(290, 100%, 50%),
+                    -149px -195px hsl(130, 100%, 50%),
+                    240px -248px hsl(48, 100%, 50%),
+                    -55px -370px hsl(205, 100%, 50%),
+                    112px -42px hsl(345, 100%, 50%),
+                    -198px -285px hsl(72, 100%, 50%),
+                    67px -133px hsl(255, 100%, 50%),
+                    -120px -355px hsl(18, 100%, 50%),
+                    195px -200px hsl(150, 100%, 50%),
+                    -40px -115px hsl(98, 100%, 50%),
+                    155px -380px hsl(270, 100%, 50%),
+                    -175px -68px hsl(35, 100%, 50%),
+                    88px -290px hsl(185, 100%, 50%),
+                    -225px -170px hsl(320, 100%, 50%),
+                    20px -395px hsl(60, 100%, 50%),
+                    -105px -240px hsl(140, 100%, 50%),
+                    230px -155px hsl(215, 100%, 50%),
+                    -62px -310px hsl(5, 100%, 50%),
+                    170px -85px hsl(280, 100%, 50%),
+                    -190px -345px hsl(108, 100%, 50%),
+                    48px -175px hsl(340, 100%, 50%),
+                    -135px -415px hsl(55, 100%, 50%),
+                    200px -265px hsl(175, 100%, 50%),
+                    -18px -50px hsl(245, 100%, 50%),
+                    125px -330px hsl(22, 100%, 50%),
+                    -205px -125px hsl(300, 100%, 50%),
+                    75px -385px hsl(78, 100%, 50%),
+                    -155px -210px hsl(155, 100%, 50%),
+                    245px -295px hsl(230, 100%, 50%),
+                    -85px -100px hsl(42, 100%, 50%),
+                    135px -365px hsl(195, 100%, 50%),
+                    -215px -250px hsl(115, 100%, 50%),
+                    95px -60px hsl(350, 100%, 50%),
+                    -45px -190px hsl(265, 100%, 50%),
+                    165px -140px hsl(28, 100%, 50%),
+                    -130px -300px hsl(170, 100%, 50%);
+            }
+        }
+
+        @keyframes gravity {
+            to {
+                transform: translateY(200px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes position {
+            0%, 19.9% { margin-top: 10%; margin-left: 40%; }
+            20%, 39.9% { margin-top: 40%; margin-left: 30%; }
+            40%, 59.9% { margin-top: 20%; margin-left: 70%; }
+            60%, 79.9% { margin-top: 30%; margin-left: 20%; }
+            80%, 99.9% { margin-top: 30%; margin-left: 80%; }
+        }
+
+        /* Trophy container */
+        .trophy-container {
+            position: relative;
+            width: 320px;
+            height: 420px;
+            animation: fadeIn 1.5s ease 0.8s both;
+        }
+
+        /* SVG Trophy */
+        .trophy-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* GM face circle — sits inside the trophy cup */
+        .champ-face-container {
+            position: absolute;
+            top: 72px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5),
+                        0 0 60px rgba(255, 215, 0, 0.2);
+            background: #222;
+            animation: faceReveal 1s ease 1.8s both;
+        }
+
+        .champ-face-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Champion name */
+        .champ-name {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #ffd700;
+            margin-top: 30px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            animation: fadeIn 1s ease 2.4s both;
+        }
+
+        .champ-team {
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-top: 8px;
+            font-style: italic;
+            animation: fadeIn 1s ease 2.7s both;
+        }
+
+        .champ-record {
+            font-size: 1rem;
+            color: #777;
+            margin-top: 12px;
+            letter-spacing: 1px;
+            animation: fadeIn 1s ease 3.0s both;
+        }
+
+        /* Sparkle particles */
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) translateY(0); }
+            50% { opacity: 1; transform: scale(1) translateY(-20px); }
+        }
+
+        @keyframes faceReveal {
+            from { opacity: 0; transform: translateX(-50%) scale(0.5); }
+            to { opacity: 1; transform: translateX(-50%) scale(1); }
+        }
+
+        /* Gold shimmer on trophy */
+        @keyframes shimmer {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+            100% { filter: brightness(1); }
+        }
+
+        .trophy-svg {
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        /* Mobile */
+        @media screen and (max-width: 768px) {
+            body { padding-top: 48px !important; }
+
+            .champ-wrapper { padding: 30px 15px; min-height: calc(100vh - 48px); }
+
+            .trophy-container { width: 240px; height: 315px; }
+
+            .champ-face-container {
+                top: 54px;
+                width: 98px;
+                height: 98px;
+            }
+
+            .champ-title { font-size: 1.4rem; letter-spacing: 5px; }
+            .champ-season { font-size: 1rem; }
+            .champ-name { font-size: 2rem; }
+            .champ-team { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <!-- Sparkle particles -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <!-- Fireworks -->
+    <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+    </div>
+
+    <div class="champ-wrapper">
+        <div class="champ-title">Bathouse Hockey League</div>
+        <div class="champ-season">2025–26 Champion</div>
+
+        <div class="trophy-container">
+            <!-- Trophy SVG -->
+            <svg class="trophy-svg" viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg">
+                <!-- Left handle -->
+                <path d="M55 80 Q10 80 10 130 Q10 185 55 185" fill="none" stroke="#ffd700" stroke-width="8" stroke-linecap="round"/>
+                <!-- Right handle -->
+                <path d="M265 80 Q310 80 310 130 Q310 185 265 185" fill="none" stroke="#ffd700" stroke-width="8" stroke-linecap="round"/>
+
+                <!-- Cup body -->
+                <path d="M60 55 L60 200 Q60 260 160 260 Q260 260 260 200 L260 55 Z"
+                      fill="url(#gold-gradient)" stroke="#daa520" stroke-width="3"/>
+
+                <!-- Cup rim -->
+                <rect x="50" y="48" width="220" height="14" rx="5" fill="url(#gold-gradient)" stroke="#daa520" stroke-width="2"/>
+
+                <!-- Stem -->
+                <rect x="140" y="260" width="40" height="60" rx="4" fill="url(#gold-gradient)" stroke="#daa520" stroke-width="2"/>
+
+                <!-- Base top -->
+                <rect x="100" y="318" width="120" height="16" rx="6" fill="url(#gold-gradient)" stroke="#daa520" stroke-width="2"/>
+
+                <!-- Base bottom -->
+                <rect x="80" y="332" width="160" height="22" rx="8" fill="url(#gold-gradient)" stroke="#daa520" stroke-width="2"/>
+
+                <!-- Star on cup -->
+                <polygon points="160,218 165,232 180,232 168,240 172,254 160,246 148,254 152,240 140,232 155,232"
+                         fill="#ffd700" opacity="0.6"/>
+
+                <defs>
+                    <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ffd700"/>
+                        <stop offset="30%" style="stop-color:#ffec80"/>
+                        <stop offset="50%" style="stop-color:#ffd700"/>
+                        <stop offset="70%" style="stop-color:#daa520"/>
+                        <stop offset="100%" style="stop-color:#ffd700"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Champion face placeholder -->
+            <div class="champ-face-container" id="champ-face">
+                <!-- GM image will go here -->
+            </div>
+        </div>
+
+        <div class="champ-name" id="champ-name">TBD</div>
+        <div class="champ-team" id="champ-team"></div>
+        <div class="champ-record" id="champ-record"></div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+        // Set the champion here when ready
+        const CHAMPION = {
+            name: 'Andy',
+            team: 'Birth2Girth',
+            record: '16-4-0 Regular Season',
+        };
+
+        (async function() {
+            // Load GM images
+            let gmImageMap = new Map();
+            try {
+                const gms = await fetch('gm.json').then(r => r.json());
+                gmImageMap = new Map(gms.map(gm => [gm.name, gm.image]));
+            } catch(e) {}
+
+            if (CHAMPION.name) {
+                const img = document.createElement('img');
+                img.src = gmImageMap.get(CHAMPION.name) || 'assets/default-avatar.png';
+                img.alt = CHAMPION.name;
+                document.getElementById('champ-face').appendChild(img);
+
+                document.getElementById('champ-name').textContent = CHAMPION.name;
+                if (CHAMPION.team) document.getElementById('champ-team').textContent = CHAMPION.team;
+                if (CHAMPION.record) document.getElementById('champ-record').textContent = CHAMPION.record;
+            }
+
+            // Generate sparkle particles
+            const sparklesEl = document.getElementById('sparkles');
+            for (let i = 0; i < 30; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.animationDelay = (Math.random() * 3) + 's';
+                s.style.animationDuration = (2 + Math.random() * 2) + 's';
+                s.style.width = s.style.height = (2 + Math.random() * 4) + 'px';
+                sparklesEl.appendChild(s);
+            }
+        })();
+    </script>
+</body>
+</html>
