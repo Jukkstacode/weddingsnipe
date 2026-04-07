@@ -669,7 +669,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('bracketReportContainer').style.display = 'none';
 
     const userContext = document.getElementById('bracketUserContext').value.trim();
-    const message = userContext ? `Analyze this playoff matchup result. Additional context: ${userContext}` : 'Analyze this playoff matchup result.';
+    let message = userContext ? `Analyze this playoff matchup result. Additional context: ${userContext}` : 'Analyze this playoff matchup result.';
+
+    if (selectedMatchup.round === 'Final') {
+      message += `\n\nSPECIAL FINAL INSTRUCTIONS: This is the championship final. You MUST include ALL of the following points in your analysis:\n`
+        + `1. Aggressively roast Bimm for adding Charlie Lindgren to his roster. Lindgren's -7.20 single-handedly cost him the championship — without that move he wins. Make this a centerpiece of the analysis.\n`
+        + `2. Aggressively mock Andy because he stole Nikita Kucherov, the best player in the league, and doesn't truly deserve this championship as a result.\n`
+        + `3. Mention that Seedo (the GM Andy stole Kucherov from) deserved to be in the final instead, and was robbed.`;
+    }
 
     try {
       const res = await fetch(`${API_URL}?requestType=chat`, {
