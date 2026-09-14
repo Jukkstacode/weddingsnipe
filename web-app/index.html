@@ -8,12 +8,35 @@
 </head>
 <body>
   <main>
-    <h1>Bathouse Hockey League</h1>
-    <p>Site v2 is under construction. The full <a href="v1/index.html">old site</a> is still here.</p>
+    <section class="countdown" id="countdown">
+      <p class="eyebrow">Draft night</p>
+      <div class="clock" id="clock"></div>
+      <p class="muted" id="draft-when"></p>
+    </section>
     <p class="muted" id="updated"></p>
   </main>
   <script src="js/nav.js"></script>
   <script type="module">
+    import { DRAFT_AT } from './js/league.js';
+
+    const units = [['d', 86400], ['h', 3600], ['m', 60], ['s', 1]];
+    document.getElementById('draft-when').textContent = DRAFT_AT.toLocaleString(undefined, {
+      weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+    });
+    function tick() {
+      let left = Math.max(0, Math.floor((DRAFT_AT - Date.now()) / 1000));
+      if (!left) {
+        document.getElementById('clock').innerHTML = '<span class="unit"><b>Draft is live</b></span>';
+        return;
+      }
+      document.getElementById('clock').innerHTML = units.map(([label, secs]) => {
+        const n = Math.floor(left / secs); left -= n * secs;
+        return `<span class="unit"><b>${String(n).padStart(2, '0')}</b><small>${label}</small></span>`;
+      }).join('');
+      setTimeout(tick, 1000 - (Date.now() % 1000));
+    }
+    tick();
+
     const res = await fetch('data/player-stats.json');
     if (res.ok) {
       const { updatedAt, players } = await res.json();

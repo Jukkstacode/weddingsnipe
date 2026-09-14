@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stats — Bathouse Hockey League</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="stylesheet" href="stats.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body class="stats-page">
+  <div class="rink"></div>
+  <main class="stats-main">
+    <div class="workbench">
+      <aside class="panel roster">
+        <div class="panel-head">
+          <h2>Roster</h2>
+          <span class="count" id="selected-count">0 selected</span>
+        </div>
+
+        <div class="filters">
+          <div class="segmented" id="season-mode"></div>
+          <select id="gm-filter" aria-label="Filter by GM"><option value="">All GMs</option></select>
+          <div class="chips" id="pos-filter">
+            <button data-pos="ALL" class="active">All</button>
+            <button data-pos="C">C</button>
+            <button data-pos="LW">LW</button>
+            <button data-pos="RW">RW</button>
+            <button data-pos="D">D</button>
+            <button data-pos="G">G</button>
+            <button data-pos="RFA" class="rfa">RFA</button>
+          </div>
+          <div class="search">
+            <input id="search" placeholder="Search any NHL player…" autocomplete="off">
+            <div id="search-results" class="results" hidden></div>
+          </div>
+        </div>
+
+        <ul class="players" id="players"></ul>
+
+        <div class="panel-foot">
+          <button id="clear" class="ghost">Clear</button>
+          <button id="share" class="ghost">Copy link</button>
+        </div>
+      </aside>
+
+      <section class="panel chart-panel">
+        <div class="chart-wrap">
+          <canvas id="chart"></canvas>
+          <div class="empty" id="empty">
+            <p class="eyebrow">Nothing charted</p>
+            <p>Tap any player to draw their line. Switch seasons up top.</p>
+          </div>
+          <div class="loading" id="loading" hidden><span></span></div>
+        </div>
+        <div class="legend-key">
+          <span><i class="dot"></i> Played</span>
+          <span><i class="diamond"></i> Missed</span>
+          <span id="legend-dash" hidden><i class="dash"></i> Prior season</span>
+        </div>
+        <div class="cards" id="cards"></div>
+      </section>
+
+      <aside class="panel saved">
+        <div class="panel-head">
+          <h2>Saved</h2>
+          <span class="count" id="who"></span>
+        </div>
+        <div id="saved-out">
+          <p class="muted">Sign in to keep analyses and come back to them later.</p>
+          <button id="sign-in" class="primary">Sign in with Google</button>
+        </div>
+        <div id="saved-in" hidden>
+          <form id="save-form" class="save-form">
+            <input id="save-name" placeholder="Name this analysis…" maxlength="60" required>
+            <button class="primary" type="submit">Save</button>
+          </form>
+          <ul class="saved-list" id="saved-list"></ul>
+          <button id="sign-out" class="ghost small">Sign out</button>
+        </div>
+        <p class="status" id="status"></p>
+      </aside>
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+  <script type="module" src="stats.js"></script>
+</body>
+</html>

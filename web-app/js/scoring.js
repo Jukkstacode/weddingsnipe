@@ -18,3 +18,19 @@ export function fantasyPoints(stats, position) {
     + (stats.shorthandedPoints || 0) * s.shorthandedPoints
     + (stats.gameWinningGoals || 0) * s.gameWinningGoals;
 }
+
+export function fantasyPointsForGame(game, position) {
+  if (!game || game.toi === '00:00') return 0;
+  if (position === 'G') {
+    const g = SCORING.goalie;
+    const saves = (game.shotsAgainst || 0) - (game.goalsAgainst || 0);
+    return (game.decision === 'W' ? g.wins : 0) + (game.goalsAgainst || 0) * g.goalsAgainst
+      + saves * g.saves + (game.shutouts || 0) * g.shutouts;
+  }
+  const s = SCORING.skater;
+  return (game.goals || 0) * s.goals + (game.assists || 0) * s.assists
+    + (game.plusMinus || 0) * s.plusMinus + (game.pim || 0) * s.pim
+    + (game.powerPlayPoints || 0) * s.powerPlayPoints
+    + (game.shorthandedPoints || 0) * s.shorthandedPoints
+    + (game.gameWinningGoals || 0) * s.gameWinningGoals;
+}

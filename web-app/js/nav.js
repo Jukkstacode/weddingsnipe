@@ -2,8 +2,8 @@ const base = new URL('..', document.currentScript.src).href;
 const LINKS = [
   ['index.html', 'Home'],
   ['contracts.html', 'Contracts'],
+  ['stats/index.html', 'Stats'],
   ['admin/contracts.html', 'Admin'],
-  ['v1/index.html', 'Old site'],
 ];
 
 const here = location.href;
@@ -16,5 +16,6 @@ nav.innerHTML = `
       const href = base + path;
       return `<a href="${href}"${here.startsWith(href) ? ' aria-current="page"' : ''}>${label}</a>`;
     }).join('')}
-  </div>`;
+  </div>
+  <a class="legacy" href="${base}v1/index.html">Old site</a>`;
 document.body.prepend(nav);

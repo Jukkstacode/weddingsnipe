@@ -9,14 +9,27 @@
 <body>
   <main>
     <h1>Contracts</h1>
-    <p class="muted" id="updated">Loading…</p>
-    <div id="teams"></div>
+    <div id="gate">
+      <p class="muted">Contracts are for league members. Sign in to view.</p>
+      <button id="sign-in" class="primary">Sign in with Google</button>
+    </div>
+    <div id="content" hidden>
+      <p class="muted" id="updated">Loading…</p>
+      <div id="teams"></div>
+    </div>
   </main>
   <script src="js/nav.js"></script>
   <script type="module">
     import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-    import { db } from './js/firebase.js';
+    import { db, auth, signIn, onAuthStateChanged } from './js/firebase.js';
     import { fantasyPoints } from './js/scoring.js';
+
+    document.getElementById('sign-in').onclick = () => signIn().catch(e => alert(e.message));
+    await new Promise(resolve => onAuthStateChanged(auth, user => {
+      document.getElementById('gate').hidden = !!user;
+      document.getElementById('content').hidden = !user;
+      if (user) resolve();
+    }));
 
     const [snap, statsFile] = await Promise.all([
       getDocs(collection(db, 'contracts')),
