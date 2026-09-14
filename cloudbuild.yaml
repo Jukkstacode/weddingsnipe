@@ -1,22 +1,8 @@
 steps:
-# Step 1: Install dependencies and run the stats script
-- name: 'gcr.io/cloud-builders/npm'
-  dir: 'web-app'
-  args: ['install']
-
-- name: 'gcr.io/cloud-builders/npm'
-  dir: 'web-app'
-  args: ['run', 'fetch-stats']
-
-# Step 2: Deploy the static files
 - name: 'gcr.io/cloud-builders/gsutil'
   args: [
-    '-m',
-    'rsync',
-    '-r',
-    '-c',
-    '-d',
-    '-x', 'node_modules/|\.git/|package\.json|package-lock\.json|fetch-stats\.js',
+    '-m', 'rsync', '-r', '-c', '-d',
+    '-x', 'node_modules/|\.git/|\.claude/|\.agents/|package\.json|package-lock\.json|skills-lock\.json|\.gitignore|\.DS_Store|data/player-stats\.json',
     'web-app/',
     'gs://wedding-snipe-countdown-site'
   ]

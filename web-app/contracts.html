@@ -1,42 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8TZ69H67W"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-F8TZ69H67W');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
-    <title>Player Contracts</title>
-    <link rel="stylesheet" href="contracts.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="shared.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contracts</title>
+  <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-    <div class="contracts-page">
-        <header class="contracts-header">
-            <h1>Player Contracts</h1>
-            <p class="contracts-subtitle">Keeper contracts by GM &mdash; sorted by fantasy production</p>
-            <div class="position-filters">
-                <button class="pos-filter active" data-pos="ALL">All</button>
-                <button class="pos-filter" data-pos="C">C</button>
-                <button class="pos-filter" data-pos="LW">LW</button>
-                <button class="pos-filter" data-pos="RW">RW</button>
-                <button class="pos-filter" data-pos="D">D</button>
-                <button class="pos-filter" data-pos="G">G</button>
-                <button class="rfa-filter" id="rfaFilter">RFA</button>
-            </div>
-        </header>
-        <div class="gm-list-container"></div>
-    </div>
-    <script src="nav.js"></script>
-    <script src="contracts.js"></script>
+  <main>
+    <h1>Contracts</h1>
+    <p class="muted" id="updated">Loading…</p>
+    <div id="teams"></div>
+  </main>
+  <script src="js/nav.js"></script>
+  <script type="module">
+    import { fantasyPoints } from './js/scoring.js';
+
+    const [contracts, statsFile] = await Promise.all([
+      fetch('data/contracts.json').then(r => r.json()),
+      fetch('data/player-stats.json').then(r => r.ok ? r.json() : { players: {}, updatedAt: null }),
+    ]);
+    const stats = statsFile.players;
+
+    document.getElementById('updated').textContent = statsFile.updatedAt
+      ? `Stats updated ${new Date(statsFile.updatedAt).toLocaleString()}`
+      : 'No stats file yet — run the stats job.';
+
+    const byGM = new Map();
+    for (const c of contracts) {
+      if (!byGM.has(c.GM)) byGM.set(c.GM, []);
+      byGM.get(c.GM).push(c);
+    }
+
+    const fmt = n => n.toFixed(1);
+    const root = document.getElementById('teams');
+    for (const [gm, players] of [...byGM].sort(([a], [b]) => a.localeCompare(b))) {
+      const rows = players
+        .map(p => ({ ...p, s: stats[p.nhlId], fp: fantasyPoints(stats[p.nhlId], p.Position) }))
+        .sort((a, b) => b.fp - a.fp);
+      const total = rows.reduce((sum, r) => sum + r.fp, 0);
+
+      root.insertAdjacentHTML('beforeend', `
+        <h2>${gm} <span class="muted">${fmt(total)} FP</span></h2>
+        <div class="table-wrap"><table>
+          <tr><th>Player</th><th>Pos</th><th>Team</th><th class="num">Yrs</th><th class="num">GP</th><th class="num">FP</th><th class="num">FP/G</th></tr>
+          ${rows.map(r => `<tr>
+            <td>${r.Player}${r['Stolen?'] ? ' 🥷' : ''}</td>
+            <td>${r.Position}</td>
+            <td>${r.s?.teamAbbrev || r.Team}</td>
+            <td class="num">${r['Contract Length']}</td>
+            <td class="num">${r.s?.gamesPlayed ?? '–'}</td>
+            <td class="num">${fmt(r.fp)}</td>
+            <td class="num">${r.s?.gamesPlayed ? fmt(r.fp / r.s.gamesPlayed) : '–'}</td>
+          </tr>`).join('')}
+        </table></div>`);
+    }
+  </script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "name": "weddingsnipe-stats-job",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.14.0"
+  }
+}

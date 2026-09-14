@@ -1,60 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8TZ69H67W"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-F8TZ69H67W');
-    </script>
-    <link rel="icon" href="assets/mike-favicon.jpeg" type="image/jpeg">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bathouse Hockey League</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="shared.css">
-    <link rel="stylesheet" href="bracket.css">
-    <link rel="stylesheet" href="news-scroll.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bathouse Hockey League</title>
+  <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-    <div class="news-scroll-container">
-        <div class="news-scroll-content" id="news-scroll-content"></div>
-    </div>
-
-    <div class="bracket-page">
-        <h1 class="bracket-title">Bathouse Playoffs 2026</h1>
-
-        <div class="bracket-scroll">
-            <div id="bracket-container"></div>
-        </div>
-
-        <div class="bap-panel" id="bracketAnalyzePanel">
-            <div class="bap-header">
-                <span class="bap-title" id="bracketAnalyzeTitle"></span>
-                <div class="bap-snark-toggle">
-                    <button class="bap-snark-btn active" data-snark="off">No Snark</button>
-                    <button class="bap-snark-btn" data-snark="on">Snark</button>
-                </div>
-            </div>
-            <div class="bap-context-input">
-                <label for="bracketUserContext">Additional context (optional)</label>
-                <textarea id="bracketUserContext" placeholder="e.g. Bimm's goalies have been on fire, Andy is riding Kucherov..."></textarea>
-            </div>
-            <button class="bap-btn" id="bracketAnalyzeBtn">Bimmbot v1.0 Analysis</button>
-            <div class="tc-loading" id="bracketLoading" style="display:none;">
-                <div class="tc-spinner"></div>
-                Analyzing matchup...
-            </div>
-            <div class="tc-report" id="bracketReportContainer" style="display:none;">
-                <div class="tc-report-content" id="bracketReportContent"></div>
-            </div>
-        </div>
-    </div>
-
-    <script src="nav.js"></script>
-    <script src="news-scroll.js"></script>
-    <script src="bracket.js"></script>
+  <main>
+    <h1>Bathouse Hockey League</h1>
+    <p>Site v2 is under construction. The full <a href="v1/index.html">old site</a> is still here.</p>
+    <p class="muted" id="updated"></p>
+  </main>
+  <script src="js/nav.js"></script>
+  <script type="module">
+    const res = await fetch('data/player-stats.json');
+    if (res.ok) {
+      const { updatedAt, players } = await res.json();
+      document.getElementById('updated').textContent =
+        `Stats for ${Object.keys(players).length} players, updated ${new Date(updatedAt).toLocaleString()}`;
+    }
+  </script>
 </body>
 </html>
