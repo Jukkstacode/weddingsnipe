@@ -1,16 +1,20 @@
+const base = new URL('..', document.currentScript.src).href;
 const LINKS = [
   ['index.html', 'Home'],
   ['contracts.html', 'Contracts'],
+  ['admin/contracts.html', 'Admin'],
   ['v1/index.html', 'Old site'],
 ];
 
-const here = location.pathname.split('/').pop() || 'index.html';
+const here = location.href;
 const nav = document.createElement('nav');
 nav.className = 'top-nav';
 nav.innerHTML = `
-  <a class="brand" href="index.html">Bathouse Hockey League</a>
+  <a class="brand" href="${base}index.html">Bathouse Hockey League</a>
   <div class="links">
-    ${LINKS.map(([href, label]) =>
-      `<a href="${href}"${href === here ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
+    ${LINKS.map(([path, label]) => {
+      const href = base + path;
+      return `<a href="${href}"${here.startsWith(href) ? ' aria-current="page"' : ''}>${label}</a>`;
+    }).join('')}
   </div>`;
 document.body.prepend(nav);

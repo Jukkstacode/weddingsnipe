@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contracts Admin</title>
+  <link rel="stylesheet" href="../css/site.css">
+  <style>
+    .toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
+    select, input, button { font: inherit; padding: 0.35rem 0.6rem; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px; }
+    button.primary { background: var(--accent); color: #111; border-color: var(--accent); font-weight: 600; }
+    button:disabled { opacity: 0.5; }
+    .search { position: relative; }
+    .results { position: absolute; z-index: 5; top: 100%; left: 0; min-width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; max-height: 16rem; overflow-y: auto; }
+    .results div { padding: 0.4rem 0.6rem; cursor: pointer; white-space: nowrap; }
+    .results div:hover { background: var(--border); }
+    .status { min-height: 1.5rem; }
+    .error { color: #e06c6c; }
+    .ok { color: #7cc47c; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Contracts Admin</h1>
+    <div id="signed-out" class="toolbar" hidden>
+      <button id="sign-in" class="primary">Sign in with Google</button>
+    </div>
+    <div id="signed-in" hidden>
+      <div class="toolbar">
+        <span class="muted" id="who"></span>
+        <button id="sign-out">Sign out</button>
+      </div>
+      <div class="toolbar">
+        <label>GM <select id="gm"></select></label>
+        <div class="search">
+          <input id="search" placeholder="Add player by name…" autocomplete="off">
+          <div id="results" class="results" hidden></div>
+        </div>
+        <button id="save" class="primary" disabled>Save changes</button>
+      </div>
+      <p class="status" id="status"></p>
+      <div class="table-wrap"><table id="table">
+        <thead><tr><th>Player</th><th>Pos</th><th>Team</th><th>Years</th><th>Stolen</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+  <script type="module">
+    import { collection, getDocs, doc, writeBatch, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+    import { db, auth, signIn, signOut, onAuthStateChanged } from '../js/firebase.js';
+    import { GMS, MAX_CONTRACT_YEARS } from '../js/league.js';
+
+    const $ = id => document.getElementById(id);
+    const status = (msg, cls = '') => { $('status').textContent = msg; $('status').className = `status ${cls}`; };
+
+    let all = new Map();      // nhlId -> contract doc (whole league)
+    let rows = [];            // current GM's editable rows
+    let originalIds = new Set();
+    let dirty = false;
+
+    $('gm').innerHTML = GMS.map(g => `<option>${g}</option>`).join('');
+    $('sign-in').onclick = () => signIn().catch(e => status(e.message, 'error'));
+    $('sign-out').onclick = () => signOut(auth);
+
+    onAuthStateChanged(auth, async user => {
+      $('signed-out').hidden = !!user;
+      $('signed-in').hidden = !user;
+      if (!user) return;
+      $('who').textContent = user.email;
+      await loadAll();
+      loadGM();
+    });
+
+    async function loadAll() {
+      const snap = await getDocs(collection(db, 'contracts'));
+      all = new Map(snap.docs.map(d => [d.id, d.data()]));
+    }
+
+    function loadGM() {
+      const gm = $('gm').value;
+      rows = [...all.values()].filter(c => c.gm === gm).sort((a, b) => a.player.localeCompare(b.player));
+      originalIds = new Set(rows.map(r => r.nhlId));
+      setDirty(false);
+      render();
+    }
+
+    function setDirty(v) { dirty = v; $('save').disabled = !v; }
+
+    function render() {
+      $('rows').innerHTML = rows.map((r, i) => `<tr>
+        <td>${r.player}</td>
+        <td>${r.position}</td>
+        <td>${r.team}</td>
+        <td><select data-i="${i}" data-f="years">${
+          Array.from({ length: MAX_CONTRACT_YEARS }, (_, n) => n + 1)
+            .map(n => `<option${n === r.years ? ' selected' : ''}>${n}</option>`).join('')
+        }</select></td>
+        <td><input type="checkbox" data-i="${i}" data-f="stolen"${r.stolen ? ' checked' : ''}></td>
+        <td><button data-i="${i}" data-f="remove">Remove</button></td>
+      </tr>`).join('') || '<tr><td colspan="6" class="muted">No contracts.</td></tr>';
+    }
+
+    $('rows').addEventListener('change', e => {
+      const { i, f } = e.target.dataset;
+      if (f === 'years') rows[i].years = Number(e.target.value);
+      if (f === 'stolen') rows[i].stolen = e.target.checked;
+      setDirty(true);
+    });
+    $('rows').addEventListener('click', e => {
+      if (e.target.dataset.f !== 'remove') return;
+      rows.splice(Number(e.target.dataset.i), 1);
+      setDirty(true);
+      render();
+    });
+
+    $('gm').onchange = () => {
+      if (dirty && !confirm('Discard unsaved changes?')) { $('gm').value = rows[0]?.gm ?? $('gm').value; return; }
+      loadGM();
+    };
+
+    let searchTimer;
+    $('search').oninput = () => {
+      clearTimeout(searchTimer);
+      const q = $('search').value.trim();
+      if (q.length < 3) { $('results').hidden = true; return; }
+      searchTimer = setTimeout(() => searchPlayers(q), 250);
+    };
+    $('search').onblur = () => setTimeout(() => { $('results').hidden = true; }, 150);
+
+    async function searchPlayers(q) {
+      const res = await fetch(`https://search.d3.nhle.com/api/v1/search/player?culture=en-us&limit=10&active=true&q=${encodeURIComponent(q)}`);
+      const players = await res.json();
+      $('results').innerHTML = players.map(p => {
+        const owner = all.get(p.playerId)?.gm;
+        return `<div data-id="${p.playerId}" data-name="${p.name}" data-pos="${p.positionCode}" data-team="${p.teamAbbrev || ''}">
+          ${p.name} <span class="muted">${p.positionCode} · ${p.teamAbbrev || '–'}${owner ? ` · owned by ${owner}` : ''}</span></div>`;
+      }).join('') || '<div class="muted">No matches</div>';
+      $('results').hidden = false;
+    }
+
+    $('results').onmousedown = e => {
+      const el = e.target.closest('[data-id]');
+      if (!el) return;
+      const { id, name, pos, team } = el.dataset;
+      if (rows.some(r => r.nhlId === id)) return;
+      rows.push({ nhlId: id, player: name, position: pos, team, gm: $('gm').value, years: 1, stolen: false });
+      $('search').value = '';
+      $('results').hidden = true;
+      setDirty(true);
+      render();
+    };
+
+    $('save').onclick = async () => {
+      const gm = $('gm').value;
+      const batch = writeBatch(db);
+      const keep = new Set(rows.map(r => r.nhlId));
+      for (const r of rows) {
+        batch.set(doc(db, 'contracts', r.nhlId), {
+          ...r, gm, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email,
+        });
+      }
+      for (const id of originalIds) if (!keep.has(id)) batch.delete(doc(db, 'contracts', id));
+      try {
+        await batch.commit();
+        status(`Saved ${rows.length} contracts for ${gm}.`, 'ok');
+        await loadAll();
+        loadGM();
+      } catch (e) {
+        status(e.code === 'permission-denied' ? 'Your account is not on the admin list.' : e.message, 'error');
+      }
+    };
+  </script>
+</body>
+</html>

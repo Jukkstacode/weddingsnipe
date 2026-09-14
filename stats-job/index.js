@@ -1,12 +1,13 @@
 import { Storage } from '@google-cloud/storage';
+import { Firestore } from '@google-cloud/firestore';
 
 const BUCKET = process.env.BUCKET || 'wedding-snipe-countdown-site';
-const ROSTER_OBJECT = process.env.ROSTER_OBJECT || 'data/contracts.json';
 const OUTPUT_OBJECT = process.env.OUTPUT_OBJECT || 'data/player-stats.json';
 const SEASON = process.env.SEASON || '20252026';
 const NHL_DELAY_MS = 100;
 
 const bucket = new Storage().bucket(BUCKET);
+const db = new Firestore();
 
 function emptyStats(data) {
   return {
@@ -59,9 +60,8 @@ async function fetchPlayerStats(playerId) {
 }
 
 async function main() {
-  const [rosterBuf] = await bucket.file(ROSTER_OBJECT).download();
-  const roster = JSON.parse(rosterBuf.toString());
-  const playerIds = [...new Set(roster.map(r => r.nhlId).filter(Boolean))];
+  const roster = await db.collection('contracts').get();
+  const playerIds = roster.docs.map(d => d.id);
   console.log(`Refreshing ${playerIds.length} players for ${SEASON}`);
 
   const players = {};

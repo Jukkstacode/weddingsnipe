@@ -14,12 +14,15 @@
   </main>
   <script src="js/nav.js"></script>
   <script type="module">
+    import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+    import { db } from './js/firebase.js';
     import { fantasyPoints } from './js/scoring.js';
 
-    const [contracts, statsFile] = await Promise.all([
-      fetch('data/contracts.json').then(r => r.json()),
+    const [snap, statsFile] = await Promise.all([
+      getDocs(collection(db, 'contracts')),
       fetch('data/player-stats.json').then(r => r.ok ? r.json() : { players: {}, updatedAt: null }),
     ]);
+    const contracts = snap.docs.map(d => d.data());
     const stats = statsFile.players;
 
     document.getElementById('updated').textContent = statsFile.updatedAt
@@ -28,15 +31,15 @@
 
     const byGM = new Map();
     for (const c of contracts) {
-      if (!byGM.has(c.GM)) byGM.set(c.GM, []);
-      byGM.get(c.GM).push(c);
+      if (!byGM.has(c.gm)) byGM.set(c.gm, []);
+      byGM.get(c.gm).push(c);
     }
 
     const fmt = n => n.toFixed(1);
     const root = document.getElementById('teams');
     for (const [gm, players] of [...byGM].sort(([a], [b]) => a.localeCompare(b))) {
       const rows = players
-        .map(p => ({ ...p, s: stats[p.nhlId], fp: fantasyPoints(stats[p.nhlId], p.Position) }))
+        .map(p => ({ ...p, s: stats[p.nhlId], fp: fantasyPoints(stats[p.nhlId], p.position) }))
         .sort((a, b) => b.fp - a.fp);
       const total = rows.reduce((sum, r) => sum + r.fp, 0);
 
@@ -45,10 +48,10 @@
         <div class="table-wrap"><table>
           <tr><th>Player</th><th>Pos</th><th>Team</th><th class="num">Yrs</th><th class="num">GP</th><th class="num">FP</th><th class="num">FP/G</th></tr>
           ${rows.map(r => `<tr>
-            <td>${r.Player}${r['Stolen?'] ? ' 🥷' : ''}</td>
-            <td>${r.Position}</td>
-            <td>${r.s?.teamAbbrev || r.Team}</td>
-            <td class="num">${r['Contract Length']}</td>
+            <td>${r.player}${r.stolen ? ' <span class="muted">(stolen)</span>' : ''}</td>
+            <td>${r.position}</td>
+            <td>${r.s?.teamAbbrev || r.team}</td>
+            <td class="num">${r.years}</td>
             <td class="num">${r.s?.gamesPlayed ?? '–'}</td>
             <td class="num">${fmt(r.fp)}</td>
             <td class="num">${r.s?.gamesPlayed ? fmt(r.fp / r.s.gamesPlayed) : '–'}</td>
