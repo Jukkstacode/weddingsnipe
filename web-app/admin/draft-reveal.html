@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draft Reveal Admin</title>
+  <link rel="stylesheet" href="../css/site.css">
+  <style>
+    .toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1rem; }
+    select, input, button { font: inherit; padding: 0.35rem 0.6rem; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px; }
+    button.primary { background: var(--accent); color: #111; border-color: var(--accent); font-weight: 600; }
+    .order { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 0.5rem; margin: 1rem 0; }
+    .order label { display: flex; align-items: center; gap: 0.5rem; }
+    .order label span { width: 2.5rem; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .order select { flex: 1; }
+    .order select.dup { border-color: #e06c6c; }
+    .status { min-height: 1.5rem; }
+    .error { color: #e06c6c; }
+    .ok { color: #7cc47c; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Draft Reveal Admin</h1>
+    <p class="muted"><a href="contracts.html">← Contracts admin</a> · <a href="../draft-reveal.html" target="_blank">Open the public reveal page</a></p>
+    <div id="signed-out" class="toolbar" hidden>
+      <button id="sign-in" class="primary">Sign in with Google</button>
+    </div>
+    <div id="signed-in" hidden>
+      <div class="toolbar">
+        <span class="muted" id="who"></span>
+        <button id="sign-out">Sign out</button>
+      </div>
+      <div class="toolbar">
+        <label>Reveal starts <input type="datetime-local" id="reveal-at"></label>
+        <label>Seconds between picks <input type="number" id="interval" min="1" max="600" value="30" style="width:5rem"></label>
+      </div>
+      <p class="muted">The last pick is shown first. Each pick is locked on the server until its moment, so nobody can peek early.</p>
+      <div class="order" id="order"></div>
+      <div class="toolbar">
+        <button id="shuffle">Shuffle</button>
+        <button id="save" class="primary">Save &amp; schedule</button>
+      </div>
+      <p class="status" id="status"></p>
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+  <script type="module">
+    import { doc, getDoc, writeBatch, Timestamp, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+    import { db, auth, signIn, signOut, onAuthStateChanged } from '../js/firebase.js';
+    import { GMS } from '../js/league.js';
+
+    const N = GMS.length;
+    const $ = id => document.getElementById(id);
+    const status = (msg, cls = '') => { $('status').textContent = msg; $('status').className = `status ${cls}`; };
+    const selects = () => [...document.querySelectorAll('#order select')];
+
+    $('order').innerHTML = Array.from({ length: N }, (_, i) => `
+      <label><span>${i + 1}.</span><select data-slot="${i + 1}">
+        <option value="">—</option>${GMS.map(g => `<option>${g}</option>`).join('')}
+      </select></label>`).join('');
+
+    $('sign-in').onclick = () => signIn().catch(e => status(e.message, 'error'));
+    $('sign-out').onclick = () => signOut(auth);
+
+    onAuthStateChanged(auth, async user => {
+      $('signed-out').hidden = !!user;
+      $('signed-in').hidden = !user;
+      if (!user) return;
+      $('who').textContent = user.email;
+      await load();
+    });
+
+    // datetime-local wants "YYYY-MM-DDTHH:MM" in local time.
+    const toLocalInput = d => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+
+    async function load() {
+      try {
+        const meta = await getDoc(doc(db, 'draft', 'meta'));
+        if (meta.exists()) {
+          $('reveal-at').value = toLocalInput(meta.data().revealAt.toDate());
+          $('interval').value = meta.data().intervalSec;
+        } else {
+          $('reveal-at').value = toLocalInput(new Date(Date.now() + 3600000));
+        }
+        for (const sel of selects()) {
+          const pick = await getDoc(doc(db, 'draft', sel.dataset.slot));
+          if (pick.exists()) sel.value = pick.data().gm;
+        }
+        markDupes();
+      } catch (e) {
+        status(e.code === 'permission-denied' ? 'Your account is not on the admin list.' : e.message, 'error');
+      }
+    }
+
+    function markDupes() {
+      const seen = new Map();
+      for (const s of selects()) seen.set(s.value, (seen.get(s.value) || 0) + 1);
+      for (const s of selects()) s.classList.toggle('dup', !!s.value && seen.get(s.value) > 1);
+    }
+    $('order').addEventListener('change', markDupes);
+
+    $('shuffle').onclick = () => {
+      const order = [...GMS].sort(() => Math.random() - 0.5);
+      selects().forEach((s, i) => { s.value = order[i]; });
+      markDupes();
+    };
+
+    $('save').onclick = async () => {
+      const picks = selects().map(s => s.value);
+      if (picks.some(p => !p) || new Set(picks).size !== N) return status('Every slot needs a different GM.', 'error');
+      const revealAt = new Date($('reveal-at').value);
+      const intervalSec = Math.trunc(Number($('interval').value));
+      if (isNaN(revealAt) || !(intervalSec > 0)) return status('Set a reveal time and a positive interval.', 'error');
+
+      const batch = writeBatch(db);
+      const by = auth.currentUser.email;
+      batch.set(doc(db, 'draft', 'meta'), { revealAt: Timestamp.fromDate(revealAt), intervalSec, updatedAt: serverTimestamp(), updatedBy: by });
+      picks.forEach((gm, i) => batch.set(doc(db, 'draft', String(i + 1)), { gm, updatedAt: serverTimestamp(), updatedBy: by }));
+      try {
+        await batch.commit();
+        status(`Scheduled. Reveal starts ${revealAt.toLocaleString()}, one pick every ${intervalSec}s, ending about ${new Date(revealAt.getTime() + (N - 1) * intervalSec * 1000).toLocaleTimeString()}.`, 'ok');
+      } catch (e) {
+        status(e.code === 'permission-denied' ? 'Your account is not on the admin list.' : e.message, 'error');
+      }
+    };
+  </script>
+</body>
+</html>

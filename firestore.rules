@@ -13,6 +13,16 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Draft order reveal. draft/meta {revealAt, intervalSec} is public.
+    // draft/{slot} ("1".."14") is unreadable until its scheduled reveal moment,
+    // enforced server-side: slot 14 opens at revealAt, 13 one interval later, etc.
+    match /draft/{slot} {
+      function meta() { return get(/databases/$(database)/documents/draft/meta).data; }
+      allow read: if slot == 'meta' || isAdmin()
+        || request.time >= meta().revealAt + duration.value((14 - int(slot)) * meta().intervalSec, 's');
+      allow write: if isAdmin();
+    }
+
     match /users/{uid}/{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == uid;
     }

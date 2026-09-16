@@ -2,6 +2,7 @@ const base = new URL('..', document.currentScript.src).href;
 const LINKS = [
   ['index.html', 'Home'],
   ['contracts.html', 'Contracts'],
+  ['draft-reveal.html', 'Draft'],
   ['stats/index.html', 'Stats'],
   ['admin/contracts.html', 'Admin'],
 ];

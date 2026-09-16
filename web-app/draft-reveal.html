@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draft Order Reveal</title>
+  <link rel="stylesheet" href="css/site.css">
+  <style>
+    .stage { min-height: 22rem; display: grid; place-items: center; text-align: center; padding: 1.5rem 0 2rem; }
+    .stage .eyebrow { margin-bottom: 0.5rem; }
+    .stage h1 { margin: 0; }
+    .next { margin: 1rem 0 0; font-family: var(--display); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .next b { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+    .spot { display: grid; place-items: center; gap: 0.75rem; animation: pop 0.6s cubic-bezier(.2,1.4,.4,1); }
+    .spot .num { font-family: var(--display); font-weight: 800; font-size: clamp(1.4rem, 4vw, 2rem); letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
+    .spot img { width: min(60vw, 16rem); aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 5px solid var(--accent); box-shadow: 0 0 0 10px rgba(224,176,76,0.15), 0 20px 60px rgba(0,0,0,0.5); }
+    .spot .name { font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 12vw, 6rem); line-height: 1; text-transform: uppercase; }
+    .spot.first .num { color: var(--accent); }
+    .spot.first img { border-color: var(--red); box-shadow: 0 0 0 10px rgba(255,77,77,0.2), 0 20px 60px rgba(0,0,0,0.5); }
+    @keyframes pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+
+    .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: 0.75rem; }
+    .pick { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.6rem 0.5rem 0.7rem; text-align: center; transition: border-color 0.3s; }
+    .pick .num { font-family: var(--display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .pick .face { width: 4.5rem; aspect-ratio: 1; margin: 0.4rem auto; border-radius: 50%; display: grid; place-items: center; background: var(--border); font-family: var(--display); font-weight: 800; font-size: 2rem; color: var(--muted); overflow: hidden; }
+    .pick .face img { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .pick .name { font-family: var(--display); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; min-height: 1.3em; }
+    .pick.revealed { border-color: var(--accent); }
+    .pick.revealed .face { background: none; }
+    .pick.revealed .face img { display: block; animation: pop 0.5s ease-out; }
+    .pick.revealed .face span { display: none; }
+    .pick.latest { border-color: var(--red); box-shadow: 0 0 0 2px var(--red); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="stage" id="stage">
+      <p class="muted">Loading…</p>
+    </section>
+    <h2 id="board-title" hidden>Draft order</h2>
+    <div class="board" id="board" hidden></div>
+    <p class="muted" id="note"></p>
+  </main>
+  <script src="js/nav.js"></script>
+  <script type="module">
+    import { GMS, gmPhoto } from './js/league.js';
+
+    const N = GMS.length;
+    const $ = id => document.getElementById(id);
+    const ordinal = n => n + (n % 10 === 1 && n !== 11 ? 'st' : n % 10 === 2 && n !== 12 ? 'nd' : n % 10 === 3 && n !== 13 ? 'rd' : 'th');
+    const mmss = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    // --- Data source: Firestore, or a local demo (?demo) that needs no backend. ---
+    const demo = new URLSearchParams(location.search).has('demo');
+    let meta, fetchSlot;
+    if (demo) {
+      const order = [...GMS].sort(() => Math.random() - 0.5);
+      meta = { revealAt: Date.now() + 8000, intervalSec: 4 };
+      fetchSlot = async slot => order[slot - 1];
+      $('note').textContent = 'Demo mode: random order, nothing is loaded from the server.';
+    } else {
+      const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js');
+      const { db } = await import('./js/firebase.js');
+      const snap = await getDoc(doc(db, 'draft', 'meta'));
+      if (!snap.exists()) {
+        $('stage').innerHTML = '<p class="muted">The draft order reveal hasn\'t been scheduled yet.</p>';
+        throw new Error('no draft/meta');
+      }
+      meta = { revealAt: snap.data().revealAt.toMillis(), intervalSec: snap.data().intervalSec };
+      // The doc is locked server-side until its moment. A fast local clock gets
+      // permission-denied a little early, so keep retrying once a second.
+      fetchSlot = async slot => {
+        for (;;) {
+          try {
+            const s = await getDoc(doc(db, 'draft', String(slot)));
+            if (s.exists()) return s.data().gm;
+          } catch (e) {
+            if (e.code !== 'permission-denied') throw e;
+          }
+          await sleep(1000);
+        }
+      };
+    }
+
+    // Slot N (last pick) is revealed first, slot 1 last.
+    const slotAt = slot => meta.revealAt + (N - slot) * meta.intervalSec * 1000;
+
+    // --- Board: one card per slot, 1..N, filled in as picks are revealed. ---
+    $('board').innerHTML = Array.from({ length: N }, (_, i) => `
+      <div class="pick" id="pick-${i + 1}">
+        <div class="num">${ordinal(i + 1)} pick</div>
+        <div class="face"><span>?</span><img alt=""></div>
+        <div class="name"></div>
+      </div>`).join('');
+
+    function showOnBoard(slot, gm) {
+      document.querySelectorAll('.pick.latest').forEach(el => el.classList.remove('latest'));
+      const el = $(`pick-${slot}`);
+      el.classList.add('revealed', 'latest');
+      el.querySelector('img').src = gmPhoto(gm);
+      el.querySelector('img').alt = gm;
+      el.querySelector('.name').textContent = gm;
+    }
+
+    function spotlight(slot, gm) {
+      $('stage').innerHTML = `
+        <div class="spot${slot === 1 ? ' first' : ''}">
+          <div class="num">${ordinal(slot)} overall pick</div>
+          <img src="${gmPhoto(gm)}" alt="">
+          <div class="name">${gm}</div>
+          <p class="next" id="next"></p>
+        </div>`;
+    }
+
+    function countdown(el, until, label) {
+      const tick = () => {
+        const left = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+        el.innerHTML = `${label} <b>${mmss(left)}</b>`;
+        if (left > 0) setTimeout(tick, 1000 - (Date.now() % 1000));
+      };
+      tick();
+    }
+
+    // --- Pre-reveal countdown ---
+    if (Date.now() < meta.revealAt) {
+      const when = new Date(meta.revealAt).toLocaleString(undefined, {
+        weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+      });
+      $('stage').innerHTML = `
+        <div>
+          <p class="eyebrow">Draft order reveal</p>
+          <h1>The picks drop live</h1>
+          <p class="muted">${when} · one pick every ${meta.intervalSec} seconds, starting from ${ordinal(N)}</p>
+          <p class="next" id="next"></p>
+        </div>`;
+      countdown($('next'), meta.revealAt, 'Reveal begins in');
+      await sleep(meta.revealAt - Date.now());
+    }
+
+    $('board-title').hidden = $('board').hidden = false;
+
+    // --- Live reveal: walk slots N..1 on the shared wall-clock schedule. ---
+    // Late arrivals catch up quickly: already-open slots reveal with a short stagger.
+    for (let slot = N; slot >= 1; slot--) {
+      const wait = slotAt(slot) - Date.now();
+      if (wait > 0) {
+        countdown($('next') ?? $('stage'), slotAt(slot), `${ordinal(slot)} pick in`);
+        await sleep(wait);
+      } else if (slot < N) {
+        await sleep(400);
+      }
+      const gm = await fetchSlot(slot);
+      showOnBoard(slot, gm);
+      spotlight(slot, gm);
+      if (slot === 1) {
+        $('next').innerHTML = 'That\'s the order. Good luck.';
+        document.title = 'Draft Order';
+      }
+    }
+  </script>
+</body>
+</html>
