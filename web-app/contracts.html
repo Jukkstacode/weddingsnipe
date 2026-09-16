@@ -3,74 +3,318 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contracts</title>
+  <title>Contracts — Bathouse Hockey League</title>
   <link rel="stylesheet" href="css/site.css">
+  <style>
+    .contracts-main { max-width: 1400px; }
+
+    /* ---------- header ---------- */
+    .page-head {
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem;
+      margin-bottom: 1.25rem; animation: rise 0.5s ease-out both;
+    }
+    .page-head h1 { margin: 0; font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 0.9; letter-spacing: -0.01em; }
+    .page-head h1 span { color: var(--blue); }
+    .lede { max-width: 38ch; margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .lede b { color: var(--text); font-weight: 400; }
+
+    /* ---------- filters ---------- */
+    .toolbar {
+      position: sticky; top: 0; z-index: 5;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem;
+      margin: 0 -1rem 1.25rem; padding: 0.6rem 1rem;
+      background: rgba(10,20,32,0.92); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .chips button, .ghost {
+      font-family: var(--display); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 0.65rem; border-radius: 3px; border: 1px solid var(--border); background: transparent; color: var(--muted);
+      cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .chips button:hover:not(.active), .ghost:hover { color: var(--text); border-color: var(--muted); }
+    .chips button.active { background: var(--blue); border-color: var(--blue); color: var(--bg); }
+    .chips button.rfa.active { background: var(--accent); border-color: var(--accent); }
+    .chips button.stolen.active { background: var(--red); border-color: var(--red); color: #fff; }
+    .toolbar .sep { width: 1px; height: 1.4rem; background: var(--border); }
+    .toolbar input, .toolbar select {
+      font: inherit; font-size: 0.9rem; padding: 0.35rem 0.6rem; color: var(--text);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 4px;
+    }
+    .toolbar input { width: 13rem; max-width: 100%; }
+    .toolbar input:focus, .toolbar select:focus { outline: none; border-color: var(--blue); }
+    .toolbar .count { margin-left: auto; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    /* ---------- GM sections ---------- */
+    .gm {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 1rem; overflow: hidden;
+      animation: rise 0.5s ease-out both;
+    }
+    .gm-head {
+      display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: 0.9rem;
+      padding: 0.8rem 1rem; border-bottom: 1px solid var(--border);
+    }
+    .gm-head .rank {
+      font-family: var(--display); font-weight: 800; font-size: 1.6rem; line-height: 1; color: var(--muted); opacity: 0.5; min-width: 1.6ch; text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .gm:nth-child(1) .rank { color: var(--accent); opacity: 1; }
+    .gm-head img { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+    .gm:nth-child(1) .gm-head img { border-color: var(--accent); }
+    .gm-head .name { font-family: var(--display); font-weight: 800; font-size: 1.6rem; line-height: 1; text-transform: uppercase; }
+    .gm-head .meta { margin-top: 0.25rem; font-size: 0.78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.25rem 0.8rem; }
+    .gm-head .meta .years { display: inline-flex; gap: 0.1rem; align-items: center; }
+    .gm-head .meta .years i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 1px; background: var(--yc); }
+    .gm-head .total { text-align: right; }
+    .gm-head .total .label { font-family: var(--display); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .gm-head .total .value { font-family: var(--display); font-weight: 800; font-size: 2rem; line-height: 1; color: var(--blue); font-variant-numeric: tabular-nums; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin: 0 -1px -1px 0; }
+    .gm-empty { padding: 1rem; color: var(--muted); font-size: 0.85rem; background: var(--surface); }
+
+    /* ---------- player cards ---------- */
+    .card {
+      position: relative; display: block; text-decoration: none; color: inherit;
+      background: var(--surface); padding: 0.8rem 0.9rem 0.75rem; transition: background 0.15s;
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .card:hover { background: rgba(95,179,255,0.06); }
+    .card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.55rem; }
+    .card .who { min-width: 0; }
+    .card .pname { font-weight: 700; font-size: 1rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card .detail { display: flex; align-items: center; gap: 0.45rem; margin-top: 0.25rem; font-size: 0.8rem; color: var(--muted); }
+    .pos {
+      --pc: var(--muted);
+      font-family: var(--display); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em; padding: 0.1rem 0.4rem; border-radius: 3px;
+      background: color-mix(in srgb, var(--pc) 18%, transparent); color: var(--pc);
+    }
+    .pos-C { --pc: var(--blue); }
+    .pos-LW, .pos-RW { --pc: #c084fc; }
+    .pos-D { --pc: #4bd4a8; }
+    .pos-G { --pc: var(--accent); }
+    .pos-multi { --pc: #ff9f40; }
+    .stolen-tag {
+      font-family: var(--display); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--red); border: 1px solid var(--red); border-radius: 3px; padding: 0.05rem 0.35rem;
+    }
+
+    .term { display: flex; flex-direction: column; align-items: flex-end; gap: 0.2rem; flex-shrink: 0; }
+    .term .dots { display: flex; gap: 3px; }
+    .term .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--yc); }
+    .term .lbl { font-family: var(--display); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .y1 { --yc: var(--muted); }
+    .y2 { --yc: var(--blue); }
+    .y3 { --yc: var(--accent); }
+    .y4 { --yc: var(--red); }
+    .term.y1 .lbl { color: var(--accent); }
+
+    .stats { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 1px; background: rgba(0,0,0,0.25); border-radius: 4px; overflow: hidden; }
+    .stats div { text-align: center; padding: 0.35rem 0.2rem; background: rgba(255,255,255,0.03); }
+    .stats small { display: block; font-family: var(--display); font-weight: 700; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .stats b { display: block; font-size: 0.9rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .stats .fp { background: rgba(95,179,255,0.10); }
+    .stats .fp b { color: var(--blue); }
+    .nostats { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+
+    .card.hide, .gm.hide { display: none; }
+
+    .notice { padding: 3rem 1rem; text-align: center; color: var(--muted); }
+    .notice .spin { width: 22px; height: 22px; margin: 0 auto 0.8rem; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--red); animation: spin 0.8s linear infinite; }
+
+    #gate { padding: 2rem 0; }
+    #gate .primary { margin-top: 0.5rem; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 720px) {
+      .toolbar input { width: 100%; }
+      .toolbar .count { margin-left: 0; width: 100%; }
+      .gm-head { grid-template-columns: auto auto minmax(0, 1fr); }
+      .gm-head .total { grid-column: 2 / -1; text-align: left; display: flex; align-items: baseline; gap: 0.5rem; }
+      .gm-head .total .value { font-size: 1.5rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <main>
-    <h1>Contracts</h1>
-    <div id="gate">
+  <main class="contracts-main">
+    <header class="page-head">
+      <div>
+        <p class="eyebrow">Keeper contracts</p>
+        <h1>Who's <span>locked up</span></h1>
+      </div>
+      <p class="lede" id="lede">Every GM's roster, sorted by fantasy production. Tap a player to chart their season.</p>
+    </header>
+
+    <div id="gate" hidden>
       <p class="muted">Contracts are for league members. Sign in to view.</p>
       <button id="sign-in" class="primary">Sign in with Google</button>
     </div>
+
     <div id="content" hidden>
-      <p class="muted" id="updated">Loading…</p>
-      <div id="teams"></div>
+      <div class="toolbar">
+        <div class="chips" id="pos">
+          <button data-pos="ALL" class="active">All</button>
+          <button data-pos="C">C</button>
+          <button data-pos="LW">LW</button>
+          <button data-pos="RW">RW</button>
+          <button data-pos="D">D</button>
+          <button data-pos="G">G</button>
+        </div>
+        <span class="sep"></span>
+        <div class="chips">
+          <button id="rfa" class="rfa" title="Contracts expiring after this season">RFA</button>
+          <button id="stolen" class="stolen" title="Players taken in the offseason steal">Stolen</button>
+        </div>
+        <span class="sep"></span>
+        <select id="gm" aria-label="Filter by GM"><option value="">All GMs</option></select>
+        <input id="q" placeholder="Search players…" autocomplete="off">
+        <span class="count" id="count"></span>
+      </div>
+      <div id="teams"><div class="notice"><div class="spin"></div>Loading contracts…</div></div>
     </div>
   </main>
+
   <script src="js/nav.js"></script>
   <script type="module">
     import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
     import { db, auth, signIn, onAuthStateChanged } from './js/firebase.js';
     import { fantasyPoints } from './js/scoring.js';
+    import { GMS, gmPhoto } from './js/league.js';
 
-    document.getElementById('sign-in').onclick = () => signIn().catch(e => alert(e.message));
+    const $ = id => document.getElementById(id);
+    const fmt = n => n.toFixed(1);
+    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    // ---------- auth gate ----------
+    $('sign-in').onclick = () => signIn().catch(e => alert(e.message));
     await new Promise(resolve => onAuthStateChanged(auth, user => {
-      document.getElementById('gate').hidden = !!user;
-      document.getElementById('content').hidden = !user;
+      $('gate').hidden = !!user;
+      $('content').hidden = !user;
       if (user) resolve();
     }));
 
-    const [snap, statsFile] = await Promise.all([
+    // ---------- data ----------
+    const [snap, file] = await Promise.all([
       getDocs(collection(db, 'contracts')),
-      fetch('data/player-stats.json').then(r => r.ok ? r.json() : { players: {}, updatedAt: null }),
+      fetch('data/player-stats.json').then(r => r.ok ? r.json() : { players: {}, updatedAt: null, season: '' }),
     ]);
-    const contracts = snap.docs.map(d => d.data());
-    const stats = statsFile.players;
+    const stats = file.players || {};
+    const contracts = snap.docs.map(d => {
+      const c = d.data();
+      const s = stats[c.nhlId];
+      // Older docs use NHL's one-letter codes (L, R); normalise so badges and filters match.
+      const position = String(c.position || '').split(',').map(p => ({ L: 'LW', R: 'RW' }[p.trim()] || p.trim())).join(',');
+      return { ...c, s, position, fp: fantasyPoints(s, position), team: s?.teamAbbrev || c.team };
+    });
 
-    document.getElementById('updated').textContent = statsFile.updatedAt
-      ? `Stats updated ${new Date(statsFile.updatedAt).toLocaleString()}`
-      : 'No stats file yet — run the stats job.';
+    const season = file.season ? `${file.season.slice(0, 4)}-${file.season.slice(6)}` : '';
+    const rfas = contracts.filter(c => c.years === 1).length;
+    const stolen = contracts.filter(c => c.stolen).length;
+    $('lede').innerHTML = file.updatedAt
+      ? `<b>${contracts.length}</b> contracts across ${GMS.length} GMs. <b>${rfas}</b> expire after this season, <b>${stolen}</b> were stolen.
+         ${season} stats updated ${new Date(file.updatedAt).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}.`
+      : `<b>${contracts.length}</b> contracts across ${GMS.length} GMs. No stats file yet.`;
 
-    const byGM = new Map();
-    for (const c of contracts) {
-      if (!byGM.has(c.gm)) byGM.set(c.gm, []);
-      byGM.get(c.gm).push(c);
+    // ---------- group + sort (fixed order; filters only hide) ----------
+    const teams = GMS.map(gm => {
+      const players = contracts.filter(c => c.gm === gm)
+        .sort((a, b) => (b.years - a.years) || (b.fp - a.fp) || a.player.localeCompare(b.player));
+      const total = players.reduce((sum, p) => sum + p.fp, 0);
+      const byYears = [4, 3, 2, 1].map(y => [y, players.filter(p => p.years === y).length]).filter(([, n]) => n);
+      return { gm, players, total, byYears };
+    }).filter(t => t.players.length).sort((a, b) => b.total - a.total);
+
+    $('gm').innerHTML += teams.map(t => `<option>${t.gm}</option>`).join('');
+
+    // ---------- render ----------
+    const posClass = pos => pos.includes(',') ? 'pos-multi' : `pos-${pos.trim()}`;
+    const plus = n => (n > 0 ? '+' : '') + n;
+
+    function statsRow(p) {
+      const s = p.s;
+      if (!s) return '<p class="nostats">No stats yet</p>';
+      const cells = p.position === 'G'
+        ? [['GP', s.gamesPlayed], ['W', s.wins], ['L', s.losses], ['GAA', s.goalsAgainstAverage ? s.goalsAgainstAverage.toFixed(2) : '–'], ['SV%', s.savePctg ? s.savePctg.toFixed(3).slice(1) : '–']]
+        : [['GP', s.gamesPlayed], ['G', s.goals], ['A', s.assists], ['P', s.points], ['+/-', plus(s.plusMinus)]];
+      cells.push(['FP', fmt(p.fp), 'fp']);
+      return `<div class="stats">${cells.map(([l, v, c]) => `<div class="${c || ''}"><small>${l}</small><b>${v ?? 0}</b></div>`).join('')}</div>`;
     }
 
-    const fmt = n => n.toFixed(1);
-    const root = document.getElementById('teams');
-    for (const [gm, players] of [...byGM].sort(([a], [b]) => a.localeCompare(b))) {
-      const rows = players
-        .map(p => ({ ...p, s: stats[p.nhlId], fp: fantasyPoints(stats[p.nhlId], p.position) }))
-        .sort((a, b) => b.fp - a.fp);
-      const total = rows.reduce((sum, r) => sum + r.fp, 0);
-
-      root.insertAdjacentHTML('beforeend', `
-        <h2>${gm} <span class="muted">${fmt(total)} FP</span></h2>
-        <div class="table-wrap"><table>
-          <tr><th>Player</th><th>Pos</th><th>Team</th><th class="num">Yrs</th><th class="num">GP</th><th class="num">FP</th><th class="num">FP/G</th></tr>
-          ${rows.map(r => `<tr>
-            <td>${r.player}${r.stolen ? ' <span class="muted">(stolen)</span>' : ''}</td>
-            <td>${r.position}</td>
-            <td>${r.s?.teamAbbrev || r.team}</td>
-            <td class="num">${r.years}</td>
-            <td class="num">${r.s?.gamesPlayed ?? '–'}</td>
-            <td class="num">${fmt(r.fp)}</td>
-            <td class="num">${r.s?.gamesPlayed ? fmt(r.fp / r.s.gamesPlayed) : '–'}</td>
-          </tr>`).join('')}
-        </table></div>`);
+    function card(p) {
+      const yrs = Math.min(Math.max(p.years, 1), 4);
+      return `
+        <a class="card" href="stats/index.html?p=${p.nhlId}.${file.season || '20252026'}"
+           data-pos="${esc(p.position)}" data-years="${p.years}" data-stolen="${p.stolen ? 1 : 0}" data-name="${esc(p.player.toLowerCase())}">
+          <div class="top">
+            <div class="who">
+              <div class="pname">${esc(p.player)}</div>
+              <div class="detail">
+                <span class="pos ${posClass(p.position)}">${esc(p.position)}</span>
+                <span>${esc(p.team || '–')}</span>
+                ${p.stolen ? '<span class="stolen-tag">Stolen</span>' : ''}
+              </div>
+            </div>
+            <div class="term y${yrs}">
+              <div class="dots">${'<i></i>'.repeat(yrs)}</div>
+              <span class="lbl">${p.years === 1 ? 'RFA' : `${p.years} yrs`}</span>
+            </div>
+          </div>
+          ${statsRow(p)}
+        </a>`;
     }
+
+    $('teams').innerHTML = teams.map((t, i) => `
+      <section class="gm" data-gm="${t.gm}" style="animation-delay:${i * 40}ms">
+        <div class="gm-head">
+          <div class="rank">${i + 1}</div>
+          <img src="${gmPhoto(t.gm)}" alt="">
+          <div>
+            <div class="name">${t.gm}</div>
+            <div class="meta">
+              <span class="n">${t.players.length} contracts</span>
+              ${t.byYears.map(([y, n]) => `<span class="years"><i class="y${y}"></i>${n} × ${y === 1 ? 'RFA' : `${y}yr`}</span>`).join('')}
+            </div>
+          </div>
+          <div class="total"><div class="label">Total FP</div><div class="value">${fmt(t.total)}</div></div>
+        </div>
+        <div class="grid">${t.players.map(card).join('')}</div>
+        <div class="gm-empty" hidden>No players match.</div>
+      </section>`).join('') || '<div class="notice">No contracts yet. Add some on the admin page.</div>';
+
+    // ---------- filters (composable, never reorder) ----------
+    const filter = { pos: 'ALL', rfa: false, stolen: false, gm: '', q: '' };
+    function apply() {
+      let shown = 0;
+      document.querySelectorAll('.gm').forEach(sec => {
+        const gmHit = !filter.gm || sec.dataset.gm === filter.gm;
+        let n = 0;
+        sec.querySelectorAll('.card').forEach(c => {
+          const hit = gmHit
+            && (filter.pos === 'ALL' || c.dataset.pos.split(',').some(p => p.trim() === filter.pos))
+            && (!filter.rfa || c.dataset.years === '1')
+            && (!filter.stolen || c.dataset.stolen === '1')
+            && (!filter.q || c.dataset.name.includes(filter.q));
+          c.classList.toggle('hide', !hit);
+          if (hit) n++;
+        });
+        sec.classList.toggle('hide', !gmHit);
+        sec.querySelector('.gm-empty').hidden = n > 0;
+        shown += n;
+      });
+      const any = filter.pos !== 'ALL' || filter.rfa || filter.stolen || filter.gm || filter.q;
+      $('count').textContent = any ? `${shown} of ${contracts.length} shown` : '';
+    }
+
+    $('pos').addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      $('pos').querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+      filter.pos = b.dataset.pos; apply();
+    });
+    $('rfa').onclick = () => { filter.rfa = !filter.rfa; $('rfa').classList.toggle('active', filter.rfa); apply(); };
+    $('stolen').onclick = () => { filter.stolen = !filter.stolen; $('stolen').classList.toggle('active', filter.stolen); apply(); };
+    $('gm').onchange = () => { filter.gm = $('gm').value; apply(); };
+    $('q').oninput = () => { filter.q = $('q').value.trim().toLowerCase(); apply(); };
   </script>
 </body>
 </html>
