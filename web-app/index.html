@@ -13,6 +13,11 @@
       <div class="clock" id="clock"></div>
       <p class="muted" id="draft-when"></p>
     </section>
+    <section class="countdown" id="reveal" hidden>
+      <p class="eyebrow">Draft order reveal</p>
+      <div class="clock" id="reveal-clock"></div>
+      <p class="muted" id="reveal-when"></p>
+    </section>
     <p class="muted" id="updated"></p>
   </main>
   <script src="js/nav.js"></script>
@@ -20,22 +25,40 @@
     import { DRAFT_AT } from './js/league.js';
 
     const units = [['d', 86400], ['h', 3600], ['m', 60], ['s', 1]];
-    document.getElementById('draft-when').textContent = DRAFT_AT.toLocaleString(undefined, {
+    const fmt = d => d.toLocaleString(undefined, {
       weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
     });
-    function tick() {
-      let left = Math.max(0, Math.floor((DRAFT_AT - Date.now()) / 1000));
-      if (!left) {
-        document.getElementById('clock').innerHTML = '<span class="unit"><b>Draft is live</b></span>';
-        return;
-      }
-      document.getElementById('clock').innerHTML = units.map(([label, secs]) => {
-        const n = Math.floor(left / secs); left -= n * secs;
-        return `<span class="unit"><b>${String(n).padStart(2, '0')}</b><small>${label}</small></span>`;
-      }).join('');
-      setTimeout(tick, 1000 - (Date.now() % 1000));
+
+    // Counts down `el` to `at`; shows `liveHtml` once it passes.
+    function countdown(el, at, liveHtml) {
+      const tick = () => {
+        let left = Math.max(0, Math.floor((at - Date.now()) / 1000));
+        if (!left) { el.innerHTML = liveHtml; return; }
+        el.innerHTML = units.map(([label, secs]) => {
+          const n = Math.floor(left / secs); left -= n * secs;
+          return `<span class="unit"><b>${String(n).padStart(2, '0')}</b><small>${label}</small></span>`;
+        }).join('');
+        setTimeout(tick, 1000 - (Date.now() % 1000));
+      };
+      tick();
     }
-    tick();
+
+    document.getElementById('draft-when').textContent = fmt(DRAFT_AT);
+    countdown(document.getElementById('clock'), DRAFT_AT, '<span class="unit"><b>Draft is live</b></span>');
+
+    // Draft order reveal time is set by admins in Firestore (draft/meta).
+    try {
+      const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js');
+      const { db } = await import('./js/firebase.js');
+      const snap = await getDoc(doc(db, 'draft', 'meta'));
+      if (snap.exists()) {
+        const revealAt = snap.data().revealAt.toDate();
+        document.getElementById('reveal').hidden = false;
+        document.getElementById('reveal-when').innerHTML = `${fmt(revealAt)} · <a href="draft-reveal.html">Watch it live</a>`;
+        countdown(document.getElementById('reveal-clock'), revealAt,
+          '<span class="unit"><b><a href="draft-reveal.html">The order is out</a></b></span>');
+      }
+    } catch (e) { console.warn('reveal countdown unavailable', e); }
 
     const res = await fetch('data/player-stats.json');
     if (res.ok) {
