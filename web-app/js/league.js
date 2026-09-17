@@ -12,9 +12,10 @@ export const BEER_LEAGUE = {
   'charlie.jemmett@gmail.com': 'Charlie',
   'chris.bimm@gmail.com': 'Bimm',
   'andy.nishimura@gmail.com': 'Andy',
+  'trevorregan85@gmail.com': 'Trevor',
 };
 export const BEER_NAMES = {
   Hordo: 'Jon Hordo', Jordan: 'Jordan Black', Dan: 'Dan Gleeson', Adam: 'Adam Zabrodski',
-  Charlie: 'Charlie Jemmett', Andy: 'Andy Nishimura', Bimm: 'Chris Bimm',
+  Charlie: 'Charlie Jemmett', Andy: 'Andy Nishimura', Bimm: 'Chris Bimm', Trevor: 'Trevor Regan',
 };
 export const BEER_SEASON = '20252026';

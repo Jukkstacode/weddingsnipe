@@ -33,7 +33,8 @@ service cloud.firestore {
         'a.zabrodski@gmail.com': 'Adam',
         'charlie.jemmett@gmail.com': 'Charlie',
         'chris.bimm@gmail.com': 'Bimm',
-        'andy.nishimura@gmail.com': 'Andy'
+        'andy.nishimura@gmail.com': 'Andy',
+        'trevorregan85@gmail.com': 'Trevor'
       };
       return request.auth != null && request.auth.token.email in owners
         ? owners[request.auth.token.email] : '';
