@@ -6,5 +6,8 @@ steps:
     'web-app/',
     'gs://wedding-snipe-countdown-site'
   ]
+# Cloud CDN caches bucket objects for up to 10 minutes; flush it so deploys show up immediately.
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['compute', 'url-maps', 'invalidate-cdn-cache', 'weddingsnipe-lb', '--path', '/*', '--async']
 options:
   logging: CLOUD_LOGGING_ONLY
