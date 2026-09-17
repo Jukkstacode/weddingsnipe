@@ -179,7 +179,7 @@ function renderList() {
         <div class="meta">${p.position}${p.team ? ` · ${p.team}` : ''}${p.beer ? ' · Beer league' : p.gm ? ` · <b>${p.gm}</b>` : ''}${p.years === 1 ? ' · RFA' : ''}</div>
       </div>
     </li>`;
-  }).join('') || '<li class="muted" style="padding:1rem">No rostered players match.</li>';
+  }).join('') || '<li class="none">No rostered matches</li>';
   const extra = filter.q.length >= 3 && outside.length ? `
     <li class="divider">Not on a roster</li>
     ${outside.map(r => `<li class="outside" data-add="${r.playerId}" data-name="${r.name}" data-pos="${r.positionCode}" data-team="${r.teamAbbrev || ''}">
