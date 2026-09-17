@@ -119,9 +119,6 @@
     .notice { padding: 3rem 1rem; text-align: center; color: var(--muted); }
     .notice .spin { width: 22px; height: 22px; margin: 0 auto 0.8rem; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--red); animation: spin 0.8s linear infinite; }
 
-    #gate { padding: 2rem 0; }
-    #gate .primary { margin-top: 0.5rem; }
-
     @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -145,12 +142,7 @@
       <p class="lede">Every GM's roster, sorted by fantasy production. Tap a player to chart their season.</p>
     </header>
 
-    <div id="gate" hidden>
-      <p class="muted">Contracts are for league members. Sign in to view.</p>
-      <button id="sign-in" class="primary">Sign in with Google</button>
-    </div>
-
-    <div id="content" hidden>
+    <div id="content">
       <div class="toolbar">
         <div class="chips" id="pos">
           <button data-pos="ALL" class="active">All</button>
@@ -177,21 +169,13 @@
   <script src="js/nav.js"></script>
   <script type="module">
     import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-    import { db, auth, signIn, onAuthStateChanged } from './js/firebase.js';
+    import { db } from './js/firebase.js';
     import { fantasyPoints } from './js/scoring.js';
     import { GMS, gmPhoto } from './js/league.js';
 
     const $ = id => document.getElementById(id);
     const fmt = n => n.toFixed(1);
     const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-
-    // ---------- auth gate ----------
-    $('sign-in').onclick = () => signIn().catch(e => alert(e.message));
-    await new Promise(resolve => onAuthStateChanged(auth, user => {
-      $('gate').hidden = !!user;
-      $('content').hidden = !user;
-      if (user) resolve();
-    }));
 
     // ---------- data ----------
     const [snap, file] = await Promise.all([
