@@ -116,6 +116,7 @@
 .players .divider:hover { background: none; }
 .players .outside .swatch { border-style: dashed; }
 .players .outside .name::after { content: " +"; color: var(--blue); }
+.list-toggle { display: none; }
 .panel-foot { display: flex; gap: 0.5rem; padding: 0.6rem 1rem; border-top: 1px solid var(--line); }
 
 .chart-panel { padding: 1rem; }
@@ -180,6 +181,16 @@
 }
 @media (max-width: 720px) {
   .workbench { grid-template-columns: 1fr; }
-  .players { max-height: 40vh; }
   .chart-wrap { height: 320px; }
+  /* Collapsed by default so the chart isn't buried; typing or the toggle expands it. */
+  .players { max-height: 9.6rem; position: relative; }
+  .players:not(.expanded)::after {
+    content: ""; position: sticky; bottom: 0; display: block; height: 2.5rem; margin-top: -2.5rem; pointer-events: none;
+    background: linear-gradient(transparent, var(--ice-2));
+  }
+  .players.expanded { max-height: 40vh; }
+  .list-toggle {
+    display: block; width: 100%; border: 0; border-top: 1px solid var(--line); background: transparent; color: var(--blue); cursor: pointer;
+    font-family: var(--display); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.55rem 0;
+  }
 }

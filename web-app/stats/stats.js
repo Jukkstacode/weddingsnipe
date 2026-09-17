@@ -229,10 +229,19 @@ async function applySelection(keys) {
   draw();
 }
 
+// ---------- collapsed roster (phones) ----------
+function setExpanded(on) {
+  $('players').classList.toggle('expanded', on);
+  $('list-toggle').setAttribute('aria-expanded', on);
+  $('list-toggle').textContent = on ? 'Show fewer' : 'Show all players';
+}
+$('list-toggle').onclick = () => setExpanded(!$('players').classList.contains('expanded'));
+
 // ---------- search ----------
 let searchTimer;
 $('search').oninput = () => {
   filter.q = $('search').value.trim();
+  if (filter.q) setExpanded(true);
   outside = [];
   renderList();
   clearTimeout(searchTimer);
