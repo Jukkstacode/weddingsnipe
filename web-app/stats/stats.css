@@ -87,6 +87,7 @@
 }
 .chips button.active { background: var(--blue); border-color: var(--blue); color: var(--ice); }
 .chips button.rfa.active { background: var(--gold); border-color: var(--gold); }
+.chips button.beer.active { background: var(--red); border-color: var(--red); color: #fff; }
 .chips button:hover:not(.active) { color: var(--text); border-color: var(--muted); }
 .stats-page .primary { background: var(--red); border-color: var(--red); color: #fff; }
 .stats-page .primary:hover { filter: brightness(1.1); }

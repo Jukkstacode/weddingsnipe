@@ -2,19 +2,20 @@ import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, serverTime
   from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 import { db, auth, signIn, signOut, onAuthStateChanged } from '../js/firebase.js';
 import { fantasyPointsForGame } from '../js/scoring.js';
-import { GMS } from '../js/league.js';
+import { GMS, BEER_NAMES, BEER_SEASON } from '../js/league.js';
+import { COLORS, lineDataset, drawChart } from '../js/fp-chart.js';
 
 const ENDPOINT = 'https://nhl-stats-cacher-347732622266.us-west1.run.app';
 const SEASONS = [{ id: '20242025', label: '24-25' }, { id: '20252026', label: '25-26' }];
 const CURRENT = SEASONS.at(-1).id;
-const COLORS = ['#5fb3ff', '#ff4d4d', '#e0b04c', '#4bd4a8', '#c084fc', '#ff9f40', '#f472b6', '#a3e635', '#22d3ee', '#fb7185'];
 const $ = id => document.getElementById(id);
 
-const players = new Map();          // nhlId -> { id, name, position, team, gm, years }
+const players = new Map();          // id -> { id, name, position, team, gm, years, beer? }
+const beerGames = new Map();        // "bl-Gm" -> hand-entered games (beer league)
 const picks = new Map();            // nhlId -> color
 const gameLogs = new Map();         // "id.season" -> game[]
 const schedules = new Map();        // "team.season" -> gameDate[]
-const filter = { gm: '', pos: 'ALL', rfa: false, q: '' };
+const filter = { gm: '', pos: 'ALL', rfa: false, beer: false, q: '' };
 let mode = CURRENT;                 // season id or 'both'
 let chart = null;
 let user = null;
@@ -32,10 +33,18 @@ function nextColor() {
 
 // ---------- data ----------
 async function loadRoster() {
-  const snap = await getDocs(collection(db, 'contracts'));
+  const [snap, beer] = await Promise.all([getDocs(collection(db, 'contracts')), getDocs(collection(db, 'beerleague'))]);
   snap.forEach(d => {
     const c = d.data();
     players.set(d.id, { id: d.id, name: c.player, position: c.position, team: c.team, gm: c.gm, years: c.years });
+  });
+  // Beer-league GMs chart like any player; their "game log" is hand-entered in Firestore.
+  beer.forEach(d => {
+    const b = d.data();
+    if (!b.games?.length) return;   // nothing logged yet: keep them out of the roster
+    const id = `bl-${d.id}`;
+    players.set(id, { id, name: BEER_NAMES[d.id] || d.id, position: b.position, team: '', gm: d.id, years: 0, beer: true });
+    beerGames.set(id, (b.games || []).slice().sort((a, c) => a.gameDate.localeCompare(c.gameDate)));
   });
 }
 
@@ -46,6 +55,7 @@ async function fetchJSON(url) {
 }
 
 async function getGameLog(id, season) {
+  if (beerGames.has(id)) return season === BEER_SEASON ? beerGames.get(id) : [];
   const k = key(id, season);
   if (!gameLogs.has(k)) {
     const d = await fetchJSON(`${ENDPOINT}?requestType=gameLog&playerIds=${id}&season=${season}`);
@@ -109,68 +119,6 @@ async function buildSeries(id, season) {
 }
 
 // ---------- chart ----------
-const crosshair = {
-  id: 'crosshair',
-  afterDatasetsDraw(c) {
-    const active = c.tooltip?.getActiveElements?.();
-    if (!active?.length) return;
-    const { x } = active[0].element;
-    const { top, bottom } = c.chartArea;
-    const ctx = c.ctx;
-    ctx.save();
-    ctx.strokeStyle = 'rgba(234,241,248,0.25)';
-    ctx.setLineDash([3, 3]);
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke();
-    ctx.restore();
-  },
-};
-
-function gradientFor(c, color) {
-  const { top, bottom } = c.chartArea || { top: 0, bottom: 400 };
-  const g = c.ctx.createLinearGradient(0, top, 0, bottom);
-  g.addColorStop(0, color + '33');
-  g.addColorStop(1, color + '00');
-  return g;
-}
-
-function chartOptions() {
-  const grid = 'rgba(142,162,184,0.10)', tick = '#8ea2b8';
-  const font = { family: 'Barlow Condensed', weight: 700, size: 13 };
-  const perPoint = 6;
-  return {
-    responsive: true, maintainAspectRatio: false,
-    animation: {
-      x: { type: 'number', easing: 'linear', duration: perPoint, from: NaN,
-        delay(ctx) { if (ctx.type !== 'data' || ctx.xStarted) return 0; ctx.xStarted = true; return ctx.index * perPoint; } },
-      y: { type: 'number', easing: 'linear', duration: perPoint, from: NaN,
-        delay(ctx) { if (ctx.type !== 'data' || ctx.yStarted) return 0; ctx.yStarted = true; return ctx.index * perPoint; } },
-    },
-    interaction: { mode: 'index', intersect: false },
-    scales: {
-      x: { title: { display: true, text: 'GAME', color: tick, font }, ticks: { color: tick, maxTicksLimit: 12 }, grid: { color: grid }, border: { color: grid } },
-      y: { beginAtZero: true, title: { display: true, text: 'CUMULATIVE FP', color: tick, font }, ticks: { color: tick }, grid: { color: grid }, border: { display: false } },
-    },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: 'rgba(15,29,46,0.96)', borderColor: '#1f3247', borderWidth: 1, padding: 10,
-        titleColor: '#8ea2b8', titleFont: { family: 'Barlow Condensed', weight: 700, size: 13 },
-        bodyColor: '#eaf1f8', bodyFont: { family: 'Atkinson Hyperlegible', size: 12 },
-        usePointStyle: true, boxPadding: 4,
-        itemSort: (a, b) => b.raw - a.raw,
-        callbacks: {
-          title: items => `GAME ${items[0].dataIndex + 1}`,
-          label: it => {
-            const d = it.dataset.dates[it.dataIndex];
-            return ` ${it.dataset.label}  ${it.formattedValue} FP${d ? `  ·  ${d}` : ''}`;
-          },
-        },
-      },
-    },
-  };
-}
-
 async function draw() {
   const token = ++drawToken;
   const keys = selectionKeys();
@@ -188,30 +136,12 @@ async function draw() {
   if (token !== drawToken) return;
   $('loading').hidden = true;
 
-  const maxLen = Math.max(...series.map(s => s.points.length));
   const prior = mode === 'both';
-  const datasets = series.map(s => {
-    const color = picks.get(s.id);
-    const isPrior = prior && s.season !== CURRENT;
-    return {
-      label: `${s.name}${prior ? ` ${seasonLabel(s.season)}` : ''}`,
-      data: s.points.map(pt => pt.y),
-      dates: s.points.map(pt => pt.date),
-      borderColor: color, borderWidth: isPrior ? 1.5 : 2.5, borderCapStyle: 'round', borderJoinStyle: 'round',
-      tension: 0.3, fill: !isPrior,
-      backgroundColor: c => gradientFor(c.chart, color),
-      borderDash: isPrior ? [6, 4] : [],
-      pointRadius: s.points.map(pt => pt.missed ? 4.5 : 0),
-      pointHoverRadius: 5, pointHoverBorderWidth: 2, pointHoverBorderColor: '#0a1420',
-      pointStyle: s.points.map(pt => pt.missed ? 'rectRot' : 'circle'),
-      pointBackgroundColor: s.points.map(pt => pt.missed ? '#e0b04c' : color),
-      pointBorderColor: s.points.map(pt => pt.missed ? '#e0b04c' : color),
-    };
-  });
-
-  const labels = Array.from({ length: maxLen }, (_, i) => i + 1);
-  if (chart) { chart.data.labels = labels; chart.data.datasets = datasets; chart.update(); }
-  else chart = new Chart($('chart'), { type: 'line', data: { labels, datasets }, options: chartOptions(), plugins: [crosshair] });
+  const datasets = series.map(s => lineDataset({
+    label: `${s.name}${prior ? ` ${seasonLabel(s.season)}` : ''}`,
+    color: picks.get(s.id), points: s.points, prior: prior && s.season !== CURRENT,
+  }));
+  chart = drawChart($('chart'), chart, datasets);
 
   $('cards').innerHTML = series.map((s, i) => `
     <div class="card ${prior && s.season !== CURRENT ? 'prior' : ''}" style="--c:${picks.get(s.id)}; animation-delay:${i * 40}ms">
@@ -221,7 +151,7 @@ async function draw() {
       <div class="big">${s.total.toFixed(1)}</div>
       <div class="row"><span>FP/G</span><b>${s.gp ? (s.total / s.gp).toFixed(2) : '–'}</b></div>
       <div class="row"><span>GP</span><b>${s.gp}</b></div>
-      <div class="row"><span>Missed</span><b>${s.missed}</b></div>
+      ${players.get(s.id)?.beer ? '' : `<div class="row"><span>Missed</span><b>${s.missed}</b></div>`}
     </div>`).join('');
 }
 
@@ -232,6 +162,7 @@ function visiblePlayers() {
     .filter(p => !filter.gm || p.gm === filter.gm)
     .filter(p => filter.pos === 'ALL' || p.position === filter.pos)
     .filter(p => !filter.rfa || p.years === 1)
+    .filter(p => !filter.beer || p.beer)
     .filter(p => !q || p.name.toLowerCase().includes(q))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -243,7 +174,7 @@ function renderList() {
       <span class="swatch"></span>
       <div>
         <div class="name">${p.name}</div>
-        <div class="meta">${p.position}${p.team ? ` · ${p.team}` : ''}${p.gm ? ` · <b>${p.gm}</b>` : ''}${p.years === 1 ? ' · RFA' : ''}</div>
+        <div class="meta">${p.position}${p.team ? ` · ${p.team}` : ''}${p.beer ? ' · Beer league' : p.gm ? ` · <b>${p.gm}</b>` : ''}${p.years === 1 ? ' · RFA' : ''}</div>
       </div>
     </li>`;
   }).join('') || '<li class="muted" style="padding:1rem">No players match.</li>';
@@ -375,9 +306,12 @@ $('pos-filter').onclick = e => {
   if (b.dataset.pos === 'RFA') {
     filter.rfa = !filter.rfa;
     b.classList.toggle('active', filter.rfa);
+  } else if (b.dataset.pos === 'BEER') {
+    filter.beer = !filter.beer;
+    b.classList.toggle('active', filter.beer);
   } else {
     filter.pos = b.dataset.pos;
-    $('pos-filter').querySelectorAll('button:not(.rfa)').forEach(x => x.classList.toggle('active', x === b));
+    $('pos-filter').querySelectorAll('button:not(.rfa):not(.beer)').forEach(x => x.classList.toggle('active', x === b));
   }
   renderList();
 };
@@ -391,5 +325,5 @@ $('share').onclick = async () => {
 
 await loadRoster();
 const preset = new URLSearchParams(location.search).get('p');
-if (preset) await applySelection(preset.split(',').filter(k => /^\d+\.\d{8}$/.test(k)));
+if (preset) await applySelection(preset.split(',').filter(k => /^(\d+|bl-\w+)\.\d{8}$/.test(k)));
 else renderList();

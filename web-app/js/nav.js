@@ -4,6 +4,7 @@ const LINKS = [
   ['contracts.html', 'Contracts'],
   ['draft-reveal.html', 'Draft'],
   ['stats/index.html', 'Stats'],
+  ['beer-league.html', 'Beer League'],
   ['admin/contracts.html', 'Admin'],
 ];
 

@@ -23,6 +23,26 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Beer-league stats: one doc per GM, editable only by that GM's email (or an admin).
+    // Keep this map in sync with BEER_LEAGUE in web-app/js/league.js.
+    function beerLeagueGM() {
+      let owners = {
+        'hordoj@gmail.com': 'Hordo',
+        'jordanrblack@gmail.com': 'Jordan',
+        'daniel.j.gleeson@gmail.com': 'Dan',
+        'a.zabrodski@gmail.com': 'Adam',
+        'charlie.jemmett@gmail.com': 'Charlie',
+        'chris.bimm@gmail.com': 'Bimm',
+        'andy.nishimura@gmail.com': 'Andy'
+      };
+      return request.auth != null && request.auth.token.email in owners
+        ? owners[request.auth.token.email] : '';
+    }
+    match /beerleague/{gm} {
+      allow read: if true;
+      allow write: if isAdmin() || beerLeagueGM() == gm;
+    }
+
     match /users/{uid}/{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == uid;
     }

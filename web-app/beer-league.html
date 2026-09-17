@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beer League — Bathouse Hockey League</title>
+  <link rel="stylesheet" href="css/site.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    .page-head {
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem;
+      margin-bottom: 1.25rem; animation: rise 0.5s ease-out both;
+    }
+    .page-head h1 { margin: 0; font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 0.9; letter-spacing: -0.01em; }
+    .page-head h1 span { color: var(--blue); }
+    .lede { max-width: 38ch; margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; animation: rise 0.5s ease-out both; }
+    .chart-panel { padding: 1rem; }
+    .chart-wrap { position: relative; height: clamp(320px, 50vh, 560px); }
+    .empty { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; color: var(--muted); pointer-events: none; }
+    .empty p { margin: 0.2rem 0; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.6rem; margin: 0.8rem 0 2rem; }
+    .card { position: relative; padding: 0.7rem 0.8rem 0.6rem; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); border-top: 3px solid var(--c); animation: rise 0.35s ease-out both; }
+    .card .who { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; }
+    .card .who img { width: 1.6rem; height: 1.6rem; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+    .card .season { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
+    .card .big { font-family: var(--display); font-weight: 800; font-size: 2rem; line-height: 1; margin: 0.35rem 0 0.2rem; color: var(--c); }
+    .card .row { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .card .row b { color: var(--text); font-weight: 400; }
+
+    .mine { padding: 1rem; }
+    .mine-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin-bottom: 0.8rem; }
+    .mine-head h2 { margin: 0; color: var(--text); }
+    .mine-head .spacer { flex: 1; }
+    .ghost {
+      font-family: var(--display); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 0.65rem; border-radius: 3px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer;
+    }
+    .ghost:hover { color: var(--text); border-color: var(--muted); }
+    .ghost.danger { color: var(--red); border-color: var(--red); }
+    label.f { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .beer-page select, .beer-page input {
+      font: inherit; font-size: 1rem; padding: 0.4rem 0.55rem; color: var(--text);
+      background: var(--bg); border: 1px solid var(--border); border-radius: 4px; min-height: 44px;
+    }
+    .beer-page input:focus, .beer-page select:focus { outline: none; border-color: var(--blue); }
+    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+    .totals { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; align-items: baseline; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .totals b { color: var(--text); font-weight: 700; }
+    .totals .tfp { font-family: var(--display); font-weight: 800; font-size: 1.5rem; color: var(--blue); }
+
+    .games { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+    .games li {
+      display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) auto; align-items: center; gap: 0.75rem;
+      padding: 0.7rem 0.25rem; min-height: 52px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s;
+    }
+    .games li:hover { background: rgba(95,179,255,0.06); }
+    .games .d { font-family: var(--display); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.06em; color: var(--muted); }
+    .games .line { font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .games .line span { color: var(--muted); }
+    .games .fp { font-family: var(--display); font-weight: 800; font-size: 1.2rem; color: var(--blue); font-variant-numeric: tabular-nums; }
+    .games .none { grid-template-columns: 1fr; color: var(--muted); cursor: default; }
+    .log { width: 100%; min-height: 48px; font-size: 1rem; margin-top: 0.8rem; }
+    .status { min-height: 1.4rem; font-size: 0.85rem; color: var(--muted); margin: 0.6rem 0 0; }
+    .status.ok { color: #7cc47c; }
+    .status.err { color: var(--red); }
+    .signin { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+
+    /* ---------- game sheet (dialog) ---------- */
+    dialog.sheet {
+      width: min(100%, 30rem); max-width: 100%; margin: auto; padding: 0; border: 1px solid var(--border); border-radius: 10px;
+      background: var(--surface); color: var(--text); box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+    dialog.sheet::backdrop { background: rgba(4,10,18,0.7); backdrop-filter: blur(3px); }
+    .sheet form { display: grid; gap: 0.9rem; padding: 1.1rem 1.1rem calc(1.1rem + env(safe-area-inset-bottom, 0px)); }
+    .sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .sheet-head h2 { margin: 0; color: var(--text); font-size: 1.5rem; }
+    .sheet-head .live { text-align: right; }
+    .sheet-head .live small { display: block; font-family: var(--display); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .sheet-head .live b { font-family: var(--display); font-weight: 800; font-size: 2rem; line-height: 1; color: var(--blue); font-variant-numeric: tabular-nums; }
+    .sheet .date { display: grid; gap: 0.3rem; }
+    .sheet .date input { width: 100%; }
+    .steppers { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 0.6rem; }
+    .step { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); overflow: hidden; }
+    .step button { min-height: 52px; border: 0; background: transparent; color: var(--muted); font-size: 1.5rem; line-height: 1; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+    .step button:active { background: var(--border); color: var(--text); }
+    .step .v { text-align: center; }
+    .step .v b { display: block; font-family: var(--display); font-weight: 800; font-size: 1.5rem; line-height: 1; font-variant-numeric: tabular-nums; }
+    .step .v small { display: block; font-family: var(--display); font-weight: 700; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 0.15rem; }
+    .step .v input { width: 100%; text-align: center; border: 0; background: transparent; padding: 0; min-height: 0; font-family: var(--display); font-weight: 800; font-size: 1.5rem; line-height: 1; }
+    .step .v input:focus { outline: none; }
+    .segmented { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .segmented button {
+      font-family: var(--display); font-weight: 700; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; min-height: 48px;
+      border: 0; background: transparent; color: var(--muted); cursor: pointer; touch-action: manipulation;
+    }
+    .segmented button + button { border-left: 1px solid var(--border); }
+    .segmented button.active { background: var(--red); color: #fff; }
+    .sheet-foot { display: flex; gap: 0.5rem; align-items: center; }
+    .sheet-foot .spacer { flex: 1; }
+    .sheet-foot .primary { min-height: 48px; padding-inline: 1.4rem; font-size: 1rem; }
+    .sheet-foot .ghost { min-height: 48px; }
+
+    @media (max-width: 640px) {
+      dialog.sheet {
+        width: 100%; margin: auto 0 0; border-radius: 14px 14px 0 0; border-bottom: 0; max-height: 92dvh; overflow-y: auto;
+        animation: up 0.25s ease-out;
+      }
+      .steppers { grid-template-columns: 1fr 1fr; }
+    }
+    @keyframes up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="beer-page">
+  <main>
+    <header class="page-head">
+      <div>
+        <p class="eyebrow">Beer league</p>
+        <h1>The <span>GM</span> stats</h1>
+      </div>
+    </header>
+
+    <section class="panel chart-panel">
+      <div class="chart-wrap">
+        <canvas id="chart"></canvas>
+        <div class="empty" id="empty" hidden>
+          <p class="eyebrow">No games yet</p>
+          <p>Once someone logs a game, their line shows up here.</p>
+        </div>
+      </div>
+    </section>
+    <div class="cards" id="cards"></div>
+
+    <section class="panel mine" id="mine">
+      <div class="signin" id="signed-out">
+        <span class="muted">Play beer league? Sign in to log your games.</span>
+        <button id="sign-in" class="primary">Sign in with Google</button>
+      </div>
+      <div id="not-allowed" hidden>
+        <span class="muted" id="not-allowed-msg"></span>
+        <button id="sign-out-2" class="ghost">Sign out</button>
+      </div>
+      <div id="signed-in" hidden>
+        <div class="mine-head">
+          <h2 id="mine-title"></h2>
+          <label class="f">Pos <select id="position">
+            <option>C</option><option>LW</option><option>RW</option><option>D</option><option>G</option>
+          </select></label>
+          <span class="spacer"></span>
+          <button id="sign-out" class="ghost">Sign out</button>
+        </div>
+        <div class="totals" id="totals"></div>
+        <ul class="games" id="games"></ul>
+        <button id="add" class="primary log">+ Log a game</button>
+        <p class="status" id="status"></p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="sheet" id="sheet">
+    <form method="dialog" id="form">
+      <div class="sheet-head">
+        <h2 id="sheet-title">Log a game</h2>
+        <div class="live"><small>Fantasy pts</small><b id="live">0.0</b></div>
+      </div>
+      <label class="date"><span class="f">Date</span><input type="date" id="g-date" required></label>
+      <div class="segmented" id="decision" hidden>
+        <button type="button" data-v="W">Win</button><button type="button" data-v="L">Loss</button><button type="button" data-v="OTL">OT loss</button>
+      </div>
+      <div class="steppers" id="steppers"></div>
+      <div class="sheet-foot">
+        <button type="button" class="ghost danger" id="delete" hidden>Delete</button>
+        <span class="spacer"></span>
+        <button type="button" class="ghost" id="cancel">Cancel</button>
+        <button type="submit" class="primary" id="save">Save game</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/nav.js"></script>
+  <script type="module">
+    import { collection, getDocs, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+    import { db, auth, signIn, signOut, onAuthStateChanged } from './js/firebase.js';
+    import { fantasyPointsForGame } from './js/scoring.js';
+    import { BEER_LEAGUE, BEER_NAMES, BEER_SEASON, gmPhoto } from './js/league.js';
+    import { COLORS, lineDataset, drawChart } from './js/fp-chart.js';
+
+    const $ = id => document.getElementById(id);
+    const status = (msg, cls = '') => { $('status').textContent = msg; $('status').className = `status ${cls}`; };
+    const fmt = n => n.toFixed(1);
+    const today = () => new Date().toISOString().slice(0, 10);
+    const seasonLabel = `${BEER_SEASON.slice(2, 4)}-${BEER_SEASON.slice(6)}`;
+
+    const blank = pos => pos === 'G'
+      ? { gameDate: today(), decision: 'W', goalsAgainst: 0, shotsAgainst: 0, shutouts: 0 }
+      : { gameDate: today(), goals: 0, assists: 0, plusMinus: 0, pim: 0, powerPlayPoints: 0, shorthandedPoints: 0, gameWinningGoals: 0 };
+    const sortGames = games => games.slice().sort((a, b) => a.gameDate.localeCompare(b.gameDate));
+
+    // ---------- everyone's chart ----------
+    let chart = null;
+    const all = new Map();   // gm -> doc data
+
+    async function loadAll() {
+      const snap = await getDocs(collection(db, 'beerleague'));
+      all.clear();
+      snap.forEach(d => all.set(d.id, d.data()));
+      renderChart();
+    }
+
+    function series(gm, b) {
+      let total = 0;
+      const points = sortGames(b.games || []).map(g => {
+        total += fantasyPointsForGame(g, b.position);
+        return { date: g.gameDate, y: +total.toFixed(2), missed: false };
+      });
+      return { gm, name: BEER_NAMES[gm] || gm, position: b.position, points, total, gp: points.length };
+    }
+
+    function renderChart() {
+      // GMs with no games logged stay out of the chart and cards.
+      const rows = [...all].map(([gm, b]) => series(gm, b)).filter(r => r.gp).sort((a, b) => b.total - a.total);
+      rows.forEach((r, i) => r.color = COLORS[i % COLORS.length]);
+      $('empty').hidden = rows.length > 0;
+      $('chart').hidden = !rows.length;
+      if (rows.length) chart = drawChart($('chart'), chart, rows.map(r => lineDataset({ label: r.name, color: r.color, points: r.points })));
+      $('cards').innerHTML = rows.map((r, i) => `
+        <div class="card" style="--c:${r.color}; animation-delay:${i * 40}ms">
+          <div class="who"><img src="${gmPhoto(r.gm)}" alt="">${r.name}</div>
+          <div class="season">${seasonLabel} · ${r.position}</div>
+          <div class="big">${fmt(r.total)}</div>
+          <div class="row"><span>FP/G</span><b>${r.gp ? (r.total / r.gp).toFixed(2) : '–'}</b></div>
+          <div class="row"><span>GP</span><b>${r.gp}</b></div>
+        </div>`).join('');
+    }
+
+    // ---------- my games ----------
+    let gm = null;          // GM name for the signed-in user
+    let mine = null;        // { position, games } for the signed-in GM
+    let editing = -1;       // index into mine.games while the sheet is open, -1 = new
+    let draft = null;       // game being edited in the sheet
+
+    // Steppers per position: [field, label, min]. Shots against is typed (a stepper to 30 is a chore).
+    const SKATER = [['goals', 'Goals', 0], ['assists', 'Assists', 0], ['plusMinus', '+ / −', -99], ['pim', 'PIM', 0], ['powerPlayPoints', 'PP pts', 0], ['shorthandedPoints', 'SH pts', 0], ['gameWinningGoals', 'GW goals', 0]];
+    const GOALIE = [['goalsAgainst', 'Goals against', 0], ['shotsAgainst', 'Shots against', 0, 'typed'], ['shutouts', 'Shutout', 0]];
+    const fields = pos => pos === 'G' ? GOALIE : SKATER;
+
+    function statLine(g, pos) {
+      if (pos === 'G') return `<b>${g.decision}</b> <span>·</span> ${g.goalsAgainst} GA on ${g.shotsAgainst} SA${g.shutouts ? ' <span>·</span> SO' : ''}`;
+      const bits = [`${g.goals}G`, `${g.assists}A`, `${g.plusMinus > 0 ? '+' : ''}${g.plusMinus}`];
+      if (g.pim) bits.push(`${g.pim} PIM`);
+      if (g.powerPlayPoints) bits.push(`${g.powerPlayPoints} PPP`);
+      if (g.shorthandedPoints) bits.push(`${g.shorthandedPoints} SHP`);
+      if (g.gameWinningGoals) bits.push(`${g.gameWinningGoals} GWG`);
+      return bits.join(' <span>·</span> ');
+    }
+    const niceDate = d => new Date(d + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+    function renderMine() {
+      const pos = mine.position;
+      $('mine-title').textContent = BEER_NAMES[gm] || gm;
+      $('position').value = pos;
+      const total = mine.games.reduce((s, g) => s + fantasyPointsForGame(g, pos), 0);
+      const sum = f => mine.games.reduce((s, g) => s + (+g[f] || 0), 0);
+      const n = mine.games.length;
+      $('totals').innerHTML = n ? `
+        <span class="tfp">${fmt(total)} <small>FP</small></span>
+        <span><b>${n}</b> GP</span>
+        <span><b>${(total / n).toFixed(2)}</b> FP/G</span>
+        ${pos === 'G'
+          ? `<span><b>${['W', 'L', 'OTL'].map(d => mine.games.filter(g => g.decision === d).length).join('-')}</b> record</span><span><b>${sum('goalsAgainst')}</b> GA</span><span><b>${sum('shutouts')}</b> SO</span>`
+          : `<span><b>${sum('goals')}</b> G</span><span><b>${sum('assists')}</b> A</span><span><b>${sum('goals') + sum('assists')}</b> P</span><span><b>${sum('plusMinus') > 0 ? '+' : ''}${sum('plusMinus')}</b></span>`}` : '';
+      // Newest first so the game you just logged is at the top.
+      $('games').innerHTML = mine.games.map((g, i) => `<li data-i="${i}">
+        <span class="d">${niceDate(g.gameDate)}</span>
+        <span class="line">${statLine(g, pos)}</span>
+        <span class="fp">${fmt(fantasyPointsForGame(g, pos))}</span>
+      </li>`).reverse().join('') || '<li class="none">No games logged yet. Tap the button below after your next skate.</li>';
+    }
+
+    async function saveMine(msg) {
+      mine.games = sortGames(mine.games);
+      try {
+        await setDoc(doc(db, 'beerleague', gm), { ...mine, gm, season: BEER_SEASON, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email });
+        status(msg, 'ok');
+        renderMine();
+        await loadAll();
+        return true;
+      } catch (e) {
+        status(e.code === 'permission-denied' ? 'Your account isn\'t allowed to edit this GM.' : e.message, 'err');
+        return false;
+      }
+    }
+
+    $('position').onchange = () => {
+      const toGoalie = $('position').value === 'G', fromGoalie = mine.position === 'G';
+      if (toGoalie !== fromGoalie && mine.games.length && !confirm('Switching between skater and goalie clears your logged games. Continue?')) {
+        $('position').value = mine.position; return;
+      }
+      if (toGoalie !== fromGoalie) mine.games = [];
+      mine.position = $('position').value;
+      saveMine('Position saved.');
+    };
+
+    // ---------- the sheet ----------
+    function openSheet(i) {
+      editing = i;
+      draft = i >= 0 ? { ...mine.games[i] } : blank(mine.position);
+      const pos = mine.position;
+      $('sheet-title').textContent = i >= 0 ? 'Edit game' : 'Log a game';
+      $('delete').hidden = i < 0;
+      $('g-date').value = draft.gameDate;
+      $('decision').hidden = pos !== 'G';
+      $('steppers').innerHTML = fields(pos).map(([f, label, , typed]) => `
+        <div class="step" data-f="${f}">
+          <button type="button" data-d="-1" aria-label="Less ${label}">−</button>
+          <div class="v">${typed
+            ? `<input type="number" inputmode="numeric" pattern="[0-9]*" min="0" data-f="${f}" value="${draft[f]}">`
+            : `<b>${draft[f]}</b>`}<small>${label}</small></div>
+          <button type="button" data-d="1" aria-label="More ${label}">+</button>
+        </div>`).join('');
+      syncSheet();
+      $('sheet').showModal();
+    }
+    function syncSheet() {
+      $('live').textContent = fmt(fantasyPointsForGame(draft, mine.position));
+      $('decision').querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.v === draft.decision));
+      $('steppers').querySelectorAll('.step').forEach(el => { const b = el.querySelector('b'); if (b) b.textContent = draft[el.dataset.f]; });
+    }
+    $('steppers').addEventListener('click', e => {
+      const b = e.target.closest('button[data-d]'); if (!b) return;
+      const el = b.closest('.step'), f = el.dataset.f;
+      const [, , min] = fields(mine.position).find(x => x[0] === f);
+      draft[f] = Math.max(min, (+draft[f] || 0) + Number(b.dataset.d));
+      const input = el.querySelector('input'); if (input) input.value = draft[f];
+      syncSheet();
+    });
+    $('steppers').addEventListener('input', e => {
+      if (!e.target.dataset.f) return;
+      draft[e.target.dataset.f] = Math.max(0, Number(e.target.value) || 0);
+      $('live').textContent = fmt(fantasyPointsForGame(draft, mine.position));
+    });
+    $('decision').onclick = e => { const b = e.target.closest('button'); if (b) { draft.decision = b.dataset.v; syncSheet(); } };
+    $('g-date').onchange = () => { draft.gameDate = $('g-date').value; };
+    $('cancel').onclick = () => $('sheet').close();
+    $('form').onsubmit = async e => {
+      e.preventDefault();
+      if (!$('g-date').value) { $('g-date').focus(); return; }
+      draft.gameDate = $('g-date').value;
+      if (editing >= 0) mine.games[editing] = draft; else mine.games.push(draft);
+      $('sheet').close();
+      await saveMine(editing >= 0 ? 'Game updated.' : `Game logged: ${fmt(fantasyPointsForGame(draft, mine.position))} FP.`);
+    };
+    $('delete').onclick = async () => {
+      if (!confirm('Delete this game?')) return;
+      mine.games.splice(editing, 1);
+      $('sheet').close();
+      await saveMine('Game deleted.');
+    };
+    $('add').onclick = () => openSheet(-1);
+    $('games').onclick = e => { const li = e.target.closest('li[data-i]'); if (li) openSheet(Number(li.dataset.i)); };
+
+    // ---------- auth (after the first load so an existing doc is found) ----------
+    await loadAll();
+    $('sign-in').onclick = () => signIn().catch(e => status(e.message, 'err'));
+    $('sign-out').onclick = $('sign-out-2').onclick = () => signOut(auth);
+    onAuthStateChanged(auth, user => {
+      gm = user ? BEER_LEAGUE[user.email] : null;
+      $('signed-out').hidden = !!user;
+      $('not-allowed').hidden = !user || !!gm;
+      $('signed-in').hidden = !gm;
+      if (user && !gm) $('not-allowed-msg').textContent = `${user.email} isn't on the beer-league list. Ask Bimm if it should be.`;
+      if (!gm) return;
+      const existing = all.get(gm);
+      mine = existing
+        ? { position: existing.position, games: sortGames(existing.games || []) }
+        : { position: 'C', games: [] };
+      renderMine();
+      status(existing ? '' : 'Pick your position, then log your first game.');
+    });
+  </script>
+</body>
+</html>
