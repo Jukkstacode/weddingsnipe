@@ -12,7 +12,7 @@ const here = location.href;
 const nav = document.createElement('nav');
 nav.className = 'top-nav';
 nav.innerHTML = `
-  <a class="brand" href="${base}index.html">Bathouse Hockey League</a>
+  <a class="brand" href="${base}index.html"><span class="full">Bathouse Hockey League</span><span class="short">BHL</span></a>
   <div class="links">
     ${LINKS.map(([path, label]) => {
       const href = base + path;
@@ -21,3 +21,5 @@ nav.innerHTML = `
   </div>
   <a class="legacy" href="${base}v1/index.html">Old site</a>`;
 document.body.prepend(nav);
+// On phones the links scroll sideways; make sure the current page is visible.
+nav.querySelector('.links a[aria-current]')?.scrollIntoView({ block: 'nearest', inline: 'center' });

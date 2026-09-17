@@ -30,7 +30,7 @@
     .card .row { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
     .card .row b { color: var(--text); font-weight: 400; }
 
-    .mine { padding: 1rem; }
+    .mine { padding: 1rem; animation: none; } /* no transform here: the fixed log button must anchor to the viewport */
     .mine-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; margin-bottom: 0.8rem; }
     .mine-head h2 { margin: 0; color: var(--text); }
     .mine-head .spacer { flex: 1; }
@@ -106,6 +106,13 @@
     .sheet-foot .ghost { min-height: 48px; }
 
     @media (max-width: 640px) {
+      .chart-wrap { height: 42vh; }
+      /* Floating "log a game" so it's never below the fold. */
+      .log {
+        position: fixed; z-index: 4; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); width: auto; margin: 0;
+        padding: 0.9rem 1.3rem; border-radius: 999px; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+      }
+      .mine { padding-bottom: 4.5rem; }
       dialog.sheet {
         width: 100%; margin: auto 0 0; border-radius: 14px 14px 0 0; border-bottom: 0; max-height: 92dvh; overflow-y: auto;
         animation: up 0.25s ease-out;
