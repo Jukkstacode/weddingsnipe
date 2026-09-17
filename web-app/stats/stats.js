@@ -89,10 +89,16 @@ async function addUnknownPlayers(ids) {
 async function buildSeries(id, season) {
   const p = players.get(id);
   const log = await getGameLog(id, season);
+  // Beer-league games can share a date (and carry their own position), so they're one point per game with no schedule.
+  if (p.beer) {
+    let total = 0;
+    const points = log.map(g => { total += fantasyPointsForGame(g, g.position || p.position); return { date: g.gameDate, y: +total.toFixed(2), missed: false }; });
+    return { id, season, name: p.name, position: p.position, points, gp: log.length, total, missed: 0 };
+  }
   const played = new Map();
   let total = 0;
   for (const g of log) {
-    total += fantasyPointsForGame(g, g.position || p.position);   // beer-league games carry their own position
+    total += fantasyPointsForGame(g, p.position);
     played.set(g.gameDate, +total.toFixed(2));
   }
   // Missed games are judged per team stint so a mid-season trade doesn't count the new team's earlier games.
