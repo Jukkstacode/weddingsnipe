@@ -92,7 +92,7 @@ async function buildSeries(id, season) {
   const played = new Map();
   let total = 0;
   for (const g of log) {
-    total += fantasyPointsForGame(g, p.position);
+    total += fantasyPointsForGame(g, g.position || p.position);   // beer-league games carry their own position
     played.set(g.gameDate, +total.toFixed(2));
   }
   // Missed games are judged per team stint so a mid-season trade doesn't count the new team's earlier games.
