@@ -34,6 +34,11 @@ async function fetchPlayerStats(playerId) {
   if (!featured || String(data.featuredStats.season) !== SEASON) return emptyStats(data);
 
   const s = featured;
+  // featuredStats omits goalsAgainst/shotsAgainst, which the goalie formula needs.
+  // seasonTotals has them; a traded player has one row per team, so sum the season.
+  const totals = (data.seasonTotals || [])
+    .filter(t => String(t.season) === SEASON && t.gameTypeId === 2 && t.leagueAbbrev === 'NHL');
+  const sum = key => totals.reduce((n, t) => n + (t[key] || 0), 0);
   return {
     ...emptyStats(data),
     gamesPlayed: s.gamesPlayed || 0,
@@ -51,10 +56,10 @@ async function fetchPlayerStats(playerId) {
     wins: s.wins || 0,
     losses: s.losses || 0,
     otLosses: s.otLosses || 0,
-    goalsAgainst: s.goalsAgainst || 0,
+    goalsAgainst: s.goalsAgainst || sum('goalsAgainst'),
     goalsAgainstAverage: s.goalsAgainstAverage || s.goalsAgainstAvg || 0,
     savePctg: s.savePctg || s.savePercentage || 0,
-    shotsAgainst: s.shotsAgainst || 0,
+    shotsAgainst: s.shotsAgainst || sum('shotsAgainst'),
     shutouts: s.shutouts || 0,
   };
 }
