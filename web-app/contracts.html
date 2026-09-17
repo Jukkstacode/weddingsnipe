@@ -16,7 +16,6 @@
     .page-head h1 { margin: 0; font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 0.9; letter-spacing: -0.01em; }
     .page-head h1 span { color: var(--blue); }
     .lede { max-width: 38ch; margin: 0; color: var(--muted); font-size: 0.95rem; }
-    .lede b { color: var(--text); font-weight: 400; }
 
     /* ---------- filters ---------- */
     .toolbar {
@@ -143,7 +142,7 @@
         <p class="eyebrow">Keeper contracts</p>
         <h1>Who's <span>locked up</span></h1>
       </div>
-      <p class="lede" id="lede">Every GM's roster, sorted by fantasy production. Tap a player to chart their season.</p>
+      <p class="lede">Every GM's roster, sorted by fantasy production. Tap a player to chart their season.</p>
     </header>
 
     <div id="gate" hidden>
@@ -197,7 +196,7 @@
     // ---------- data ----------
     const [snap, file] = await Promise.all([
       getDocs(collection(db, 'contracts')),
-      fetch('data/player-stats.json').then(r => r.ok ? r.json() : { players: {}, updatedAt: null, season: '' }),
+      fetch('data/player-stats.json').then(r => r.ok ? r.json() : { players: {}, season: '' }),
     ]);
     const stats = file.players || {};
     const contracts = snap.docs.map(d => {
@@ -207,14 +206,6 @@
       const position = String(c.position || '').split(',').map(p => ({ L: 'LW', R: 'RW' }[p.trim()] || p.trim())).join(',');
       return { ...c, s, position, fp: fantasyPoints(s, position), team: s?.teamAbbrev || c.team };
     });
-
-    const season = file.season ? `${file.season.slice(0, 4)}-${file.season.slice(6)}` : '';
-    const rfas = contracts.filter(c => c.years === 1).length;
-    const stolen = contracts.filter(c => c.stolen).length;
-    $('lede').innerHTML = file.updatedAt
-      ? `<b>${contracts.length}</b> contracts across ${GMS.length} GMs. <b>${rfas}</b> expire after this season, <b>${stolen}</b> were stolen.
-         ${season} stats updated ${new Date(file.updatedAt).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}.`
-      : `<b>${contracts.length}</b> contracts across ${GMS.length} GMs. No stats file yet.`;
 
     // ---------- group + sort (fixed order; filters only hide) ----------
     const teams = GMS.map(gm => {
