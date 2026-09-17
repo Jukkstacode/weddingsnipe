@@ -167,8 +167,10 @@ function visiblePlayers() {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
+let outside = [];   // NHL search hits that aren't on any roster; shown below the roster, never as an overlay
+
 function renderList() {
-  $('players').innerHTML = visiblePlayers().map(p => {
+  const rows = visiblePlayers().map(p => {
     const c = picks.get(p.id);
     return `<li data-id="${p.id}" class="${c ? 'on' : ''}" style="--c:${c || ''}">
       <span class="swatch"></span>
@@ -177,7 +179,14 @@ function renderList() {
         <div class="meta">${p.position}${p.team ? ` · ${p.team}` : ''}${p.beer ? ' · Beer league' : p.gm ? ` · <b>${p.gm}</b>` : ''}${p.years === 1 ? ' · RFA' : ''}</div>
       </div>
     </li>`;
-  }).join('') || '<li class="muted" style="padding:1rem">No players match.</li>';
+  }).join('') || '<li class="muted" style="padding:1rem">No rostered players match.</li>';
+  const extra = filter.q.length >= 3 && outside.length ? `
+    <li class="divider">Not on a roster</li>
+    ${outside.map(r => `<li class="outside" data-add="${r.playerId}" data-name="${r.name}" data-pos="${r.positionCode}" data-team="${r.teamAbbrev || ''}">
+      <span class="swatch"></span>
+      <div><div class="name">${r.name}</div><div class="meta">${r.positionCode}${r.teamAbbrev ? ` · ${r.teamAbbrev}` : ''}</div></div>
+    </li>`).join('')}` : '';
+  $('players').innerHTML = rows + extra;
 }
 
 function syncRow(id) {
@@ -224,29 +233,27 @@ async function applySelection(keys) {
 let searchTimer;
 $('search').oninput = () => {
   filter.q = $('search').value.trim();
+  outside = [];
   renderList();
   clearTimeout(searchTimer);
-  if (filter.q.length < 3) { $('search-results').hidden = true; return; }
+  if (filter.q.length < 3) return;
+  const q = filter.q;
   searchTimer = setTimeout(async () => {
-    const res = await fetchJSON(`https://search.d3.nhle.com/api/v1/search/player?culture=en-us&limit=8&active=true&q=${encodeURIComponent(filter.q)}`);
-    const outside = res.filter(r => !players.has(r.playerId));
-    $('search-results').innerHTML = outside.map(r =>
-      `<div data-id="${r.playerId}" data-name="${r.name}" data-pos="${r.positionCode}" data-team="${r.teamAbbrev || ''}">${r.name}<small>${r.positionCode} · ${r.teamAbbrev || '–'}</small></div>`
-    ).join('') || '<div><small>No unrostered matches</small></div>';
-    $('search-results').hidden = false;
+    const res = await fetchJSON(`https://search.d3.nhle.com/api/v1/search/player?culture=en-us&limit=8&active=true&q=${encodeURIComponent(q)}`);
+    if (q !== filter.q) return;   // typed more since; a newer search is on its way
+    outside = res.filter(r => !players.has(r.playerId));
+    renderList();
   }, 250);
 };
-$('search').onblur = () => setTimeout(() => { $('search-results').hidden = true; }, 150);
-$('search-results').onmousedown = e => {
-  const el = e.target.closest('[data-id]');
-  if (!el) return;
-  const { id, name, pos, team } = el.dataset;
+
+function addOutside(el) {
+  const { add: id, name, pos, team } = el.dataset;
   players.set(id, { id, name, position: pos, team, gm: '', years: 0, extra: true });
-  $('search').value = ''; filter.q = ''; $('search-results').hidden = true;
+  $('search').value = ''; filter.q = ''; outside = [];
   picks.set(id, nextColor());
   renderList();
   draw();
-};
+}
 
 // ---------- saved analyses ----------
 function savedCol() { return collection(db, 'users', user.uid, 'analyses'); }
@@ -315,7 +322,10 @@ $('pos-filter').onclick = e => {
   }
   renderList();
 };
-$('players').onclick = e => { const li = e.target.closest('li[data-id]'); if (li) togglePlayer(li.dataset.id); };
+$('players').onclick = e => {
+  const add = e.target.closest('li[data-add]'); if (add) return addOutside(add);
+  const li = e.target.closest('li[data-id]'); if (li) togglePlayer(li.dataset.id);
+};
 $('cards').onclick = e => { const b = e.target.closest('.x'); if (b) togglePlayer(b.dataset.id); };
 $('clear').onclick = () => { picks.clear(); renderList(); draw(); };
 $('share').onclick = async () => {
